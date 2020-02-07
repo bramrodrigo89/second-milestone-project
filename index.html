@@ -23,10 +23,37 @@
     
     <h1>My eStock Dashboard</h1>
 
-    <div>
-        <h2>Exxon Mobil Corp (XOM)</h2>
-        <button onclick="writeToDocument('XOM')">Update</button>
-        <p>Current Market Value: <span id='market-value'></span></p>
+    <div class="row">
+        <div class= 'col-12 col-md-6'>
+            <h2><span id="company-name">Name</span> (<span id='company-symbol'>Symbol</span>)</h2>
+            <h3><span id='real-time-price'></span> US$</h3>
+            <p>Price change: <span id="price-change"></span> US$     -     Price Change Percent: <span id="price-change-percent"></span> %</p>
+            <p>Last trade time: <span id='latest-time'>Date</span> <span id="last-trade-time">Time</span></p>
+            <div class="container">
+                <table class="table table-dark">
+                    <tr>
+                        <th scope="row">Latest Price</th>
+                        <td> <span id='latest-price'></span> US$</td>
+                        <th scope="row">Market Cap</th>
+                        <td><span id="market-cap"></span>B</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price-to-Earnings Ratio</th>
+                        <td> <span id='pe-ratio'></span> </td>
+                        <th scope="row">Avg. Volume Total</th>
+                        <td><span id="avg-total-volume"></span></td>
+                    </tr>
+
+                    Price-to-Earnings Ratio
+                </table>
+            </div>
+		</div>
+        <div class= 'col-12 col-md-6'>
+            <button onclick="writeToDocument('XOM')">XOM</button>
+            <button onclick="writeToDocument('BAM')">BAM</button>
+            <button onclick="writeToDocument('UBER')">UBER</button>
+        </div>
+		
     </div>
     
     
