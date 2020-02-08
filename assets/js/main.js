@@ -4,20 +4,10 @@ function getStockData(company, type, cb) {
     const version = 'stable/stock/'
     const tokenURL= 'token=Tsk_22c4304dbda24a059f9e35d3f3ee96c9'
 
-    switch (type) {
-        case 'intra-day':
-            var datatype = '/intra-day?'
-        break;
-        case 'quote':
-            var datatype = '/quote?'
-        break;
-        default:
-            var datatype = '/quote?'
-    }
     
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", sandboxAPI+version+company+datatype+tokenURL); 
-    console.log(sandboxAPI+version+company+datatype+tokenURL);
+    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=10&'+tokenURL); 
+    console.log(sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=10&'+tokenURL);
     xhr.send(); 
 
     xhr.onreadystatechange = function () {
@@ -27,22 +17,21 @@ function getStockData(company, type, cb) {
     };
 }
 
-
 function quoteDataToDocument(company, type) {
 
     getStockData(company, type, function(stockData){
         
-        var company_name = stockData.companyName;
-        var company_symbol = stockData.symbol;
-        var latest_price= stockData.latestPrice.toFixed(2);
-        var price_change = stockData.change;
-        var price_change_percent = stockData.changePercent*100;
-        var latest_time = stockData.latestTime;
-        var last_trade_time = stockData.lastTradeTime;
-        var previous_close = stockData.previousClose.toFixed(2);
-        var market_cap= (stockData.marketCap/Math.pow(10, 9)).toFixed(2);
-        var pe_ratio = stockData.peRatio;
-        var avg_total_volume = stockData.avgTotalVolume;
+        var company_name = stockData.quote.companyName;
+        var company_symbol = stockData.quote.symbol;
+        var latest_price= stockData.quote.latestPrice.toFixed(2);
+        var price_change = stockData.quote.change.toFixed(2);
+        var price_change_percent = stockData.quote.changePercent*100;
+        var latest_time = stockData.quote.latestTime;
+        var last_trade_time = stockData.quote.lastTradeTime;
+        var previous_close = stockData.quote.previousClose.toFixed(2);
+        var market_cap= (stockData.quote.marketCap/Math.pow(10, 9)).toFixed(2);
+        var pe_ratio = stockData.quote.peRatio;
+        var avg_total_volume = stockData.quote.avgTotalVolume.toLocaleString();
         
         document.getElementById('company-name').innerHTML = company_name;
         document.getElementById('company-symbol').innerHTML = company_symbol;
@@ -57,12 +46,24 @@ function quoteDataToDocument(company, type) {
         document.getElementById('avg-total-volume').innerHTML = avg_total_volume;
         
         console.log(stockData);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            
+            type: 'line',
+            data: {
+                labels: Object.map(stockData.chart.date),
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: Object.map(stockData.chart.close)
+                }],
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
     });
 }
-
-function graphDataToDocument(company, type) {
-
-    getStockData(company, type, function(stockData){
-        console.log(stockData);
-    });
-};
