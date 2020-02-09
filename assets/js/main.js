@@ -1,3 +1,7 @@
+//initiate ticker
+
+$('#WebTicker').webTicker();
+
 function getStockData(company, type, cb) { 
     
     const sandboxAPI = 'https://sandbox.iexapis.com/'
@@ -6,8 +10,7 @@ function getStockData(company, type, cb) {
 
     
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=10&'+tokenURL); 
-    console.log(sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=10&'+tokenURL);
+    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=15&'+tokenURL); 
     xhr.send(); 
 
     xhr.onreadystatechange = function () {
@@ -17,10 +20,12 @@ function getStockData(company, type, cb) {
     };
 }
 
-function quoteDataToDocument(company, type) {
+function stockDataToDocument(company, type) {
 
     getStockData(company, type, function(stockData){
         
+        // fetch stock quote data for table
+
         var company_name = stockData.quote.companyName;
         var company_symbol = stockData.quote.symbol;
         var latest_price= stockData.quote.latestPrice.toFixed(2);
@@ -45,25 +50,42 @@ function quoteDataToDocument(company, type) {
         document.getElementById('pe-ratio').innerHTML = pe_ratio;
         document.getElementById('avg-total-volume').innerHTML = avg_total_volume;
         
-        console.log(stockData);
+        // fetch historic data for graph, 1 month by default
+
+        var graphData = stockData.chart;
+        var timeLabels = [];
+        var graphDataSet = [];
+
+        graphData.forEach(function(item) {
+            timeLabels.push(item.label) });
+        graphData.forEach(function(item) {
+            graphDataSet.push(item.close) });
+        
+        // create graph with obtained data
 
         var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            
+        var stockChart = new Chart(ctx, {
+
             type: 'line',
             data: {
-                labels: Object.map(stockData.chart.date),
+                labels: timeLabels,
                 datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: Object.map(stockData.chart.close)
-                }],
+                    label: company_name,
+                    backgroundColor: 'rgb(83, 207, 85',
+                    borderColor: 'rgb(83, 207, 85)',
+                    data: graphDataSet
+                }]
             },
 
-            // Configuration options go here
+            // Configuration options go here, empty at this time
             options: {}
         });
+
+        // fetch news data from selected stock
+
+        var newsData = stockData.news;
+        console.log(newsData);
+
 
     });
 }

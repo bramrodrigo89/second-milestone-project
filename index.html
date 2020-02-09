@@ -14,14 +14,15 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.9/dc.css" integrity="sha256-+wbciTNbHmdFmPIAE7BvN0EVjCie/AgvFiAHFJW3uQ4=" crossorigin="anonymous" />
+    <link rel='stylesheet' type="text/css" href="assets/css/styles.css"/>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+    <script src="assets/js/jquery.webticker.min.js"></script>
 
 	<script defer type="text/javascript" src="assets/js/main.js"></script>
-    <script defer type="text/javascript" src="assets/js/my-charts.js"></script>
 
 	<!-- Title + Favicon -->
 
@@ -30,15 +31,29 @@
 </head>
 
 <body>
-
-	<h1 class="text-center">My eStock Dashboard</h1>
-
+<h1 class="text-center">My eStock Dashboard</h1>
+<div class="container">
+	<div class="tickercontainer">
+		<div class="mask">
+			<ul id="WebTicker">
+				<li class="ticker-spacer"></li>
+				<li>Article 1</li>
+				<li>Article 2</li>
+                <li>Article 3</li>
+                <li>Article 4</li>
+                <li>Article 5</li>
+				<li class="last">Latest News - Today's Date here</li>
+			</ul>
+			<span class="tickeroverlay-left">&nbsp;</span>
+			<span class="tickeroverlay-right">&nbsp;</span>
+		</div>
+	</div>
 	<div class="row">
-		<div class='col-12 col-md-6'>
+		<div class='col-12 col-md-6 p-3'>
 			<div class="container">
 				<h2><span id="company-name">Name</span> (<span id='company-symbol'>Symbol</span>)</h2>
 				<h3><span id='last-price'></span> US$</h3>
-                <a href="https://iexcloud.io">IEX Cloud</a>
+				<a href="https://iexcloud.io">IEX Cloud</a>
 				<p>Price change: <span id="price-change"></span> US$ - Price Change Percent:
 					<span id="price-change-percent"></span> %</p>
 				<p>Last trade time: <span id='latest-time'>Date</span> <span id="last-trade-time">Time</span></p>
@@ -58,32 +73,34 @@
 						<td><span id="avg-total-volume"></span></td>
 					</tr>
 				</table>
-				<button onclick="quoteDataToDocument('XOM', 'quote,chart,news')">XOM</button>
-				<button onclick="quoteDataToDocument('BAC', 'quote,chart,news')">BAC</button>
-				<button onclick="quoteDataToDocument('UBER', 'quote,chart,news')">UBER</button>
+				<button onclick="stockDataToDocument('XOM', 'quote,chart,news')">XOM</button>
+				<button onclick="stockDataToDocument('BAC', 'quote,chart,news')">BAC</button>
+				<button onclick="stockDataToDocument('UBER', 'quote,chart,news')">UBER</button>
 			</div>
 		</div>
-		<div class='col-12 col-md-6'>
-            <canvas id="myChart"></canvas>
-            
+		<div class='col-12 col-md-6 p-3'>
+			<canvas id="myChart"></canvas>
+
 		</div>
 
 	</div>
+</div>
 
 
 
-    <footer>
-    <p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>
-    </footer>
+
+<footer>
+	<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>
+</footer>
 
 
 
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-	</script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-	</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
 </body>
 
 </html>
