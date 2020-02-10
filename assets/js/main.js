@@ -5,12 +5,14 @@ $('#WebTicker').webTicker();
 function getStockData(company, type, cb) { 
     
     const sandboxAPI = 'https://sandbox.iexapis.com/'
+    const realAPI = 'https://cloud.iexapis.com/'
     const version = 'stable/stock/'
-    const tokenURL= 'token=Tsk_22c4304dbda24a059f9e35d3f3ee96c9'
+    const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
+    const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 
     
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=15&'+tokenURL); 
+    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=5&'+testToken); 
     xhr.send(); 
 
     xhr.onreadystatechange = function () {
@@ -42,7 +44,7 @@ function stockDataToDocument(company, type) {
         document.getElementById('company-symbol').innerHTML = company_symbol;
         document.getElementById('last-price').innerHTML = latest_price;
         document.getElementById('price-change').innerHTML = price_change;
-        document.getElementById('price-change-percent').innerHTML = price_change_percent;
+        document.getElementById('price-change-percent').innerHTML = price_change_percent.toFixed(2);
         document.getElementById('latest-time').innerHTML = latest_time;
         document.getElementById('last-trade-time').innerHTML = last_trade_time;
         document.getElementById('previous-close').innerHTML = previous_close;
@@ -84,8 +86,22 @@ function stockDataToDocument(company, type) {
         // fetch news data from selected stock
 
         var newsData = stockData.news;
-        console.log(newsData);
+        var news_ticker = document.getElementById('WebTicker')
 
+        var articleItems = [];
 
+        newsData.forEach(function(item) {
+            var articleDateTime = new Date(item.datetime).toLocaleString();
+            var articleHeadline = item.headline;
+            var articleSource = item.source;
+            var articleURL = item.url;
+
+            articleItems.push(`<li><strong>${articleDateTime}</strong> ${articleSource}: <a href='${articleURL}' target='_blank'>${articleHeadline}</a></li>\n`)
+        })
+        articleItems.unshift(`<li class="ticker-spacer">Latest News</li>\n`);
+        articleItems.push(`<li class="last">Today's Date here</li>\n`);
+        console.log(articleItems);
+        news_ticker.append(articleItems);
+        
     });
 }

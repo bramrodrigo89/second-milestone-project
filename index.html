@@ -20,7 +20,7 @@
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
-    <script src="assets/js/jquery.webticker.min.js"></script>
+    <script src="assets/js/node_modules/webticker/jquery.webticker.min.js"></script>
 
 	<script defer type="text/javascript" src="assets/js/main.js"></script>
 
@@ -36,13 +36,7 @@
 	<div class="tickercontainer">
 		<div class="mask">
 			<ul id="WebTicker">
-				<li class="ticker-spacer"></li>
-				<li>Article 1</li>
-				<li>Article 2</li>
-                <li>Article 3</li>
-                <li>Article 4</li>
-                <li>Article 5</li>
-				<li class="last">Latest News - Today's Date here</li>
+				
 			</ul>
 			<span class="tickeroverlay-left">&nbsp;</span>
 			<span class="tickeroverlay-right">&nbsp;</span>
@@ -77,6 +71,9 @@
 				<button onclick="stockDataToDocument('BAC', 'quote,chart,news')">BAC</button>
 				<button onclick="stockDataToDocument('UBER', 'quote,chart,news')">UBER</button>
 			</div>
+            Latest news: 
+            <ul id="test-list">
+            </ul>
 		</div>
 		<div class='col-12 col-md-6 p-3'>
 			<canvas id="myChart"></canvas>
