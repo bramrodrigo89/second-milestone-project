@@ -4,3 +4,9 @@ body {
     
     background-color: #1d1d1d;
 }
+
+/* taken from JQuery Marquee documentation */
+
+.marquee {
+  overflow: hidden;
+}
