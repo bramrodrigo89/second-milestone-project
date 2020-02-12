@@ -17,6 +17,8 @@ function getStockData(company, type, cb) {
     };
 }
 
+// fetch news data from selected stock
+
 function newsArticlesHTML(news) {
     if (news.length == 0) {
         return `<div>Currently no news listed</div>`
@@ -32,6 +34,8 @@ function newsArticlesHTML(news) {
                 ${articleItems.join('\n')}
             </ul>`
 }
+
+ // create graph with obtained data
 
 function createStockChart(data, company) {
     var graphData = data.chart;
@@ -63,66 +67,61 @@ function createStockChart(data, company) {
 
 }
 
-function updateStockChart(time) {
+// fetch quote data for summary table
 
+function quoteDataVariables(data) {
+
+    var quoteData = data.quote;
+    var latest_price = quoteData.latestPrice.toFixed(2);
+    var price_change = quoteData.change.toFixed(2);
+    var price_change_percent = quoteData.changePercent * 100;
+    var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
+    var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
+
+    $('#company-name').html(quoteData.companyName);
+    $('#company-symbol').html(quoteData.symbol);
+    $('#last-price').html(latest_price);    
+    $('#price-change').html(price_change);
+
+    if (price_change > 0) {
+        $('.green-or-red').addClass('text-success');
+        $('#plus-or-minus').html('+');
+    } else if (price_change < 0) { 
+        $('.green-or-red').addClass('text-danger');
+        $('#plus-or-minus').html('');
+    } else if (!price_change) {
+        $('.green-or-red').addClass('text-secondary');
+        $('#plus-or-minus').html('0.00');
+    }
+
+    $('#price-change-percent').html(price_change_percent.toFixed(2));
+    $('#latest-time').html(quoteData.latestTime);
+    $('#last-trade-time').html(quoteData.lastTradeTime);
+    $('#previous-close').html(quoteData.previousClose.toFixed(2));
+    $('#market-cap').html(market_cap);
+    $('#pe-ratio').html(quoteData.peRatio);
+    $('#avg-total-volume').html(avg_total_volume);
 }
 
 function stockDataToDocument(company, type) {
 
     getStockData(company, type, function(stockData){
         
-        // fetch quote data for summary table
-
-        var quoteData = stockData.quote;
-
-        $('#company-name').html(quoteData.companyName);
-        $('#company-symbol').html(quoteData.symbol);
-        
-        var latest_price= quoteData.latestPrice.toFixed(2);
-        $('#last-price').html(latest_price);
-        
-        var price_change = quoteData.change.toFixed(2);
-        $('#price-change').html(price_change);
-
-        var price_change_percent = quoteData.changePercent*100;
-        $('#price-change-percent').html(price_change_percent.toFixed(2));
-
-        $('#latest-time').html(quoteData.latestTime);
-        $('#last-trade-time').html(quoteData.lastTradeTime);
-        $('#previous-close').html(quoteData.previousClose.toFixed(2));
-        
-        var market_cap= (quoteData.marketCap/Math.pow(10, 9)).toFixed(2);
-        $('#market-cap').html(market_cap);
-
-        $('#pe-ratio').html(quoteData.peRatio);
-
-        var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
-        $('#avg-total-volume').html(avg_total_volume);
-        
-        // create graph with obtained data
-        
+        quoteDataVariables(stockData);
         createStockChart(stockData, company);
-
-        // fetch news data from selected stock
-
         $('#news-ticker').html(newsArticlesHTML(stockData.news));
-
         $('.update-chart-button').click(function(){
             var range = this.innerText.toLowerCase();
-
-            var updateXHR = new XMLHttpRequest();
-            updateXHR.open("GET", sandboxAPI+version+company+'/batch?types=chart&range='+range+'&'+testToken); 
-            updateXHR.send(); 
-            updateXHR.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var updatedChartData = JSON.parse(this.responseText);
+            $.when(
+                $.getJSON(`${sandboxAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
+            ).then(
+                function (firstResponse) {
+                    var updatedChartData = firstResponse;
                     createStockChart(updatedChartData, company);
                 }
-            };
-            
-        });
-
+            )
+        })
     });
-}
+};
 
 $(document).ready(stockDataToDocument('AAPL', 'quote,chart,news'));

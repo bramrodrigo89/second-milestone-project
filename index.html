@@ -17,10 +17,10 @@
 		integrity="sha256-+wbciTNbHmdFmPIAE7BvN0EVjCie/AgvFiAHFJW3uQ4=" crossorigin="anonymous" />
 	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-	</script>
-	<!-- Charts.JS CDN for charts -->
+    <!-- JQuery CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+    <!-- Charts.JS CDN for charts -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
 		integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
 
@@ -44,11 +44,9 @@
 					<button onclick="stockDataToDocument('BAC', 'quote,chart,news')">BAC</button>
 					<button onclick="stockDataToDocument('UBER', 'quote,chart,news')">UBER</button>
                     
-					<h2><span id="company-name">Name</span> (<span id='company-symbol'>Symbol</span>)</h2>
-					<h3><span id='last-price'></span> US$</h3>
+					<h2><span id="company-name">Name</span> ( <span id='company-symbol'>Symbol</span> )</h2>
+					<h3 display-4><span id='last-price'></span> US$ <small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small></h3>
 					<a href="https://iexcloud.io">IEX Cloud</a>
-					<p>Price change: <span id="price-change"></span> US$ - Price Change Percent:
-						<span id="price-change-percent"></span> %</p>
 					<p>Last trade time: <span id='latest-time'>Date</span> <span id="last-trade-time">Time</span></p>
 				</div>
 				<div class="container">
@@ -70,12 +68,12 @@
 				</div>
 			</div>
 			<div class='col-12 col-md-6 p-3'>
-                <button class='update-chart-button' onclick="updateStockChart('1d')">1D</button>
-				<button class='update-chart-button' onclick="updateStockChart('5d')">5D</button>
-				<button class='update-chart-button' onclick="updateStockChart('1m')">1M</button>
-                <button class='update-chart-button' onclick="updateStockChart('1y')">1Y</button>
-                <button class='update-chart-button' onclick="updateStockChart('5y')">5Y</button>
-                <button class='update-chart-button' onclick="updateStockChart('max')">Max</button>
+                <button type="button" class='btn btn-info update-chart-button'>1D</button>
+				<button type="button" class='btn btn-info update-chart-button'>5D</button>
+				<button type="button" class='btn btn-info update-chart-button'>1M</button>
+                <button type="button" class='btn btn-info update-chart-button'>1Y</button>
+                <button type="button" class='btn btn-info update-chart-button'>5Y</button>
+                <button type="button" class='btn btn-info update-chart-button'>Max</button>
 				<canvas id="stockChart"></canvas>
 
 			</div>
