@@ -68,15 +68,21 @@
 					</table>
 					
 				</div>
-				<div class="ticker-container container">
-                    Latest news:
-			        <div id='news-ticker'></div>
-		        </div>
 			</div>
 			<div class='col-12 col-md-6 p-3'>
-				<canvas id="myChart"></canvas>
+                <button class='update-chart-button' onclick="updateStockChart('1d')">1D</button>
+				<button class='update-chart-button' onclick="updateStockChart('5d')">5D</button>
+				<button class='update-chart-button' onclick="updateStockChart('1m')">1M</button>
+                <button class='update-chart-button' onclick="updateStockChart('1y')">1Y</button>
+                <button class='update-chart-button' onclick="updateStockChart('5y')">5Y</button>
+                <button class='update-chart-button' onclick="updateStockChart('max')">Max</button>
+				<canvas id="stockChart"></canvas>
 
 			</div>
+            <div class="ticker-container container">
+                Latest news:
+			    <div id='news-ticker'></div>
+		    </div>
 
 		</div>
 	</div>
