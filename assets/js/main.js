@@ -1,4 +1,4 @@
-const sandboxAPI = 'https://sandbox.iexapis.com/'
+const testAPI = 'https://sandbox.iexapis.com/'
 const realAPI = 'https://cloud.iexapis.com/'
 const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
@@ -7,7 +7,7 @@ const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 function getStockData(company, type, cb) { 
     
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", sandboxAPI+version+company+'/batch?types='+type+'&range=1m&last=5&'+testToken); 
+    xhr.open("GET", testAPI+version+company+'/batch?types='+type+'&range=1m&last=8&'+testToken); 
     xhr.send(); 
 
     xhr.onreadystatechange = function () {
@@ -21,18 +21,30 @@ function getStockData(company, type, cb) {
 
 function newsArticlesHTML(news) {
     if (news.length == 0) {
-        return `<div>Currently no news listed</div>`
+        
+        return `<p>Currently no news listed</p>`
     }
 
     var articleItems = news.map(function (newsItem) {
 
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
-        return `<li><strong>${articleDateTime}</strong> ${newsItem.source}: <a href='${newsItem.url}' target='_blank'>${newsItem.headline}</a></li>`
+        return  `<div class="col mb-4" >
+                    <div class="card h-100 bg-dark text-white">
+                        <img src="${newsItem.image}" class="card-img-top" alt="Article image">
+                        <div class="card-body">
+                            <h5 class="card-title">${newsItem.source}</h5>
+                            <p class="card-text">${newsItem.headline}</p>
+                            <a href="${newsItem.url}" target='_blank' class="btn btn-primary">Read more</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Published: ${articleDateTime}</small>
+                        </div>
+                    </div>
+                </div>`
     })
-
-    return `<ul>
-                ${articleItems.join('\n')}
-            </ul>`
+    console.log(articleItems);
+    return articleItems.join('\n')
+            
 }
 
  // create graph with obtained data
@@ -55,14 +67,17 @@ function createStockChart(data, company) {
             labels: timeLabels,
             datasets: [{
                 label: company,
-                backgroundColor: 'rgb(83, 207, 85',
+                backgroundColor: 'rgba(83, 207, 85, 0)',
                 borderColor: 'rgb(83, 207, 85)',
                 data: graphDataSet
             }]
         },
 
-        // Configuration options go here, empty at this time
-        options: {}
+        options: {
+            legend: {
+                display: true
+            }
+        }
     })
 
 }
@@ -113,7 +128,7 @@ function stockDataToDocument(company, type) {
         $('.update-chart-button').click(function(){
             var range = this.innerText.toLowerCase();
             $.when(
-                $.getJSON(`${sandboxAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
+                $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
             ).then(
                 function (firstResponse) {
                     var updatedChartData = firstResponse;
