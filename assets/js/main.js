@@ -4,8 +4,9 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 
-function getStockData(company, type, cb) { 
+function getStockData(company, cb) { 
     
+    var type = 'quote,chart,news';
     var xhr = new XMLHttpRequest();
     xhr.open("GET", testAPI+version+company+'/batch?types='+type+'&range=1m&last=8&'+testToken); 
     xhr.send(); 
@@ -28,6 +29,7 @@ function newsArticlesHTML(news) {
     var articleItems = news.map(function (newsItem) {
 
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
+
         return  `<div class="col mb-4" >
                     <div class="card h-100 bg-dark text-white">
                         <img src="${newsItem.image}" class="card-img-top" alt="Article image">
@@ -42,7 +44,7 @@ function newsArticlesHTML(news) {
                     </div>
                 </div>`
     })
-    console.log(articleItems);
+    
     return articleItems.join('\n')
             
 }
@@ -118,9 +120,9 @@ function quoteDataVariables(data) {
     $('#avg-total-volume').html(avg_total_volume);
 }
 
-function stockDataToDocument(company, type) {
+function stockDataToDocument(company) {
 
-    getStockData(company, type, function(stockData){
+    getStockData(company, function(stockData){
         
         quoteDataVariables(stockData);
         createStockChart(stockData, company);

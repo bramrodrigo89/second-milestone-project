@@ -40,6 +40,7 @@
 
 <body>
 	<header>
+    This will be the header
 	</header>
 	<section>
 		<h1 class="text-center">Title here</h1>
@@ -47,7 +48,7 @@
         <!-- Look up any stock input text -->
 
 		<div class="row">
-			<div class=" col-12 px-5 container center-form">
+			<div class=" col-12 px-5 container center-form my-4">
 				<form action="#">
 					<div class="form-row align-items-center">
 						<div class="col-sm-4 my-1">
@@ -60,7 +61,7 @@
                             </div>
 						</div>
 						<div class="col-auto my-1">
-							<button type="submit" class="btn btn-info">Search</button>
+							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
                             <div class="custom-control custom-switch">
@@ -79,9 +80,9 @@
 
 			<div class='col-12 col-md-6 pl-5'>
 				<div class="container">
-					<button onclick="stockDataToDocument('XOM', 'quote,chart,news')">XOM</button>
-					<button onclick="stockDataToDocument('BAC', 'quote,chart,news')">BAC</button>
-					<button onclick="stockDataToDocument('UBER', 'quote,chart,news')">UBER</button>
+					<button onclick="stockDataToDocument('XOM')">XOM</button>
+					<button onclick="stockDataToDocument('BAC')">BAC</button>
+					<button onclick="stockDataToDocument('UBER')">UBER</button>
 
 					<h2><span id="company-name">Name</span> ( <span id='company-symbol'>Symbol</span> )</h2>
 					<h3 display-4><span id='last-price'></span> US$
