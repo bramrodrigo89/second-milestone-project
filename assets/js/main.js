@@ -120,25 +120,47 @@ function quoteDataVariables(data) {
     $('#avg-total-volume').html(avg_total_volume);
 }
 
-function stockDataToDocument(company) {
+function stockDataToDocument(event) {
+    var company = $('#symbolInputText').val();
+    if (!company) {
+        $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+        return;
+    } else (
 
-    getStockData(company, function(stockData){
-        
-        quoteDataVariables(stockData);
-        createStockChart(stockData, company);
-        $('#news-ticker').html(newsArticlesHTML(stockData.news));
-        $('.update-chart-button').click(function(){
-            var range = this.innerText.toLowerCase();
-            $.when(
-                $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
-            ).then(
-                function (firstResponse) {
-                    var updatedChartData = firstResponse;
-                    createStockChart(updatedChartData, company);
-                }
+    $("#search-symbol-button").html(
+        `<button class="btn btn-info" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>`)
+    )
+
+    $.when(
+        $.getJSON(`${testAPI}${version}${company}/batch?types=quote,chart,news&range=1m&last=8&${testToken}`)
+    ).then(
+        function(response) {
+            $("#message-error").html('')
+            $('#search-symbol-button').html(
+                `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+                Search
+                </button>`
             )
-        })
-    });
-};
+            var stockData = response;
+            quoteDataVariables(stockData);
+            createStockChart(stockData, company);
+            $('#news-ticker').html(newsArticlesHTML(stockData.news));
+            $('.update-chart-button').click(function(){
+                var range = this.innerText.toLowerCase();
+                $.when(
+                    $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
+                ).then(
+                    function (firstResponse) {
+                        var updatedChartData = firstResponse;
+                        createStockChart(updatedChartData, company);
+                    }
+                )
+            })
+        }
+    )
+}
 
-$(document).ready(stockDataToDocument('AAPL', 'quote,chart,news'));
+$(document).ready(stockDataToDocument('AAPL'));

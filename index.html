@@ -61,7 +61,7 @@
                             </div>
 						</div>
 						<div class="col-auto my-1">
-							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+							<button type="submit" id='search-symbol-button' class="btn btn-info" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
                             <div class="custom-control custom-switch">
@@ -75,14 +75,11 @@
 			</div>
 		</div>
         <div class="row">
-            
+            <div class="col-12" id='loading-symbol'></div>
             <!-- Quote Stock Data display -->
 
 			<div class='col-12 col-md-6 pl-5'>
 				<div class="container">
-					<button onclick="stockDataToDocument('XOM')">XOM</button>
-					<button onclick="stockDataToDocument('BAC')">BAC</button>
-					<button onclick="stockDataToDocument('UBER')">UBER</button>
 
 					<h2><span id="company-name">Name</span> ( <span id='company-symbol'>Symbol</span> )</h2>
 					<h3 display-4><span id='last-price'></span> US$
