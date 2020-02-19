@@ -60,8 +60,8 @@
 								<input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
                             </div>
 						</div>
-						<div class="col-auto my-1">
-							<button type="submit" id='search-symbol-button' class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+						<div class="col-auto my-1" id='search-symbol-button'>
+							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
                             <div class="custom-control custom-switch">
@@ -86,7 +86,7 @@
 						<small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
 					</h3>
 					<a href="https://iexcloud.io">IEX Cloud</a>
-					<p>Last trade time: <span id='latest-time'>Date</span> <span id="last-trade-time">Time</span>
+					<p>Last trade time: <span id='latest-time'></span>
 					</p>
 				</div>
 				<div class="container">

@@ -94,6 +94,7 @@ function quoteDataVariables(data) {
     var price_change_percent = quoteData.changePercent * 100;
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
+    var latest_time = new Date(quoteData.latestTime).toLocaleString("en-US").toString();
 
     $('#company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
@@ -112,8 +113,7 @@ function quoteDataVariables(data) {
     }
 
     $('#price-change-percent').html(price_change_percent.toFixed(2));
-    $('#latest-time').html(quoteData.latestTime);
-    $('#last-trade-time').html(quoteData.lastTradeTime);
+    $('#latest-time').html(latest_time);
     $('#previous-close').html(quoteData.previousClose.toFixed(2));
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
@@ -122,6 +122,7 @@ function quoteDataVariables(data) {
 
 function stockDataToDocument(event) {
     var company = $('#symbolInputText').val();
+    
     if (!company) {
         $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
         return;
@@ -141,7 +142,7 @@ function stockDataToDocument(event) {
             $("#message-error").html('')
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
-                Search
+                    Search
                 </button>`
             )
             var stockData = response;
@@ -163,4 +164,7 @@ function stockDataToDocument(event) {
     )
 }
 
-$(document).ready(stockDataToDocument('AAPL'));
+$(document).ready(function() {
+    $('#symbolInputText').html('aapl')
+    stockDataToDocument();
+})
