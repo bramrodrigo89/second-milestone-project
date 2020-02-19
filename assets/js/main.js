@@ -181,4 +181,8 @@ function stockDataToDocument(event) {
     )
 }
 
-$(document).ready(function() {})
+$(document).ready(function() {
+    $('#symbolInputText').val('aapl');
+    stockDataToDocument();
+    $('#symbolInputText').val('');
+})
