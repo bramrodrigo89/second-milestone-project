@@ -14,16 +14,12 @@
     <!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	
-    <!-- Bootstrap Toggle CDN -->
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script defer src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     
     <!-- My Stylesheet -->
 	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
 
 	<!-- JQuery CDN -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
 	<!-- Charts.JS CDN for charts -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
@@ -64,10 +60,10 @@
 							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="testAPISwitch">
-                                <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
-                            </div>
+							<div class="custom-control custom-switch">
+								<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+							</div>
 							<div class="form-check"></div>
 						</div>
 					</div>
@@ -75,10 +71,12 @@
 			</div>
 		</div>
         <div class="row">
-            <div class="col-12" id='loading-symbol'></div>
+            <div class="col-12 px-5" id='loading-symbol'></div>
+            <div class="col-12 px-5" id='message-error'></div>
+
             <!-- Quote Stock Data display -->
 
-			<div class='col-12 col-md-6 pl-5'>
+			<div class='col-12 px-4 col-md-6 pl-lg-5'>
 				<div class="container">
 
 					<h2><span id="company-name">Name</span> ( <span id='company-symbol'>Symbol</span> )</h2>
@@ -86,7 +84,7 @@
 						<small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
 					</h3>
 					<a href="https://iexcloud.io">IEX Cloud</a>
-					<p>Last trade time: <span id='latest-time'></span>
+					<p>Last trade time: <span id='latest-time'></span> from <span id='latest-source'></span>
 					</p>
 				</div>
 				<div class="container">
@@ -107,16 +105,21 @@
 
 				</div>
 			</div>
+
+             <!-- Chart with historic data -->
+
 			<div class='col-12 col-md-6 pr-5'>
-				<div class="d-flex justify-content-around px-5">
-					<button type="button" class='btn btn-info update-chart-button'>1D</button>
-					<button type="button" class='btn btn-info update-chart-button'>5D</button>
-					<button type="button" class='btn btn-info update-chart-button'>1M</button>
-					<button type="button" class='btn btn-info update-chart-button'>1Y</button>
-					<button type="button" class='btn btn-info update-chart-button'>5Y</button>
-					<button type="button" class='btn btn-info update-chart-button'>Max</button>
-				</div>
-				<canvas id="stockChart"></canvas>
+                <div class="container">
+                    <div class="d-flex justify-content-around px-5">
+                        <button type="button" class='btn btn-info update-chart-button'>1D</button>
+                        <button type="button" class='btn btn-info update-chart-button'>5D</button>
+                        <button type="button" class='btn btn-info update-chart-button'>1M</button>
+                        <button type="button" class='btn btn-info update-chart-button'>1Y</button>
+                        <button type="button" class='btn btn-info update-chart-button'>5Y</button>
+                        <button type="button" class='btn btn-info update-chart-button'>Max</button>
+                    </div>
+                    <canvas id="stockChart"></canvas>
+                </div>
 			</div>
 		</div>
 		<div class="ticker-container container">

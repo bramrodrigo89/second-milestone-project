@@ -4,6 +4,7 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 
+
 function getStockData(company, cb) { 
     
     var type = 'quote,chart,news';
@@ -89,12 +90,13 @@ function createStockChart(data, company) {
 function quoteDataVariables(data) {
 
     var quoteData = data.quote;
+    console.log(quoteData);
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
     var price_change_percent = quoteData.changePercent * 100;
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
-    var latest_time = new Date(quoteData.latestTime).toLocaleString("en-US").toString();
+    var latest_time = quoteData.latestTime.toLocaleString();
 
     $('#company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
@@ -114,6 +116,7 @@ function quoteDataVariables(data) {
 
     $('#price-change-percent').html(price_change_percent.toFixed(2));
     $('#latest-time').html(latest_time);
+    $('#latest-source').html(quoteData.latestSource);
     $('#previous-close').html(quoteData.previousClose.toFixed(2));
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
@@ -122,7 +125,14 @@ function quoteDataVariables(data) {
 
 function stockDataToDocument(event) {
     var company = $('#symbolInputText').val();
-    
+
+    if ($('#testAPISwitch').is(':checked')) {
+        var baseURL = testAPI;
+        var keyToken = testToken
+    } else {
+        var baseURL = realAPI;
+        var keyToken = realToken}
+
     if (!company) {
         $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
         return;
@@ -136,7 +146,7 @@ function stockDataToDocument(event) {
     )
 
     $.when(
-        $.getJSON(`${testAPI}${version}${company}/batch?types=quote,chart,news&range=1m&last=8&${testToken}`)
+        $.getJSON(`${baseURL}${version}${company}/batch?types=quote,chart,news&range=1m&last=8&${keyToken}`)
     ).then(
         function(response) {
             $("#message-error").html('')
@@ -160,11 +170,15 @@ function stockDataToDocument(event) {
                     }
                 )
             })
+        }, function(errorResponse) {
+            $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+            $('#search-symbol-button').html(
+                `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+                    Search
+                </button>`
+            )
         }
     )
 }
 
-$(document).ready(function() {
-    $('#symbolInputText').html('aapl')
-    stockDataToDocument();
-})
+$(document).ready(function() {})
