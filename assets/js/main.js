@@ -97,6 +97,7 @@ function quoteDataVariables(data) {
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
+    var USMarketOpen = quoteData.isUSMarketOpen;
 
     $('#company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);

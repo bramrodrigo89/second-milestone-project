@@ -76,9 +76,8 @@
 
             <!-- Quote Stock Data display -->
 
-			<div class='col-12 px-4 col-md-6 pl-lg-5'>
+			<div class='col-12 col-md-6 px-4 my-2'>
 				<div class="container">
-
 					<h2><span id="company-name">Name</span> ( <span id='company-symbol'>Symbol</span> )</h2>
 					<h3 display-4><span id='last-price'></span> US$
 						<small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
@@ -87,40 +86,55 @@
 					<p>Last trade time: <span id='latest-time'></span> from <span id='latest-source'></span>
 					</p>
 				</div>
-				<div class="container">
-					<table class="table table-striped table-dark">
-						<tr>
-							<th scope="row">Previous close</th>
-							<td> <span id='previous-close'></span> US$</td>
-							<th scope="row">Market Cap</th>
-							<td><span id="market-cap"></span>B</td>
-						</tr>
-						<tr>
-							<th scope="row">Price-to-Earnings Ratio</th>
-							<td> <span id='pe-ratio'></span> </td>
-							<th scope="row">Avg. Volume Total</th>
-							<td><span id="avg-total-volume"></span></td>
-						</tr>
-					</table>
-
-				</div>
 			</div>
 
              <!-- Chart with historic data -->
 
-			<div class='col-12 col-md-6 pr-lg-5'>
+			<div class='col-12 col-md-6 px-4 my-2'>
                 <div class="container">
                     <div class="d-flex justify-content-around px-5">
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>1D</button>
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>5D</button>
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>1M</button>
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>1Y</button>
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>5Y</button>
-                        <button type="button" class='btn mx-2 btn-info update-chart-button'>Max</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1D</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>5D</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1M</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1Y</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>5Y</button>
+                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>Max</button>
                     </div>
                     <canvas id="stockChart"></canvas>
                 </div>
 			</div>
+
+            <div class="col-12 px-4 my-3">
+            	<div class="container">
+					<table class="table table-sm table-striped table-dark">
+						<tr>
+							<th scope="row">Previous close</th>
+							<td><span id='previous-close'></span> US$</td>
+                            <th scope="row">Open</th>
+							<td><span></span></td>
+						</tr>
+						<tr>
+							<th scope="row">P/E Ratio</th>
+							<td><span id='pe-ratio'></span> </td>
+							<th scope="row">52 Week Range</th>
+							<td><span></span><span></span></td>
+						</tr>
+                        <tr>
+                            <th scope="row">Market Cap</th>
+							<td><span id="market-cap"></span>B</td>
+                            <th scope="row">Label 8</th>
+							<td><span></span></td>
+						</tr>
+						<tr>
+                            <th scope="row">Volume</th>
+							<td><span></span></td>
+                            <th scope="row">Avg. Volume Total</th>
+							<td><span id="avg-total-volume"></span></td>
+						</tr>
+					</table>
+				</div>
+            </div>
+
 		</div>
 		<div class="ticker-container container">
 			Latest news:
