@@ -3,6 +3,7 @@ const realAPI = 'https://cloud.iexapis.com/'
 const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
+var stockChart;
 
 
 function getStockData(company, cb) { 
@@ -63,7 +64,7 @@ function createStockChart(data, company) {
     });
 
     var ctx = document.getElementById('stockChart').getContext('2d');
-    var stockChart = new Chart(ctx, {
+    stockChart = new Chart(ctx, {
 
         type: 'line',
         data: {
@@ -166,6 +167,7 @@ function stockDataToDocument(event) {
                     $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
                 ).then(
                     function (firstResponse) {
+                        stockChart.destroy();
                         var updatedChartData = firstResponse;
                         createStockChart(updatedChartData, company);
                     }
