@@ -4,21 +4,7 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 var stockChart;
-
-
-function getStockData(company, cb) { 
-    
-    var type = 'quote,chart,news';
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", testAPI+version+company+'/batch?types='+type+'&range=1m&last=8&'+testToken); 
-    xhr.send(); 
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) { 
-            cb(JSON.parse(this.responseText)); 
-        }
-    };
-}
+var recentSymbolArray = []
 
 // fetch news data from selected stock
 
@@ -51,7 +37,7 @@ function newsArticlesHTML(news) {
             
 }
 
- // create graph with obtained data
+// create graph with obtained data
 
 function createStockChart(data, company) {
     var graphData = data.chart;
@@ -64,6 +50,7 @@ function createStockChart(data, company) {
     });
 
     var ctx = document.getElementById('stockChart').getContext('2d');
+    
     stockChart = new Chart(ctx, {
 
         type: 'line',
@@ -86,11 +73,12 @@ function createStockChart(data, company) {
 
 }
 
-// fetch quote data for summary table
+// Fetch quote data for summary table
 
 function quoteDataVariables(data) {
 
     var quoteData = data.quote;
+    // uncomment this when necessary 
     console.log(quoteData);
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
@@ -98,7 +86,9 @@ function quoteDataVariables(data) {
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
+    var extended_time = new Date(quoteData.extendedPriceTime).toLocaleTimeString('en-US');
     var USMarketOpen = quoteData.isUSMarketOpen;
+    var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
     $('#company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
@@ -107,23 +97,39 @@ function quoteDataVariables(data) {
 
     if (price_change > 0) {
         $('.green-or-red').addClass('text-success');
+        $('.green-or-red').removeClass('text-danger text-secondary');
         $('#plus-or-minus').html('+');
     } else if (price_change < 0) { 
         $('.green-or-red').addClass('text-danger');
+        $('.green-or-red').removeClass('text-success text-secondary');
         $('#plus-or-minus').html('');
     } else if (!price_change) {
         $('.green-or-red').addClass('text-secondary');
+        $('.green-or-red').removeClass('text-success text-danger');
         $('#plus-or-minus').html('0.00');
     }
 
     $('#price-change-percent').html(price_change_percent.toFixed(2));
-    $('#latest-time').html(latest_time);
-    $('#latest-source').html(quoteData.latestSource);
+    
+    
     $('#previous-close').html(quoteData.previousClose.toFixed(2));
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
+    
+    if (USMarketOpen === true) {
+        console.log('Yes, market is open')
+        $('#latest-time').html(`Last trade time: ${latest_time} from ${quoteData.latestSource}`);
+        $('#latest-source').html('');
+    } else {
+        console.log('Market is closed')
+        $('#latest-time').html(`<i class="fas fa-moon"></i> ${quoteData.latestSource} as of ${latest_time}`);
+        $('#extended-price').html(`<h5>${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h5> <p>Extended price as of ${extended_time}</p?`)
+    }
+
 }
+
+// Main function that combines all previous functions
 
 function stockDataToDocument(event) {
     var company = $('#symbolInputText').val();
@@ -166,13 +172,14 @@ function stockDataToDocument(event) {
                 $.when(
                     $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
                 ).then(
-                    function (firstResponse) {
+                    function (response) {
                         stockChart.destroy();
-                        var updatedChartData = firstResponse;
+                        var updatedChartData = response;
                         createStockChart(updatedChartData, company);
                     }
                 )
-            })
+            });
+
         }, function(errorResponse) {
             $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
             $('#search-symbol-button').html(
@@ -182,6 +189,7 @@ function stockDataToDocument(event) {
             )
         }
     )
+    console.log(recentSymbolArray);
 }
 
 $(document).ready(function() {
