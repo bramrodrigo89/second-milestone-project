@@ -1,3 +1,5 @@
+// define constants and variables 
+
 const testAPI = 'https://sandbox.iexapis.com/'
 const realAPI = 'https://cloud.iexapis.com/'
 const version = 'stable/stock/'
@@ -78,7 +80,6 @@ function createStockChart(data, company) {
 function quoteDataVariables(data) {
 
     var quoteData = data.quote;
-    // uncomment this when necessary 
     console.log(quoteData);
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
@@ -87,13 +88,26 @@ function quoteDataVariables(data) {
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
     var extended_time = new Date(quoteData.extendedPriceTime).toLocaleTimeString('en-US');
-    var USMarketOpen = quoteData.isUSMarketOpen;
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
     $('#company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
     $('#last-price').html(latest_price);    
     $('#price-change').html(price_change);
+    $('#52-week-range').html(`${quoteData.week52Low} - ${quoteData.week52High}`);
+    $('#primary-exchange').html(quoteData.primaryExchange)
+    $('#price-change-percent').html(price_change_percent.toFixed(2));
+    $('#previous-close').html(quoteData.previousClose.toFixed(2));
+    $('#market-cap').html(market_cap);
+    $('#pe-ratio').html(quoteData.peRatio);
+    $('#avg-total-volume').html(avg_total_volume);
+    $('#ytd-change').html(`${quoteData.ytdChange.toFixed(4)*100} %`);
+
+    if (quoteData.open = 'null') {
+        $('#open-price').html(`N/A`);
+    } else {
+        $('#open-price').html(quoteData.open);
+    }
 
     if (price_change > 0) {
         $('.green-or-red').addClass('text-success');
@@ -108,25 +122,23 @@ function quoteDataVariables(data) {
         $('.green-or-red').removeClass('text-success text-danger');
         $('#plus-or-minus').html('0.00');
     }
-
-    $('#price-change-percent').html(price_change_percent.toFixed(2));
     
-    
-    $('#previous-close').html(quoteData.previousClose.toFixed(2));
-    $('#market-cap').html(market_cap);
-    $('#pe-ratio').html(quoteData.peRatio);
-    $('#avg-total-volume').html(avg_total_volume);
-    
-    if (USMarketOpen === true) {
-        console.log('Yes, market is open')
-        $('#latest-time').html(`Last trade time: ${latest_time} from ${quoteData.latestSource}`);
+    if (quoteData.isUSMarketOpen === true) {
+        $('#latest-time').html(`${quoteData.latestSource} as of ${latest_time}`);
         $('#latest-source').html('');
     } else {
-        console.log('Market is closed')
-        $('#latest-time').html(`<i class="fas fa-moon"></i> ${quoteData.latestSource} as of ${latest_time}`);
-        $('#extended-price').html(`<h5>${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h5> <p>Extended price as of ${extended_time}</p?`)
+        $('#latest-time').html(`<i class="fas fa-moon"></i>   <strong>Closed:</strong> Last price as of ${latest_time}`);
+        $('#extended-price').html(`<h5><strong>After hours:</strong> ${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h5> <p class='small'>Extended price as of ${extended_time}</p?`)
     }
 
+}
+
+// Fetch profile data for company summary
+
+function profileData(data) {
+
+    var profileData = data.company;
+    console.log(profileData);
 }
 
 // Main function that combines all previous functions
@@ -154,7 +166,8 @@ function stockDataToDocument(event) {
     )
 
     $.when(
-        $.getJSON(`${baseURL}${version}${company}/batch?types=quote,chart,news&range=1m&last=8&${keyToken}`)
+        $.getJSON(`${baseURL}${version}${company}/batch?types=company,logo,quote,chart,news&range=5d&last=8&${keyToken}`),
+
     ).then(
         function(response) {
             $("#message-error").html('')
@@ -165,6 +178,8 @@ function stockDataToDocument(event) {
             )
             var stockData = response;
             quoteDataVariables(stockData);
+            $('#company-logo').attr('src',response.logo.url);
+            profileData(stockData);
             createStockChart(stockData, company);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
             $('.update-chart-button').click(function(){
@@ -179,7 +194,7 @@ function stockDataToDocument(event) {
                     }
                 )
             });
-
+            
         }, function(errorResponse) {
             $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
             $('#search-symbol-button').html(
@@ -189,7 +204,8 @@ function stockDataToDocument(event) {
             )
         }
     )
-    console.log(recentSymbolArray);
+    // uncomment this when needed 
+    // console.log(recentSymbolArray);
 }
 
 $(document).ready(function() {

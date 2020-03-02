@@ -1,12 +1,18 @@
 
-body {
-    color: #c3c3c3;
-    
-    background-color: #1d1d1d;
+/* Eliminates gaps on the right side of rendered html page */
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
 }
 
-/* taken from JQuery Marquee documentation */
+/* Dark mode (this will be interactive later) */
 
-.marquee {
-  overflow: hidden;
+body {
+    color: #c3c3c3;   
+    background-color: #1d1d1d;
 }
