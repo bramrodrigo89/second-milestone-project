@@ -87,7 +87,7 @@ function quoteDataVariables(data) {
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
-    var extended_time = new Date(quoteData.extendedPriceTime).toLocaleTimeString('en-US');
+    
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
     $('#company-name').html(quoteData.companyName);
@@ -126,11 +126,15 @@ function quoteDataVariables(data) {
     if (quoteData.isUSMarketOpen === true) {
         $('#latest-time').html(`${quoteData.latestSource} as of ${latest_time}`);
         $('#latest-source').html('');
-    } else {
+    } else if (quoteData.isUSMarketOpen === false) {
         $('#latest-time').html(`<i class="fas fa-moon"></i>   <strong>Closed:</strong> Last price as of ${latest_time}`);
-        $('#extended-price').html(`<h5><strong>After hours:</strong> ${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h5> <p class='small'>Extended price as of ${extended_time}</p?`)
+        if (quoteData.extendedPrice = !'null') {
+            var extended_time = new Date(quoteData.extendedPriceTime).toLocaleTimeString('en-US');
+            $('#extended-price').html(`<h6><strong>After hours:</strong> ${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h6> <p class='small'>Extended price as of ${extended_time}</p?`);
+        } else if (quoteData.extendedPrice = 'null') {
+            $('#extended-price').html('<h6><strong>After hours:</strong> N/A</h6>');
+        }
     }
-
 }
 
 // Fetch profile data for company summary
