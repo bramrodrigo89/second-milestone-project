@@ -101,7 +101,7 @@ function quoteDataVariables(data) {
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
-    $('#ytd-change').html(`${quoteData.ytdChange.toFixed(4)*100} %`);
+    $('#ytd-change').html(quoteData.ytdChange.toFixed(4)*100+' %');
 
     if (quoteData.open = 'null') {
         $('#open-price').html(`N/A`);
@@ -168,6 +168,7 @@ function stockDataToDocument(event) {
             Loading...
         </button>`)
     )
+    $('#search-stock-information').addClass('d-none');
 
     $.when(
         $.getJSON(`${baseURL}${version}${company}/batch?types=company,logo,quote,chart,news&range=5d&last=8&${keyToken}`),
@@ -175,6 +176,7 @@ function stockDataToDocument(event) {
     ).then(
         function(response) {
             $("#message-error").html('')
+            $('#search-stock-information').removeClass('d-none');
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
                     Search

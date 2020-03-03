@@ -41,41 +41,45 @@
 	<header>
     This will be the header
 	</header>
-	<section>
+	
 		<h1 class="text-center">Title here</h1>
 
         <!-- Look up any stock input text -->
 
-		<div class="row">
-			<div class=" col-12 px-5 container center-form my-4">
-				<form action="#">
-					<div class="form-row align-items-center">
-						<div class="col-sm-4 my-1">
-							<label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">Symbol</div>
-								</div>
-								<input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
+        <section>
+            <div class="row">
+                <div class=" col-12 px-5 container center-form my-4">
+                    <form>
+                        <div class="form-row align-items-center">
+                            <div class="col-sm-4 my-1">
+                                <label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Symbol</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
+                                </div>
                             </div>
-						</div>
-						<div class="col-auto my-1" id='search-symbol-button'>
-							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
-						</div>
-						<div class="col-auto ml-auto my-2">
-							<div class="custom-control custom-switch">
-								<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
-								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
-							</div>
-							<div class="form-check"></div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-        <div class="row">
-            <div class="col-12 px-5" id='loading-symbol'></div>
-            <div class="col-12 px-5" id='message-error'></div>
+                            <div class="col-auto my-1" id='search-symbol-button'>
+                                <button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+                            </div>
+                            <div class="col-auto ml-auto my-2">
+                                <div class="custom-control custom-switch">
+                                    <input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+                                    <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+                                </div>
+                                <div class="form-check"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id='loading-symbol'></div>
+            <div id='message-error'></div>
+        </section>
+       
+        <section>
+        <div class="row" id="search-stock-information">
 
             <!-- Quote Stock Data display -->
 
@@ -117,6 +121,8 @@
                 </div>
 			</div>
 
+            <!-- Table with important data -->
+
             <div class="col-12 px-4 my-3">
             	<div class="container">
 					<table class="table table-sm table-striped table-dark">
@@ -147,13 +153,13 @@
 					</table>
 				</div>
             </div>
-
-		</div>
-		<div class="ticker-container container">
-			Latest news:
-			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id='news-ticker'>
+            <div class="ticker-container container">
+			    <p>Latest news on this company:</p>
+			    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id='news-ticker'>
 			</div>
 		</div>
+        </div>
+		
 	</section>
 
 
