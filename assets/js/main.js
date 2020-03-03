@@ -80,7 +80,6 @@ function createStockChart(data, company) {
 function quoteDataVariables(data) {
 
     var quoteData = data.quote;
-    console.log(quoteData);
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
     var price_change_percent = quoteData.changePercent * 100;
@@ -143,6 +142,7 @@ function profileData(data) {
 
     var profileData = data.company;
     console.log(profileData);
+    $('#profile-description').html(profileData.description);
 }
 
 // Main function that combines all previous functions
@@ -168,6 +168,12 @@ function stockDataToDocument(event) {
             Loading...
         </button>`)
     )
+    $('#loading-symbol').html(`
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-info m-5" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>`);
     $('#search-stock-information').addClass('d-none');
 
     $.when(
@@ -175,7 +181,8 @@ function stockDataToDocument(event) {
 
     ).then(
         function(response) {
-            $("#message-error").html('')
+            $("#message-error").html('');
+            $('#loading-symbol').html('');
             $('#search-stock-information').removeClass('d-none');
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
