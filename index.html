@@ -39,107 +39,115 @@
 
 <body>
 	<header>
-    This will be the header
+		<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+			<a class="navbar-brand" href="#">Stock Dashboard</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+			<div class="collapse navbar-collapse" id="navbarToggler">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link 1</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link 2</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 	</header>
-	
-		<h1 class="text-center">Title here</h1>
 
         <!-- Look up any stock input text -->
 
-        <section>
-            <div class="row">
-                <div class=" col-12 px-5 container center-form my-4">
-                    <form>
-                        <div class="form-row align-items-center">
-                            <div class="col-sm-4 my-1">
-                                <label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Symbol</div>
-                                    </div>
-                                    <input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
-                                </div>
-                            </div>
-                            <div class="col-auto my-1" id='search-symbol-button'>
-                                <button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
-                            </div>
-                            <div class="col-auto ml-auto my-2">
-                                <div class="custom-control custom-switch">
-                                    <input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
-                                    <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
-                                </div>
-                                <div class="form-check"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id='loading-symbol'></div>
-            <div id='message-error'></div>
-        </section>
+	<section>
+		<div class="row">
+			<div class=" col-12 px-5 container center-form my-4">
+				<form>
+					<div class="form-row align-items-center">
+						<div class="col-sm-4 my-1">
+							<label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Symbol</div>
+								</div>
+								<input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
+	                                </div>
+							</div>
+							<div class="col-auto my-1" id='search-symbol-button'>
+								<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+							</div>
+							<div class="col-auto ml-auto my-2">
+								<div class="custom-control custom-switch">
+									<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+									<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+								</div>
+								<div class="form-check"></div>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+		<div id='loading-symbol'></div>
+		<div id='message-error'></div>
+	</section>
        
-        <section>
-        <div class="row" id="search-stock-information">
-
-            <!-- Quote Stock Data display -->
-
+	<section>
+		<div class="row" id="search-stock-information">
+	
+			<!-- Quote Stock Data display -->
+	
 			<div class='col-12 col-md-6 px-4 my-2'>
 				<div class="container">
-                        <div class="jumbotron p-4 bg-dark">
-                        <div class="media">
-                            <div class="media-body">
-                                <h2 class="display-5"><span id="company-name">Name</span> (<span id='company-symbol'>Symbol</span>)</h2>
-                                <p class="lead"><span id='last-price'></span> US$
-                                    <small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
-                                </p>
-                            </div>
-                            <img id='company-logo' src="#" class=" img-thumbnail mx-2 border-0 bg-light" style='max-width: height 100px' alt="company logo">
-                        </div>
-                        
-                        <hr class="my-3 bg-secondary">
-                        <p>Powered by <a class="text-info" href="https://iexcloud.io">IEX Cloud</a></p>
-                        <p><span id='latest-time'></span></p>
-                        <div id="extended-price"></div>
-				    </div>
-                </div>
-                
+					<div class="jumbotron p-4 bg-dark">
+						<div class="media">
+							<div class="media-body">
+								<h2 class="display-5"><span id="company-name">Name</span>
+									(<span id='company-symbol'>Symbol</span>)</h2>
+								<p class="lead"><span id='last-price'></span> US$
+									<small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
+								</p>
+							</div>
+							<img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: height 100px; overflow: hidden;' alt="company logo">
+	                    </div>
+	
+						<hr class="my-3 bg-secondary">
+						<p>Powered by <a class="text-info" href="https://iexcloud.io">IEX Cloud</a></p>
+						<p><span id='latest-time'></span></p>
+						<div id="extended-price"></div>
+					</div>
+				</div>
 			</div>
-
-            <!-- Chart with historic data -->
-
+	
+			<!-- Chart with historic data -->
+	
 			<div class='col-12 col-md-6 px-4 my-2'>
-                <div class="container">
-                    <div class="d-flex justify-content-around px-5 mb-2">
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1D</button>
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>5D</button>
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1M</button>
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>1Y</button>
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>5Y</button>
-                        <button type="button" class='btn btn-sm mx-2 btn-info update-chart-button'>Max</button>
-                    </div>
-                    <canvas id="stockChart"></canvas>
-                </div>
+				<div class="container">
+					<div class="d-flex flex-wrap justify-content-around mb-2">
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1D</button>
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>5D</button>
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1M</button>
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1Y</button>
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>5Y</button>
+						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>Max</button>
+					</div>
+					<div class="chart-container" style="position: relative; height:50vh">
+						<canvas id="stockChart"></canvas>
+					</div>
+				</div>
 			</div>
-            <!-- Company profile information -->
-
-            <hr class="my-3 bg-secondary">
-            <div class='col-12 col-md-8 px-4 my-2'>
-                <div class="container">
-                    <h4>Profile Information</h4>
-                    <p id="profile-description" class="text-justify text-small"></p>
-                </div>
-            </div>
-            <div class='col-12 col-md-4 px-4 my-2'>Other stuff</div>
-            
-            <!-- Table with important data -->
-
-            <div class="col-12 px-4 my-3">
-            	<div class="container">
+	
+				<!-- Table with important data -->
+	
+			<div class="col-12 px-4 my-3">
+				<div class="container">
 					<table class="table table-sm table-striped table-dark">
 						<tr>
 							<th scope="row">Previous close</th>
 							<td><span id='previous-close'></span> US$</td>
-                            <th scope="row">Open</th>
+							<th scope="row">Open</th>
 							<td><span id='open-price'></span></td>
 						</tr>
 						<tr>
@@ -148,34 +156,60 @@
 							<th scope="row">52 Week Range</th>
 							<td><span id='52-week-range'></span></td>
 						</tr>
-                        <tr>
-                            <th scope="row">Market Cap</th>
+						<tr>
+							<th scope="row">Market Cap</th>
 							<td><span id="market-cap"></span> B</td>
-                            <th scope="row">Exchange</th>
+							<th scope="row">Exchange</th>
 							<td><span id='primary-exchange'></span></td>
 						</tr>
 						<tr>
-                            <th scope="row">YTD Change</th>
+							<th scope="row">YTD Change</th>
 							<td><span id='ytd-change'></span></td>
-                            <th scope="row">Avg. Volume Total</th>
+							<th scope="row">Avg. Volume Total</th>
 							<td><span id="avg-total-volume"></span></td>
 						</tr>
 					</table>
 				</div>
-            </div>
-            <div class="container ticker-container">
-                <div class="container">
-                    <p>Latest news on this company:</p>
-			        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id='news-ticker'>
-                </div>
+			</div>
+	
+			<!-- Company profile information -->
+	
+			<div class="col-12 px-5">
+					<button type="button" class="btn btn-secondary btn-block btn-md-inline m-2" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about this company</button>
+			</div>
+			<div class='col-12 collapse' id="collapseProfileInformation">
+				<div class="row">
+					<div class='col-12 col-md-8 px-4 my-2'>
+						<div class="container">
+							<hr class="mb-3 bg-light">
+							<h4>Profile</h4>
+							<p id="profile-description" class="text-justify text-small"></p>
+						</div>
+					</div>
+					<div class='col-12 col-md-4 px-4 my-2'>
+						<div class="container">
+							<hr class="mb-3 bg-light">
+							<h5>Other stuff</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<!-- News related to this company -->
+	
+			<div class="col-12 px-5">
+				<button type="button" class="btn btn-secondary btn-block btn-md-inline m-2" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Check the latest news about this company</button>
+			</div>
+			<div class="container ticker-container collapse" id="collapseLatestNews">
+				<div class="container">
+					<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id='news-ticker'>
+					</div>
+				</div>
 			</div>
 		</div>
-        </div>
-		
 	</section>
 
-
-
+    <!-- Footer -->
 
 	<footer>
 		<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>

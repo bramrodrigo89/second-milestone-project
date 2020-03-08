@@ -68,8 +68,9 @@ function createStockChart(data, company) {
 
         options: {
             legend: {
-                display: true
-            }
+                display: true,
+            },
+            maintainAspectRatio: false
         }
     })
 
@@ -83,9 +84,10 @@ function quoteDataVariables(data) {
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
     var price_change_percent = quoteData.changePercent * 100;
-    var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
+    var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(1);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
+    var ytd_change = quoteData.ytdChange*100;
     
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
@@ -100,7 +102,7 @@ function quoteDataVariables(data) {
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
-    $('#ytd-change').html(quoteData.ytdChange.toFixed(4)*100+' %');
+    $('#ytd-change').html(ytd_change.toFixed(2)+' %');
 
     if (quoteData.open = 'null') {
         $('#open-price').html(`N/A`);
@@ -159,6 +161,7 @@ function stockDataToDocument(event) {
 
     if (!company) {
         $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+        $("#loading-symbol").html('');
         return;
     } else (
 
@@ -210,6 +213,7 @@ function stockDataToDocument(event) {
             
         }, function(errorResponse) {
             $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+            $("#loading-symbol").html('');
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
                     Search
