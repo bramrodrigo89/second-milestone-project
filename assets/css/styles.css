@@ -16,8 +16,15 @@ body {
     color: #c3c3c3;   
     background-color: #1d1d1d;
     padding-top: 60px;
+    font-size: 0.8rem;
 }
 
 .text-small {
     font-size: 0.8rem;
+}
+
+#read-latest-news-button, #read-company-profile-button {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
 }

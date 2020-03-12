@@ -11,9 +11,10 @@ var recentSymbolArray = []
 // fetch news data from selected stock
 
 function newsArticlesHTML(news) {
+
     if (news.length == 0) {
         
-        return `<p>Currently no news listed</p>`
+        return `<p>Currently no recent news listed for this company!</p>`
     }
 
     var articleItems = news.map(function (newsItem) {
@@ -21,7 +22,7 @@ function newsArticlesHTML(news) {
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
 
         return  `<div class="col mb-4" >
-                    <div class="card h-100 bg-dark text-white">
+                    <div class="card bg-dark text-white">
                         <img src="${newsItem.image}" class="card-img-top" alt="Article image">
                         <div class="card-body">
                             <h5 class="card-title">${newsItem.source}</h5>
@@ -162,9 +163,12 @@ function stockDataToDocument(event) {
     if (!company) {
         $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
         $("#loading-symbol").html('');
-        return;
+        $('#search-symbol-button').html(
+            `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+                Search
+            </button>`
+        )
     } else (
-
     $("#search-symbol-button").html(
         `<button class="btn btn-info" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -198,10 +202,11 @@ function stockDataToDocument(event) {
             profileData(stockData);
             createStockChart(stockData, company);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
+            
             $('.update-chart-button').click(function(){
                 var range = this.innerText.toLowerCase();
                 $.when(
-                    $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
+                    $.getJSON(`${baseURL}${version}${company}/batch?types=chart&range=${range}&${keyToken}`)
                 ).then(
                     function (response) {
                         stockChart.destroy();

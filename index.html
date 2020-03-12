@@ -12,11 +12,13 @@
 	<!-- LINKS -->
 
     <!-- Bootstrap CDN -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     
     <!--Font awesome CDN -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!--Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300|Questrial&display=swap" rel="stylesheet">
     
     <!-- My Stylesheet -->
 	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
@@ -25,21 +27,22 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
 	<!-- Charts.JS CDN for charts -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
-		integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
 
-	<!-- Main JavaScript file -->
-	<script defer type="text/javascript" src="assets/js/main.js"></script>
+	<!-- Stock Watch JavaScript file -->
+	<script defer type="text/javascript" src="assets/js/stockWatch.js"></script>
 
 	<!-- Title + Favicon -->
-
 	<title>My eStock Dashboard</title>
 
 </head>
 
 <body>
+
+    <!--Header, Navbar -->
+
 	<header>
-		<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+		<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-secondary">
 			<a class="navbar-brand" href="#">Stock Dashboard</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 	            <span class="navbar-toggler-icon"></span>
@@ -60,7 +63,7 @@
 		</nav>
 	</header>
 
-        <!-- Look up any stock input text -->
+    <!-- Look up any stock input text -->
 
 	<section>
 		<div class="row">
@@ -95,7 +98,7 @@
 	</section>
        
 	<section>
-		<div class="row" id="search-stock-information">
+		<div class="row d-none" id="search-stock-information">
 	
 			<!-- Quote Stock Data display -->
 	
@@ -175,36 +178,35 @@
 			<!-- Company profile information -->
 	
 			<div class="col-12 px-5">
-					<button type="button" class="btn btn-secondary btn-block btn-md-inline m-2" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about this company</button>
+					<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about this company</button>
 			</div>
 			<div class='col-12 collapse' id="collapseProfileInformation">
-				<div class="row">
-					<div class='col-12 col-md-8 px-4 my-2'>
-						<div class="container">
-							<hr class="mb-3 bg-light">
-							<h4>Profile</h4>
-							<p id="profile-description" class="text-justify text-small"></p>
-						</div>
-					</div>
-					<div class='col-12 col-md-4 px-4 my-2'>
-						<div class="container">
-							<hr class="mb-3 bg-light">
-							<h5>Other stuff</h5>
-						</div>
-					</div>
+                <div class="container">
+                    <div class="row">
+                        <div class='col-12 col-md-8 px-4 my-2'>
+                            <hr class="mb-3 bg-light">
+                            <h4>Profile</h4>
+                            <p id="profile-description" class="text-justify text-small"></p>
+                        </div>
+                        <div class='col-12 col-md-4 px-4 my-2'>
+                            <hr class="mb-3 bg-light">
+                            <h5>Other stuff</h5>
+                        </div>
+                    </div>
 				</div>
 			</div>
 	
 			<!-- News related to this company -->
 	
 			<div class="col-12 px-5">
-				<button type="button" class="btn btn-secondary btn-block btn-md-inline m-2" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Check the latest news about this company</button>
+				<button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about this company</button>
 			</div>
-			<div class="container ticker-container collapse" id="collapseLatestNews">
-				<div class="container">
-					<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id='news-ticker'>
-					</div>
-				</div>
+			<div class="col-12 px-5">
+                <div class="container ticker-container collapse my-4" id="collapseLatestNews">
+                    
+                    <div class="card-columns" id='news-ticker'></div>
+                    
+                </div>
 			</div>
 		</div>
 	</section>
@@ -215,14 +217,11 @@
 		<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>
 	</footer>
 
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-	</script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-	</script>
 </body>
 
 </html>
