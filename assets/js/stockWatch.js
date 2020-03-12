@@ -11,9 +11,10 @@ var recentSymbolArray = []
 // fetch news data from selected stock
 
 function newsArticlesHTML(news) {
+
     if (news.length == 0) {
         
-        return `<p>Currently no news listed</p>`
+        return `<p>Currently no recent news listed for this company!</p>`
     }
 
     var articleItems = news.map(function (newsItem) {
@@ -21,7 +22,7 @@ function newsArticlesHTML(news) {
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
 
         return  `<div class="col mb-4" >
-                    <div class="card h-100 bg-dark text-white">
+                    <div class="card bg-dark text-white">
                         <img src="${newsItem.image}" class="card-img-top" alt="Article image">
                         <div class="card-body">
                             <h5 class="card-title">${newsItem.source}</h5>
@@ -68,8 +69,9 @@ function createStockChart(data, company) {
 
         options: {
             legend: {
-                display: true
-            }
+                display: true,
+            },
+            maintainAspectRatio: false
         }
     })
 
@@ -83,9 +85,10 @@ function quoteDataVariables(data) {
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = quoteData.change.toFixed(2);
     var price_change_percent = quoteData.changePercent * 100;
-    var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(2);
+    var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(1);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
+    var ytd_change = quoteData.ytdChange*100;
     
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
@@ -100,7 +103,7 @@ function quoteDataVariables(data) {
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
-    $('#ytd-change').html(quoteData.ytdChange.toFixed(4)*100+' %');
+    $('#ytd-change').html(ytd_change.toFixed(2)+' %');
 
     if (quoteData.open = 'null') {
         $('#open-price').html(`N/A`);
@@ -159,9 +162,13 @@ function stockDataToDocument(event) {
 
     if (!company) {
         $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
-        return;
+        $("#loading-symbol").html('');
+        $('#search-symbol-button').html(
+            `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+                Search
+            </button>`
+        )
     } else (
-
     $("#search-symbol-button").html(
         `<button class="btn btn-info" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -195,10 +202,11 @@ function stockDataToDocument(event) {
             profileData(stockData);
             createStockChart(stockData, company);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
+            
             $('.update-chart-button').click(function(){
                 var range = this.innerText.toLowerCase();
                 $.when(
-                    $.getJSON(`${testAPI}${version}${company}/batch?types=chart&range=${range}&${testToken}`)
+                    $.getJSON(`${baseURL}${version}${company}/batch?types=chart&range=${range}&${keyToken}`)
                 ).then(
                     function (response) {
                         stockChart.destroy();
@@ -210,6 +218,7 @@ function stockDataToDocument(event) {
             
         }, function(errorResponse) {
             $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+            $("#loading-symbol").html('');
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
                     Search
@@ -217,8 +226,6 @@ function stockDataToDocument(event) {
             )
         }
     )
-    // uncomment this when needed 
-    // console.log(recentSymbolArray);
 }
 
 $(document).ready(function() {
