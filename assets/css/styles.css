@@ -16,15 +16,24 @@ body {
     color: #c3c3c3;   
     background-color: #1d1d1d;
     padding-top: 60px;
-    font-size: 0.8rem;
+    font-size: 1.0rem;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 300;
 }
+
+/* Text sytlings */
 
 .text-small {
     font-size: 0.8rem;
 }
-
-#read-latest-news-button, #read-company-profile-button {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 50px;
+.text-bold {
+    font-weight: 700;
 }
+.text-questrial {
+    font-family: 'Questrial', sans-serif;
+}
+.medium-text {
+    font-size: 1.5rem;
+}
+
+/* Watch List */

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!--Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Assistant:300|Questrial&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,700|Questrial:700&display=swap" rel="stylesheet">
     
     <!-- My Stylesheet -->
 	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
@@ -29,8 +29,9 @@
 	<!-- Charts.JS CDN for charts -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
 
-	<!-- Stock Watch JavaScript file -->
+	<!-- Own JavaScript files -->
 	<script defer type="text/javascript" src="assets/js/stockWatch.js"></script>
+    <script defer type="text/javascript" src="assets/js/watchList.js"></script>
 
 	<!-- Title + Favicon -->
 	<title>My eStock Dashboard</title>
@@ -43,7 +44,7 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-secondary">
-			<a class="navbar-brand" href="#">Stock Dashboard</a>
+			<a class="navbar-brand text-questrial" href="#">Stock Dashboard</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 	            <span class="navbar-toggler-icon"></span>
 	        </button>
@@ -104,18 +105,18 @@
 	
 			<div class='col-12 col-md-6 px-4 my-2'>
 				<div class="container">
+                    <p class="text-right">Add to my <a href=""><strong class="medium-text text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star text-warning medium-text"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
 							<div class="media-body">
-								<h2 class="display-5"><span id="company-name">Name</span>
-									(<span id='company-symbol'>Symbol</span>)</h2>
-								<p class="lead"><span id='last-price'></span> US$
-									<small class="green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
+								<h2 class="display-5 text-questrial text-bold"><span class="company-name">Name</span>
+									(<span class="text-questrial text-bold" id='company-symbol'>Symbol</span>)</h2>
+								<p class="lead display-5 text-questrial"><span id='last-price'></span> US$
+									<small class="d-block green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
 								</p>
 							</div>
 							<img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: height 100px; overflow: hidden;' alt="company logo">
 	                    </div>
-	
 						<hr class="my-3 bg-secondary">
 						<p>Powered by <a class="text-info" href="https://iexcloud.io">IEX Cloud</a></p>
 						<p><span id='latest-time'></span></p>
@@ -146,7 +147,7 @@
 	
 			<div class="col-12 px-4 my-3">
 				<div class="container">
-					<table class="table table-sm table-striped table-dark">
+					<table class="table table-sm table-responsive-sm table-striped table-dark">
 						<tr>
 							<th scope="row">Previous close</th>
 							<td><span id='previous-close'></span> US$</td>
@@ -178,7 +179,7 @@
 			<!-- Company profile information -->
 	
 			<div class="col-12 px-5">
-					<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about this company</button>
+					<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
 			</div>
 			<div class='col-12 collapse' id="collapseProfileInformation">
                 <div class="container">
@@ -199,7 +200,7 @@
 			<!-- News related to this company -->
 	
 			<div class="col-12 px-5">
-				<button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about this company</button>
+				<button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about <span class="company-name">this company</span></button>
 			</div>
 			<div class="col-12 px-5">
                 <div class="container ticker-container collapse my-4" id="collapseLatestNews">
@@ -216,6 +217,28 @@
 	<footer>
 		<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>
 	</footer>
+
+    <!-- Modal for error message -->
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Error</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     

@@ -6,7 +6,6 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 var stockChart;
-var recentSymbolArray = []
 
 // fetch news data from selected stock
 
@@ -92,7 +91,7 @@ function quoteDataVariables(data) {
     
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
-    $('#company-name').html(quoteData.companyName);
+    $('.company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
     $('#last-price').html(latest_price);    
     $('#price-change').html(price_change);
@@ -161,13 +160,15 @@ function stockDataToDocument(event) {
         var keyToken = realToken}
 
     if (!company) {
-        $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+        $('#search-stock-information').addClass('d-none');
         $("#loading-symbol").html('');
         $('#search-symbol-button').html(
             `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
                 Search
             </button>`
         )
+        $('#exampleModal').modal('show');
+        return
     } else (
     $("#search-symbol-button").html(
         `<button class="btn btn-info" type="button" disabled>
@@ -217,13 +218,14 @@ function stockDataToDocument(event) {
             });
             
         }, function(errorResponse) {
-            $("#message-error").html(`<h4>Please enter a valid symbol</h4>`);
+            $('#search-stock-information').addClass('d-none');
             $("#loading-symbol").html('');
             $('#search-symbol-button').html(
                 `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
                     Search
                 </button>`
             )
+            $('#exampleModal').modal('show');
         }
     )
 }
@@ -232,4 +234,4 @@ $(document).ready(function() {
     $('#symbolInputText').val('aapl');
     stockDataToDocument();
     $('#symbolInputText').val('');
-})
+});
