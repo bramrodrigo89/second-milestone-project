@@ -36,4 +36,9 @@ body {
     font-size: 1.5rem;
 }
 
+.chart-container {
+    position: relative;
+    height:45vh;
+}
+
 /* Watch List */

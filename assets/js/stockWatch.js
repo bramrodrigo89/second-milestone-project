@@ -68,7 +68,7 @@ function createStockChart(data, company) {
 
         options: {
             legend: {
-                display: true,
+                display: false,
             },
             maintainAspectRatio: false
         }
@@ -145,6 +145,41 @@ function profileData(data) {
     var profileData = data.company;
     console.log(profileData);
     $('#profile-description').html(profileData.description);
+    $('#contact-information').html(`
+        <table class="table table-sm table-responsive-sm table-dark mb-0">
+            <tbody>
+                <tr>
+                    <th scope="row">Company</th>
+                    <td>${profileData.companyName}</td>
+                </tr>
+                <tr> 
+                    <th scope="row">Website</th>
+                    <td>${profileData.website}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Address</th>
+                    <td>${profileData.address}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Address 2</th>
+                    <td>${profileData.address2}</td>
+                </tr>
+                <tr>
+                    <th scope="row">City</th>
+                    <td>${profileData.city}</td>
+                    <th scope="row">Zip</th>
+                    <td>${profileData.zip}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Country</th>
+                    <td>${profileData.country}</td>
+                    <th scope="row">Phone</th>
+                    <td>${profileData.phone}</td>
+                </tr>
+            </tbody>
+        </table>
+    `);
+    $('#industry-information').html('');
 }
 
 // Main function that combines all previous functions

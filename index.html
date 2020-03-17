@@ -137,7 +137,7 @@
 						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>5Y</button>
 						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>Max</button>
 					</div>
-					<div class="chart-container" style="position: relative; height:50vh">
+					<div class="chart-container">
 						<canvas id="stockChart"></canvas>
 					</div>
 				</div>
@@ -179,7 +179,7 @@
 			<!-- Company profile information -->
 	
 			<div class="col-12 px-5">
-					<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
+				<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
 			</div>
 			<div class='col-12 collapse' id="collapseProfileInformation">
                 <div class="container">
@@ -188,10 +188,12 @@
                             <hr class="mb-3 bg-light">
                             <h4>Profile</h4>
                             <p id="profile-description" class="text-justify text-small"></p>
+                            <div id='industry-information'></div>
                         </div>
                         <div class='col-12 col-md-4 px-4 my-2'>
                             <hr class="mb-3 bg-light">
-                            <h5>Other stuff</h5>
+                            <h5>Contact Information</h5>
+                            <div id='contact-information'></div>
                         </div>
                     </div>
 				</div>
