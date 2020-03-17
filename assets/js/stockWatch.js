@@ -146,7 +146,7 @@ function profileData(data) {
     console.log(profileData);
     $('#profile-description').html(profileData.description);
     $('#contact-information').html(`
-        <table class="table table-sm table-responsive-sm table-dark mb-0">
+        <table class="table table-sm table-dark mb-0">
             <tbody>
                 <tr>
                     <th scope="row">Company</th>
@@ -154,7 +154,7 @@ function profileData(data) {
                 </tr>
                 <tr> 
                     <th scope="row">Website</th>
-                    <td>${profileData.website}</td>
+                    <td><a href='${profileData.website}'>Company Website</a></td>
                 </tr>
                 <tr>
                     <th scope="row">Address</th>
@@ -167,12 +167,16 @@ function profileData(data) {
                 <tr>
                     <th scope="row">City</th>
                     <td>${profileData.city}</td>
+                </tr>
+                <tr>
                     <th scope="row">Zip</th>
                     <td>${profileData.zip}</td>
                 </tr>
                 <tr>
                     <th scope="row">Country</th>
                     <td>${profileData.country}</td>
+                </tr>
+                <tr>
                     <th scope="row">Phone</th>
                     <td>${profileData.phone}</td>
                 </tr>
