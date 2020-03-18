@@ -15,7 +15,7 @@ html,body
 body {
     color: #c3c3c3;   
     background-color: #1d1d1d;
-    padding-top: 60px;
+    padding-top: 80px;
     font-size: 0.8rem;
     font-family: 'Assistant', sans-serif;
     font-weight: 300;
@@ -48,10 +48,36 @@ body {
 .badge {
     font-size: 100%;
     padding: .5em .5em;
-
 }
 
 th {
     font-size: 0.9rem;
 }
+
+/* Stock Chart*/
+
+/* Navbar */
+
+.navbar-brand-logo {
+    background: url("../images/logo/white_logo_transparent_symbol.png");
+    background-size: contain;        
+    background-repeat: no-repeat;
+    height: 60px;
+    max-width: 70px;
+    }
+.navbar-brand span {
+    height: 60px;
+    max-width: 100px;
+    margin-left: 10px;
+}
 /* Watch List */
+
+/*-----------------------------------------Media Queries */
+
+/*-----------Tablet (md) */
+
+@media(min-width: 768px) {
+    .navbar-brand-logo {
+        background: url("/assets/images/logo/white_logo_transparent_long.png");
+    }
+}

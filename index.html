@@ -34,7 +34,8 @@
     <script defer type="text/javascript" src="assets/js/watchList.js"></script>
 
 	<!-- Title + Favicon -->
-	<title>My eStock Dashboard</title>
+    <link rel="icon" type="image/png" href="assets/images/logo/favicon/msd-favicon-32x32.png" />
+	<title>My Stock Dashboard</title>
 
 </head>
 
@@ -44,20 +45,24 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-secondary">
-			<a class="navbar-brand text-questrial" href="#">Stock Dashboard</a>
+			<a class="navbar-brand text-questrial" href="index.html">
+                <img class="d-inline align-top d-md-none" src="assets/images/logo/white_logo_transparent_symbol.png" height="60px" alt="My Stock Dashboard Logo">
+                <img class="align-top d-none d-md-inline" src="assets/images/logo/white_logo_transparent_background_long.png" height="60px" alt="My Stock Dashboard Logo">
+                <span class="d-inline-block d-md-none text-wrap">My Stock Dashboard</span>
+            </a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 	            <span class="navbar-toggler-icon"></span>
 	        </button>
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="index.html">Stock Quote<span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Link 1</a>
+						<a class="nav-link" href="watch-list.html">My Watch List</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Link 2</a>
+						<a class="nav-link" href="cryptocurrencies.html">Cryptocurrencies</a>
 					</li>
 				</ul>
 			</div>
@@ -71,26 +76,26 @@
 			<div class=" col-12 px-5 container center-form my-4">
 				<form>
 					<div class="form-row align-items-center">
-						<div class="col-sm-4 my-1">
+						<div class="col-12 col-md-6 my-1">
 							<label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<div class="input-group-text">Symbol</div>
-								</div>
-								<input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
-	                                </div>
-							</div>
-							<div class="col-auto my-1" id='search-symbol-button'>
-								<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
-							</div>
-							<div class="col-auto ml-auto my-2">
-								<div class="custom-control custom-switch">
-									<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
-									<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
-								</div>
-								<div class="form-check"></div>
-							</div>
+								    <div class="input-group-text">Symbol</div>
+							    </div>
+							    <input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
+	                        </div>
 						</div>
+						<div class="col-auto my-1" id='search-symbol-button'>
+							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+						</div>
+						<div class="col-auto ml-auto my-2">
+							<div class="custom-control custom-switch">
+								<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+							</div>
+							<div class="form-check"></div>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -103,9 +108,9 @@
 	
 			<!-- Quote Stock Data display -->
 	
-			<div class='col-12 col-md-6 px-4 my-2'>
+			<div class='col-12 px-4 my-2'>
 				<div class="container">
-                    <p class="text-right">Add to my <a href=""><strong class="text-x-large text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star text-warning text-x-large"></i></a></p>
+                    <p class="text-right">Add to my <a href="watch-list.html"><strong class="text-x-large text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star text-warning text-x-large"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
 							<div class="media-body">
@@ -127,15 +132,15 @@
 	
 			<!-- Chart with historic data -->
 	
-			<div class='col-12 col-md-6 px-4 my-2'>
+			<div class='col-12 px-4 my-2'>
 				<div class="container">
-					<div class="d-flex flex-wrap justify-content-around mb-2">
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1D</button>
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>5D</button>
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1M</button>
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>1Y</button>
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>5Y</button>
-						<button type="button" class='btn btn-sm m-2 btn-info update-chart-button'>Max</button>
+					<div class="text-center">
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1D</button>
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>5D</button>
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1M</button>
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1Y</button>
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>5Y</button>
+						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>Max</button>
 					</div>
 					<div class="chart-container">
 						<canvas id="stockChart"></canvas>
