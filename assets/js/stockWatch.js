@@ -145,7 +145,6 @@ function profileData(data) {
 
     var profileData = data.company;
     var tags = profileData.tags;
-    console.log(profileData);
     $('#profile-description').html(profileData.description);
     $('#contact-information').html(`
         <table class="table table-sm table-dark mb-0">
@@ -188,17 +187,25 @@ function profileData(data) {
     `);
 }
 
-// Check is stock is already in watch list
+// Object constructor for currently displayed stocks
+
+function CurrentStock (sym,company) {
+    this.symbol = sym;
+    this.name = company;
+}
+
+// Check if stock is already in watch list
 
 function isStockWatched(stockList, stock, sym) {
     if (stockList.some(stock => stock.symbol===sym)) {
-        $('#watch-list-star').addClass('fas');
+        return true
     } else {
-        $('#watch-list-star').removeClass('fas')
+        return false
     }
 }
 
-// Main function that combines all previous functions
+// Main function which brings all stock information to the page
+// and combines all previous functions 
 
 function stockDataToDocument(event) {
     var company = $('#symbolInputText').val();
@@ -250,11 +257,10 @@ function stockDataToDocument(event) {
             )
             var stockData = response;
             quoteDataVariables(stockData);
-            $('#company-logo').attr('src',response.logo.url);
+            $('#company-logo').attr('src',stockData.logo.url);
             profileData(stockData);
             createStockChart(stockData, company);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
-            
             $('.update-chart-button').click(function(){
                 var range = this.innerText.toLowerCase();
                 $.when(
@@ -267,6 +273,12 @@ function stockDataToDocument(event) {
                     }
                 )
             });
+            var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
+            if (isStockWatched(watchListArray,displayedStock,$('#company-symbol').html())==true) {
+                $('#watch-list-star').addClass('fas');
+            } else {
+                $('#watch-list-star').removeClass('fas');
+            }
             
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
@@ -281,8 +293,27 @@ function stockDataToDocument(event) {
     )
 }
 
+// Functions called after the document is finished loading
+
 $(document).ready(function() {
     $('#symbolInputText').val('aapl');
     stockDataToDocument();
     $('#symbolInputText').val('');
+});
+
+// Function to add stocks to watch list using the star button
+
+$('#watch-list-star').click(function(){
+    var company_name = $('.company-name').html();
+    var company_symbol = $('#company-symbol').html();
+    var selectedStock = new CurrentStock (company_symbol,company_name);
+    var stockInWatchList = isStockWatched(watchListArray,selectedStock,company_symbol);
+
+    if (stockInWatchList) {
+        $('#watch-list-star').removeClass('fas');
+    } else {
+        $('#watch-list-star').addClass('fas');
+        watchListArray.push(selectedStock);
+        console.log(watchListArray);
+    }
 });
