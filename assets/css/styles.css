@@ -16,15 +16,21 @@ body {
     color: #c3c3c3;   
     background-color: #1d1d1d;
     padding-top: 60px;
-    font-size: 1.0rem;
+    font-size: 0.8rem;
     font-family: 'Assistant', sans-serif;
     font-weight: 300;
 }
 
 /* Text sytlings */
 
-.text-small {
-    font-size: 0.8rem;
+.text-large {
+    font-size: 1.0rem;
+}
+.text-x-large {
+    font-size: 1.5rem;
+}
+.nav-link {
+    font-size: 1.2rem;
 }
 .text-bold {
     font-weight: 700;
@@ -32,13 +38,20 @@ body {
 .text-questrial {
     font-family: 'Questrial', sans-serif;
 }
-.medium-text {
-    font-size: 1.5rem;
-}
+
 
 .chart-container {
     position: relative;
     height:45vh;
 }
 
+.badge {
+    font-size: 100%;
+    padding: .5em .5em;
+
+}
+
+th {
+    font-size: 0.9rem;
+}
 /* Watch List */

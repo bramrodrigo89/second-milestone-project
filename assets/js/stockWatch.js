@@ -6,6 +6,7 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 var stockChart;
+var watchListArray = [];
 
 // fetch news data from selected stock
 
@@ -143,26 +144,23 @@ function quoteDataVariables(data) {
 function profileData(data) {
 
     var profileData = data.company;
+    var tags = profileData.tags;
     console.log(profileData);
     $('#profile-description').html(profileData.description);
     $('#contact-information').html(`
         <table class="table table-sm table-dark mb-0">
             <tbody>
-                <tr>
-                    <th scope="row">Company</th>
-                    <td>${profileData.companyName}</td>
-                </tr>
                 <tr> 
                     <th scope="row">Website</th>
-                    <td><a href='${profileData.website}'>Company Website</a></td>
+                    <td><a target='_blank' href='${profileData.website}'><span class="badge badge-info">${profileData.companyName}</span></a></td>
+                </tr>
+                <tr>
+                    <th scope="row">CEO</th>
+                    <td>${profileData.CEO}</td>
                 </tr>
                 <tr>
                     <th scope="row">Address</th>
                     <td>${profileData.address}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Address 2</th>
-                    <td>${profileData.address2}</td>
                 </tr>
                 <tr>
                     <th scope="row">City</th>
@@ -183,7 +181,21 @@ function profileData(data) {
             </tbody>
         </table>
     `);
-    $('#industry-information').html('');
+    $('#industry-information').html(`
+        <p><span class="font-weight-bold text-large">Tags: </span><a target='_blank' href="http://www.google.com/search?q=%22${tags[0].replace(/\s/g, '+')}%22"><span class="badge badge-info mx-2">${tags[0]}</span></a><a target='_blank' href="http://www.google.com/search?q=%22${tags[1].replace(/\s/g, '+')}%22"><span class="badge badge-info ml-2">${tags[1]}</span></a></p>
+        <p><span class="font-weight-bold text-large">Industry: </span><span class="font-weight-light">${profileData.industry}</span></p>
+        <p><span class="font-weight-bold text-large">Sector: </span><span class="font-weight-light">${profileData.sector}</span></p>
+    `);
+}
+
+// Check is stock is already in watch list
+
+function isStockWatched(stockList, stock, sym) {
+    if (stockList.some(stock => stock.symbol===sym)) {
+        $('#watch-list-star').addClass('fas');
+    } else {
+        $('#watch-list-star').removeClass('fas')
+    }
 }
 
 // Main function that combines all previous functions
