@@ -55,13 +55,13 @@
 	        </button>
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item active">
+					<li class="nav-item text-center active">
 						<a class="nav-link" href="index.html">Stock Quote<span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="watch-list.html">My Watch List</a>
+					<li class="nav-item text-center">
+						<a class="nav-link" href="watch-list.html">My Watch List<span id='watch-list-counter' class="badge badge-light"></span></a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item text-center">
 						<a class="nav-link" href="cryptocurrencies.html">Cryptocurrencies</a>
 					</li>
 				</ul>
@@ -73,7 +73,8 @@
 
 	<section>
 		<div class="row">
-			<div class=" col-12 px-5 container center-form my-4">
+			<div class=" col-12 px-4 center-form my-4">
+                <div class="container">
 				<form>
 					<div class="form-row align-items-center">
 						<div class="col-12 col-md-6 my-1">
@@ -97,6 +98,7 @@
 						</div>
 					</div>
 				</form>
+                </div>
 			</div>
 		</div>
 		<div id='loading-symbol'></div>
@@ -110,7 +112,7 @@
 	
 			<div class='col-12 px-4 my-2'>
 				<div class="container">
-                    <p class="text-right">Add to my <a href="watch-list.html"><strong class="text-x-large text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star text-warning text-x-large"></i></a></p>
+                    <p class="text-right"><span class='text-large' id="text-before-star"></span> <a href="watch-list.html"><strong class="text-x-large text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-x-large"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
 							<div class="media-body">
@@ -135,12 +137,12 @@
 			<div class='col-12 px-4 my-2'>
 				<div class="container">
 					<div class="text-center">
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1D</button>
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>5D</button>
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1M</button>
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>1Y</button>
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>5Y</button>
-						<button type="button" class='btn btn-sm my-2 mx-3 btn-info update-chart-button'>Max</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>1D</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>5D</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>1M</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>1Y</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>5Y</button>
+						<button type="button" class='btn m-2 btn-info update-chart-button'>Max</button>
 					</div>
 					<div class="chart-container">
 						<canvas id="stockChart"></canvas>

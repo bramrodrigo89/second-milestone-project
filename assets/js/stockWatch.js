@@ -27,7 +27,7 @@ function newsArticlesHTML(news) {
                         <div class="card-body">
                             <h5 class="card-title">${newsItem.source}</h5>
                             <p class="card-text">${newsItem.headline}</p>
-                            <a href="${newsItem.url}" target='_blank' class="btn btn-primary">Read more</a>
+                            <a href="${newsItem.url}" target='_blank' class="btn btn-info">Read more</a>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Published: ${articleDateTime}</small>
@@ -181,7 +181,7 @@ function profileData(data) {
         </table>
     `);
     $('#industry-information').html(`
-        <p><span class="font-weight-bold text-large">Tags: </span><a target='_blank' href="http://www.google.com/search?q=%22${tags[0].replace(/\s/g, '+')}%22"><span class="badge badge-info mx-2">${tags[0]}</span></a><a target='_blank' href="http://www.google.com/search?q=%22${tags[1].replace(/\s/g, '+')}%22"><span class="badge badge-info ml-2">${tags[1]}</span></a></p>
+        <p><span class="font-weight-bold text-large">Tags: </span><a target='_blank' href="http://www.google.com/search?q=%22${tags[0].replace(/\s/g, '+')}%22"><span class="badge badge-info m-2">${tags[0]}</span></a><a target='_blank' href="http://www.google.com/search?q=%22${tags[1].replace(/\s/g, '+')}%22"><span class="badge badge-info m-2">${tags[1]}</span></a></p>
         <p><span class="font-weight-bold text-large">Industry: </span><span class="font-weight-light">${profileData.industry}</span></p>
         <p><span class="font-weight-bold text-large">Sector: </span><span class="font-weight-light">${profileData.sector}</span></p>
     `);
@@ -275,8 +275,10 @@ function stockDataToDocument(event) {
             });
             var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
             if (isStockWatched(watchListArray,displayedStock,$('#company-symbol').html())==true) {
+                $('#text-before-star').html('Remove from my ');
                 $('#watch-list-star').addClass('fas');
             } else {
+                $('#text-before-star').html('Add to my ');
                 $('#watch-list-star').removeClass('fas');
             }
             
@@ -310,10 +312,15 @@ $('#watch-list-star').click(function(){
     var stockInWatchList = isStockWatched(watchListArray,selectedStock,company_symbol);
 
     if (stockInWatchList) {
+        $('#text-before-star').html('Add to my ');
         $('#watch-list-star').removeClass('fas');
+        var stockIndex = watchListArray.indexOf(selectedStock);
+        watchListArray.splice(stockIndex,1);
+        $('#watch-list-counter').html(watchListArray.length)
     } else {
+        $('#text-before-star').html('Remove from my ');
         $('#watch-list-star').addClass('fas');
         watchListArray.push(selectedStock);
-        console.log(watchListArray);
+        $('#watch-list-counter').html(watchListArray.length)
     }
 });

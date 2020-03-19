@@ -24,7 +24,7 @@ body {
 /* Text sytlings */
 
 .text-large {
-    font-size: 1.0rem;
+    font-size: 1.1rem;
 }
 .text-x-large {
     font-size: 1.5rem;
@@ -69,6 +69,12 @@ th {
     height: 60px;
     max-width: 100px;
     margin-left: 10px;
+}
+
+.nav-link .badge {
+    line-height: 0.7;
+    font-size: 75%;
+    margin-left: 7px;
 }
 /* Watch List */
 
