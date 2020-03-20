@@ -204,6 +204,14 @@ function isStockWatched(stockList, stock, sym) {
     }
 }
 
+function normalSearchButton() {
+    $("#loading-symbol").html('');
+    $('#search-symbol-button').html(
+        `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+            Search
+        </button>`);
+}
+
 // Main function which brings all stock information to the page
 // and combines all previous functions 
 
@@ -218,13 +226,8 @@ function stockDataToDocument(event) {
         var keyToken = realToken}
 
     if (!company) {
+        normalSearchButton();
         $('#search-stock-information').addClass('d-none');
-        $("#loading-symbol").html('');
-        $('#search-symbol-button').html(
-            `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
-                Search
-            </button>`
-        )
         $('#exampleModal').modal('show');
         return
     } else (
@@ -247,14 +250,8 @@ function stockDataToDocument(event) {
 
     ).then(
         function(response) {
-            $("#message-error").html('');
-            $('#loading-symbol').html('');
+            normalSearchButton();
             $('#search-stock-information').removeClass('d-none');
-            $('#search-symbol-button').html(
-                `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
-                    Search
-                </button>`
-            )
             var stockData = response;
             quoteDataVariables(stockData);
             $('#company-logo').attr('src',stockData.logo.url);
@@ -274,7 +271,8 @@ function stockDataToDocument(event) {
                 )
             });
             var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
-            if (isStockWatched(watchListArray,displayedStock,$('#company-symbol').html())==true) {
+            var company_symbol = $('#company-symbol').html();
+            if (isStockWatched(watchListArray,displayedStock,company_symbol)==true) {
                 $('#text-before-star').html('Remove from my ');
                 $('#watch-list-star').addClass('fas');
             } else {
@@ -317,13 +315,14 @@ $('#watch-list-star').click(function(){
         $('#watch-list-star').removeClass('fas');
         var stockIndex = watchListArray.indexOf(selectedStock);
         watchListArray.splice(stockIndex,1);
-        $('#watch-list-counter').html(watchListArray.length)
+        $('#watch-list-counter').html(watchListArray.length);
         localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
     } else {
         $('#text-before-star').html('Remove from my ');
         $('#watch-list-star').addClass('fas');
         watchListArray.push(selectedStock);
-        $('#watch-list-counter').html(watchListArray.length)
+        $('#watch-list-counter').html(watchListArray.length);
         localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
     }
 });
+
