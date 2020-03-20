@@ -301,6 +301,7 @@ $(document).ready(function() {
     $('#symbolInputText').val('aapl');
     stockDataToDocument();
     $('#symbolInputText').val('');
+    $('#watch-list-counter').html(watchListArray.length);
 });
 
 // Function to add stocks to watch list using the star button
@@ -317,10 +318,12 @@ $('#watch-list-star').click(function(){
         var stockIndex = watchListArray.indexOf(selectedStock);
         watchListArray.splice(stockIndex,1);
         $('#watch-list-counter').html(watchListArray.length)
+        localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
     } else {
         $('#text-before-star').html('Remove from my ');
         $('#watch-list-star').addClass('fas');
         watchListArray.push(selectedStock);
         $('#watch-list-counter').html(watchListArray.length)
+        localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
     }
 });

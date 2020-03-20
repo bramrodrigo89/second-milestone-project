@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<!-- META TAGS -->
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<!-- LINKS -->
+
+    <!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!--Font awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!--Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,700|Questrial:700&display=swap" rel="stylesheet">
+    
+    <!-- My Stylesheet -->
+	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
+
+	<!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+	<!-- Charts.JS CDN for charts -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+
+	<!-- Own JavaScript files -->
+	<script defer type="text/javascript" src="assets/js/stockWatch.js"></script>
+    <script defer type="text/javascript" src="assets/js/watchList.js"></script>
+
+	<!-- Title + Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/logo/favicon/msd-favicon-32x32.png" />
+	<title>My Stock Dashboard</title>
+
+</head>
+
+<body>
+
+    <!--Header, Navbar -->
+
+	<header>
+		<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-secondary">
+			<a class="navbar-brand text-questrial" href="index.html">
+                <img class="d-inline align-top d-md-none" src="assets/images/logo/white_logo_transparent_symbol.png" height="60px" alt="My Stock Dashboard Logo">
+                <img class="align-top d-none d-md-inline" src="assets/images/logo/white_logo_transparent_background_long.png" height="60px" alt="My Stock Dashboard Logo">
+                <span class="d-inline-block d-md-none text-wrap">My Stock Dashboard</span>
+            </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+			<div class="collapse navbar-collapse" id="navbarToggler">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item text-center">
+						<a class="nav-link" href="index.html">Stock Quote<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item text-center">
+						<a class="nav-link" href="watch-list.html">My Watch List<span id='watch-list-counter' class="badge badge-light"></span></a>
+					</li>
+					<li class="nav-item text-center active">
+						<a class="nav-link" href="cryptocurrencies.html">Cryptocurrencies</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+    <!-- My Watch List Display -->
+
+	<section></section>
+       
+
+
+    <!-- Footer -->
+
+	<footer>
+		<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a></p>
+	</footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
