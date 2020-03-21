@@ -216,7 +216,6 @@ function normalSearchButton() {
 // and combines all previous functions 
 
 function stockDataToDocument(event) {
-    debugger;
     var company = $('#symbolInputText').val();
 
     if ($('#testAPISwitch').is(':checked')) {
@@ -300,7 +299,9 @@ $(document).ready(function() {
     $('#symbolInputText').val('aapl');
     stockDataToDocument();
     $('#symbolInputText').val('');
-    $('#watch-list-counter').html(watchListArray.length);
+    if (watchListArray!='null') {
+        $('#watch-list-counter').html(watchListArray.length);
+    }
 });
 
 // Function to add stocks to watch list using the star button
