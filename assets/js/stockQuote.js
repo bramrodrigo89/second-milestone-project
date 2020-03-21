@@ -272,14 +272,15 @@ function stockDataToDocument(event) {
             });
             var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
             var company_symbol = $('#company-symbol').html();
-            if (isStockWatched(watchListArray,displayedStock,company_symbol)==true) {
-                $('#text-before-star').html('Remove from my ');
-                $('#watch-list-star').addClass('fas');
-            } else {
-                $('#text-before-star').html('Add to my ');
-                $('#watch-list-star').removeClass('fas');
-            }
-            
+            if (watchListArray != 'null') {
+                if (isStockWatched(watchListArray,displayedStock,company_symbol)==true) {
+                    $('#text-before-star').html('Remove from my ');
+                    $('#watch-list-star').addClass('fas');
+                } else {
+                    $('#text-before-star').html('Add to my ');
+                    $('#watch-list-star').removeClass('fas');
+                }
+            }   
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
             $("#loading-symbol").html('');
