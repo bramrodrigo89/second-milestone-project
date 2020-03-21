@@ -216,6 +216,7 @@ function normalSearchButton() {
 // and combines all previous functions 
 
 function stockDataToDocument(event) {
+    debugger;
     var company = $('#symbolInputText').val();
 
     if ($('#testAPISwitch').is(':checked')) {
