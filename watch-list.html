@@ -66,12 +66,23 @@
 	</header>
 
     <!-- My Watch List Display -->
-
+    
 	<section>
-    <div class="container">
-        <div id="my-watch-list-table"></div>
-    </div>
-    </section>
+		<div class="row">
+			<div class="col-auto ml-auto my-2">
+				<div class="custom-control custom-switch">
+					<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+					<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+				</div>
+				<div class="form-check"></div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="container">
+				<div id="my-watch-list-table"></div>
+			</div>
+		</div>
+	</section>
        
 
 
@@ -86,7 +97,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <!-- Own JavaScript files -->
-	
+	<script defer type="text/javascript" src="assets/js/stockQuote.js"></script>
     <script defer type="text/javascript" src="assets/js/watchList.js"></script>
 
 </body>
