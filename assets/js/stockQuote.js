@@ -6,7 +6,13 @@ const version = 'stable/stock/'
 const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 var stockChart;
-var watchListArray = [];
+var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"))
+if (cachedWatchList == null) {
+    var watchListArray=[];
+} else {
+    var watchListArray = cachedWatchList;
+}
+
 
 // fetch news data from selected stock
 
@@ -272,15 +278,13 @@ function stockDataToDocument(event) {
             });
             var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
             var company_symbol = $('#company-symbol').html();
-            if (watchListArray != 'null') {
-                if (isStockWatched(watchListArray,displayedStock,company_symbol)==true) {
-                    $('#text-before-star').html('Remove from my ');
-                    $('#watch-list-star').addClass('fas');
-                } else {
-                    $('#text-before-star').html('Add to my ');
-                    $('#watch-list-star').removeClass('fas');
-                }
-            }   
+            if (isStockWatched(watchListArray, displayedStock, company_symbol) == true) {
+                $('#text-before-star').html('Remove from my ');
+                $('#watch-list-star').addClass('fas');
+            } else {
+                $('#text-before-star').html('Add to my ');
+                $('#watch-list-star').removeClass('fas');
+            }
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
             $("#loading-symbol").html('');
@@ -300,9 +304,7 @@ $(document).ready(function() {
     $('#symbolInputText').val('aapl');
     stockDataToDocument();
     $('#symbolInputText').val('');
-    if (watchListArray && watchListArray.length) {
-        $('#watch-list-counter').html(watchListArray.length);
-    }
+    $('#watch-list-counter').html(watchListArray.length);
 });
 
 // Function to add stocks to watch list using the star button
@@ -311,22 +313,14 @@ $('#watch-list-star').click(function(){
     var company_name = $('.company-name').html();
     var company_symbol = $('#company-symbol').html();
     var selectedStock = new CurrentStock (company_symbol,company_name);
-    if (watchListArray && watchListArray.length) {
-        var stockInWatchList = isStockWatched(watchListArray,selectedStock,company_symbol);
-        if (stockInWatchList) {
-            $('#text-before-star').html('Add to my ');
-            $('#watch-list-star').removeClass('fas');
-            var stockIndex = watchListArray.indexOf(selectedStock);
-            watchListArray.splice(stockIndex,1);
-            $('#watch-list-counter').html(watchListArray.length);
-            localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
-        } else {
-            $('#text-before-star').html('Remove from my ');
-            $('#watch-list-star').addClass('fas');
-            watchListArray.push(selectedStock);
-            $('#watch-list-counter').html(watchListArray.length);
-            localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
-        }
+    var stockInWatchList = isStockWatched(watchListArray,selectedStock,company_symbol);
+    if (stockInWatchList) {
+        $('#text-before-star').html('Add to my ');
+        $('#watch-list-star').removeClass('fas');
+        var stockIndex = watchListArray.indexOf(selectedStock);
+        watchListArray.splice(stockIndex, 1);
+        $('#watch-list-counter').html(watchListArray.length);
+        localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
     } else {
         $('#text-before-star').html('Remove from my ');
         $('#watch-list-star').addClass('fas');
