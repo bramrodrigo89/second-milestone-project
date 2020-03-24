@@ -31,10 +31,11 @@ function watchListTableHTML() {
             $.getJSON(`${baseURL}${version}market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
         ).then(
             function(response) {
-                var tableData = response
+                var el = document.getElementById('my-watch-list-table')
+                var tableData =  response
                 for (let elem in tableData) {
                     var stockRow=[]
-                    var stockObject = tableData[elem].toString();
+                    var stockObject = tableData[elem]
                     var companyName = stockObject.quote.companyName
                     var latestPrice = stockObject.quote.latestPrice
                     var change = stockObject.quote.change
@@ -42,23 +43,18 @@ function watchListTableHTML() {
                     stockRow.push(`<th>${companyName}</th><td>${latestPrice}</td><td>${change}</td><td>${changePercent}</td>`);
                     stockRows.push(`<tr>${stockRow}</tr>`);
                 }
+                var rowsHTML = Object.values(stockRows).join(' ');
+
+                el.innerHTML = `<table class="table table-striped table-dark my-4">
+                                    <thead><tr><th>Name</th><th>Latest Price</th><th>Change</th><th>Change Percent</th></tr></thead>
+                                    <tbody>${rowsHTML}</tbody>
+                                </table>`
+            
             }, function(errorResponse) {console.log('Error loading data')}
         );
-        console.log(stockRows);
-        return  `<table class="table table-striped table-dark my-4">
-            <thead>
-                <tr><th>Name</th><th>Latest Price</th><th>Change</th><th>Change Percent</th></tr>
-            </thead>
-            <tbody>
-                ${stockRows}
-            </tbody>
-            </table>`
-        
     } else {
         return `<p>Currently nothing in your Watch List!</p>`
-    }
-   
-    
+    }   
 }
 
 // Functions called after the document is finished loading
