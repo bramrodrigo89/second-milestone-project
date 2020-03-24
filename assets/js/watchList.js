@@ -1,4 +1,5 @@
 // define constants and variables 
+
 var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"))
 if (cachedWatchList == null) {
     var watchListArray=[];
@@ -11,13 +12,14 @@ if (cachedWatchList == null) {
 function watchListTableHTML() {
     var stockRows=[]
     var symbolArray=[]
+    version = 'stable/stock/'
 
     if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = testAPI;
-        var keyToken = testToken
+        var baseURL = 'https://sandbox.iexapis.com/'
+        var keyToken = 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
     } else {
-        var baseURL = realAPI;
-        var keyToken = realToken}
+        var baseURL = 'https://cloud.iexapis.com/'
+        var keyToken = 'token=pk_45af954261be4449955cbefadc328b65'}
 
     if (watchListArray && watchListArray.length) {
         
@@ -36,11 +38,11 @@ function watchListTableHTML() {
                 for (let elem in tableData) {
                     var stockRow=[]
                     var stockObject = tableData[elem]
-                    var companyName = stockObject.quote.companyName
-                    var latestPrice = stockObject.quote.latestPrice
-                    var change = stockObject.quote.change
-                    var changePercent = stockObject.quote.changePercent
-                    stockRow.push(`<th>${companyName}</th><td>${latestPrice}</td><td>${change}</td><td>${changePercent}</td>`);
+                    var companyNameWatchList = stockObject.quote.companyName
+                    var latestPriceWatchList = stockObject.quote.latestPrice
+                    var changeWatchList = stockObject.quote.change
+                    var changePercentWatchList = stockObject.quote.changePercent
+                    stockRow.push(`<th>${companyNameWatchList}</th><td>${latestPriceWatchList}</td><td>${changeWatchList}</td><td>${changePercentWatchList}</td>`);
                     stockRows.push(`<tr>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
