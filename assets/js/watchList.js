@@ -32,27 +32,22 @@ function watchListTableHTML() {
         ).then(
             function(response) {
                 var tableData = response
-                
                 for (let elem in tableData) {
-                    var stockObject = tableData[elem]
+                    var stockRow=[]
+                    var stockObject = tableData[elem].toString();
                     var companyName = stockObject.quote.companyName
                     var latestPrice = stockObject.quote.latestPrice
-                    var stockRow=[]
-
-                    stockRow.push(`<th>${companyName}</th><td>${latestPrice}</td><td>Value 2</td>`);
+                    var change = stockObject.quote.change
+                    var changePercent = stockObject.quote.changePercent
+                    stockRow.push(`<th>${companyName}</th><td>${latestPrice}</td><td>${change}</td><td>${changePercent}</td>`);
                     stockRows.push(`<tr>${stockRow}</tr>`);
-                    
                 }
-
             }, function(errorResponse) {console.log('Error loading data')}
         );
-        
-        var rowsHTML = Object.keys(stockRows)
-        console.log(stockRows)
-        console.log(rowsHTML)
+        console.log(stockRows);
         return  `<table class="table table-striped table-dark my-4">
             <thead>
-                <tr><th>Name</th><th>Latest Price</th><th>Change</th></tr>
+                <tr><th>Name</th><th>Latest Price</th><th>Change</th><th>Change Percent</th></tr>
             </thead>
             <tbody>
                 ${stockRows}
