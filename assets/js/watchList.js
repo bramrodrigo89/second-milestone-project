@@ -42,16 +42,24 @@ function watchListTableHTML() {
                     var latestPriceWatchList = stockObject.quote.latestPrice
                     var changeWatchList = stockObject.quote.change
                     var changePercentWatchList = stockObject.quote.changePercent
-                    stockRow.push(`<th>${companyNameWatchList}</th><td>${latestPriceWatchList}</td><td>${changeWatchList}</td><td>${changePercentWatchList}</td>`);
+                    var textColor=''
+                    var signPlusMinus = ''
+                    if (changeWatchList<0) {
+                        var textColor='bg-danger text-white'
+                        var signPlusMinus=''
+                    } else {
+                        var textColor='bg-success text-white'
+                        var signPlusMinus='+'
+                    }
+                    stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList}%</span></td>`);
                     stockRows.push(`<tr>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
 
                 el.innerHTML = `<table class="table table-striped table-dark my-4">
-                                    <thead><tr><th>Name</th><th>Latest Price</th><th>Change</th><th>Change Percent</th></tr></thead>
+                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th><th class="text-center">Change Percent</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
-            
             }, function(errorResponse) {console.log('Error loading data')}
         );
     } else {
