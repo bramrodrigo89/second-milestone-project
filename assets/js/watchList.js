@@ -1,25 +1,17 @@
 // define constants and variables 
 
-var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"))
-if (cachedWatchList == null) {
-    var watchListArray=[];
-} else {
-    var watchListArray = cachedWatchList;
-}
-
 // create table using data from watch list array
 
 function watchListTableHTML() {
     var stockRows=[]
     var symbolArray=[]
-    version = 'stable/stock/'
 
     if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = 'https://sandbox.iexapis.com/'
-        var keyToken = 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
+        var baseURL = testAPI;
+        var keyToken = testToken
     } else {
-        var baseURL = 'https://cloud.iexapis.com/'
-        var keyToken = 'token=pk_45af954261be4449955cbefadc328b65'}
+        var baseURL = realAPI;
+        var keyToken = realToken}
 
     if (watchListArray && watchListArray.length) {
         
@@ -28,7 +20,6 @@ function watchListTableHTML() {
             symbolArray.push(symbol)
         });
         var URLSymbolArray = symbolArray.join(',').toLowerCase()
-
         $.when(
             $.getJSON(`${baseURL}${version}market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
         ).then(
@@ -52,19 +43,25 @@ function watchListTableHTML() {
                         var signPlusMinus='+'
                     }
                     stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList}%</span></td>`);
-                    stockRows.push(`<tr>${stockRow}</tr>`);
+                    stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
 
-                el.innerHTML = `<table class="table table-striped table-dark my-4">
+                el.innerHTML = `<table class="table table-dark table-hover my-4">
                                     <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th><th class="text-center">Change Percent</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
+                $('.clickable-row').click(function() {
+                    window.location = $(this).data("href");
+                    $('#symbolInputText').val('aapl');
+                    stockDataToDocument();
+                    $('#symbolInputText').val('');
+                });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
     } else {
         return `<p>Currently nothing in your Watch List!</p>`
-    }   
+    }
 }
 
 // Functions called after the document is finished loading

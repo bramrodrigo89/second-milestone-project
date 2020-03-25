@@ -203,7 +203,8 @@ function CurrentStock (sym,company) {
 // Check if stock is already in watch list
 
 function isStockWatched(stockList, stock, sym) {
-    if (stockList.some(stock => stock.symbol===sym)) {
+    var upperCaseSym = sym.toUpperCase();
+    if (stockList.some(stock => stock.symbol===upperCaseSym)) {
         return true
     } else {
         return false
@@ -276,9 +277,9 @@ function stockDataToDocument(event) {
                     }
                 )
             });
-            var displayedStock = new CurrentStock ($('#company-symbol').html(),$('.company-name').html());
-            var company_symbol = $('#company-symbol').html();
-            if (isStockWatched(watchListArray, displayedStock, company_symbol) == true) {
+            var displayedStock = JSON.parse(JSON.stringify(new CurrentStock ($('#company-symbol').html(),$('.company-name').html()))); 
+            
+            if (isStockWatched(watchListArray, displayedStock, company)) {
                 $('#text-before-star').html('Remove from my ');
                 $('#watch-list-star').addClass('fas');
             } else {
@@ -301,9 +302,6 @@ function stockDataToDocument(event) {
 // Functions called after the document is finished loading
 
 $(document).ready(function() {
-    $('#symbolInputText').val('aapl');
-    stockDataToDocument();
-    $('#symbolInputText').val('');
     $('#watch-list-counter').html(watchListArray.length);
 });
 
@@ -312,12 +310,13 @@ $(document).ready(function() {
 $('#watch-list-star').click(function(){
     var company_name = $('.company-name').html();
     var company_symbol = $('#company-symbol').html();
-    var selectedStock = new CurrentStock (company_symbol,company_name);
-    var stockInWatchList = isStockWatched(watchListArray,selectedStock,company_symbol);
+    var companySymbolLowerCase = company_symbol.toLowerCase();
+    var selectedStock = JSON.parse(JSON.stringify(new CurrentStock (company_symbol,company_name)));
+    var stockInWatchList = isStockWatched(watchListArray,selectedStock,companySymbolLowerCase);
     if (stockInWatchList) {
         $('#text-before-star').html('Add to my ');
         $('#watch-list-star').removeClass('fas');
-        var stockIndex = watchListArray.indexOf(selectedStock);
+        var stockIndex = watchListArray.findIndex(obj => obj.symbol === company_symbol && obj.name === company_name)
         watchListArray.splice(stockIndex, 1);
         $('#watch-list-counter').html(watchListArray.length);
         localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
