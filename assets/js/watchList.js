@@ -26,6 +26,7 @@ function watchListTableHTML() {
             function(response) {
                 var el = document.getElementById('my-watch-list-table')
                 var tableData =  response
+                var priceChangesArray = []
                 for (let elem in tableData) {
                     var stockRow=[]
                     var stockObject = tableData[elem]
@@ -42,6 +43,7 @@ function watchListTableHTML() {
                         var textColor='bg-success text-white'
                         var signPlusMinus='+'
                     }
+                    priceChangesArray.push(changeWatchList);
                     stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList}%</span></td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
@@ -51,11 +53,19 @@ function watchListTableHTML() {
                                     <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th><th class="text-center">Change Percent</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
+                // Calculate average of price changes from WatchList
+                var total = 0;
+                for(var i = 0; i < priceChangesArray.length; i++) {
+                    total += priceChangesArray[i];
+                }
+                var averagePriceChanges = total / priceChangesArray.length;
+                console.log(averagePriceChanges);
+               
                 $('.clickable-row').click(function() {
+                    stockDataToDocument('aapl');
                     window.location = $(this).data("href");
-                    $('#symbolInputText').val('aapl');
-                    stockDataToDocument();
-                    $('#symbolInputText').val('');
+                    
+                    stockDataToDocument('aapl');
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );

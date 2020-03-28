@@ -222,9 +222,12 @@ function normalSearchButton() {
 // Main function which brings all stock information to the page
 // and combines all previous functions 
 
-function stockDataToDocument(event) {
-    var company = $('#symbolInputText').val();
+function stockDataToDocument(entry) {
 
+    if (entry === undefined || entry == null) 
+    {var company = $('#symbolInputText').val();} 
+    else {var company = entry}
+    
     if ($('#testAPISwitch').is(':checked')) {
         var baseURL = testAPI;
         var keyToken = testToken
