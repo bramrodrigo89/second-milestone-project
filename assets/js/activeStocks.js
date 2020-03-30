@@ -7,24 +7,26 @@ function createStockCards(data) {
         var activeLatestPrice = item.latestPrice
         var activeChangePrice = item.change.toFixed(2)
         var activeChangePercent = item.changePercent.toFixed(2)
+        var lastUpdateTime = new Date(item.latestUpdate).toLocaleString("en-US").toString();
         if (activeChangePrice > 0) {
             var classActiveStock = 'badge-success'
         } else if (activeChangePrice < 0) {
             var classActiveStock = 'badge-danger'
         } else { var classActiveStock = 'badge-secondary'}
             return `<div class="card text-white bg-dark mb-3 active-stock-card">
-                    <div class="card-header">
-                        ${activeExchange}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">(${activeStockSymbol}) ${activeStockName}</h5>
-                        <p class="card-text">Latest Price: <strong>${activeLatestPrice} US$</strong></p>
-                        <a href="#active-stock-information" onclick="stockDataToDocument('${activeStockSymbol}')" class="badge ${classActiveStock}">${activeChangePrice} US$ (${activeChangePercent}%)</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>`
+                        <div class="card-header">
+                            ${activeExchange}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><span class='card-symbol'>${activeStockSymbol}</span></h5>
+                            <p class='card-text'>${activeStockName}</p>
+                            <a href="#active-stock-information" onclick="stockDataToDocument('${activeStockSymbol}')" class="badge ${classActiveStock}">${activeChangePrice} US$ (${activeChangePercent}%)</a>
+                            <p class="card-text">Last Price: <strong>${activeLatestPrice} US$</strong></p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Updated: ${lastUpdateTime}
+                        </div>
+                    </div>`
     });
 
     return activeStockCards.join('\n')
@@ -54,14 +56,20 @@ function activestocksToDocument() {
             var activeStocksList = response
             $('#loading-symbol-active-stocks').html(``)
             $('#active-stocks-list').html(createStockCards(activeStocksList))
+            console.log(activeStocksList)
         }, function(errorResponse) {
             console.log('Error loading data')
         }
     )
-    
-    $('.active-stock-card').click(function(){
-        stockDataToDocument(this.activeStockSymbol)
-    });
 }
 
-activestocksToDocument();
+$(document).ready(function() {
+    activestocksToDocument();
+    $('.active-stock-card').click(function(){
+        var symbolToLookUp = $(this).find('.card-symbol').html()
+        console.log('huh?')
+        console.log(symbolToLookUp);
+    });
+});
+
+
