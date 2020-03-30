@@ -17,9 +17,6 @@
     <!--Font awesome CDN -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-    <!--Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,700|Questrial:700&display=swap" rel="stylesheet">
-    
     <!-- My Stylesheet -->
 	<link rel='stylesheet' type="text/css" href="assets/css/styles.css" />
 
@@ -68,7 +65,7 @@
     <!-- Look up any stock input text -->
 
 	<section>
-		<div class="row">
+		<div class="row large-row">
 			<div class=" col-12 px-4 center-form my-4">
                 <div class="container">
 				<form>
@@ -102,24 +99,24 @@
 	</section>
        
 	<section>
-		<div class="row d-none" id="search-stock-information">
+		<div class="row d-none large-row" id="search-stock-information">
 	
 			<!-- Quote Stock Data display -->
 	
-			<div class='col-12 px-4 my-2'>
+			<div class='col-12 px-4 my-5'>
 				<div class="container">
-                    <p class="text-right"><span class='text-large' id="text-before-star">Add to my </span> <a href="watch-list.html"><strong class="text-x-large text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-x-large"></i></a></p>
+                    <p class="text-right"><span class='text-large' id="text-before-star">Add to my </span> <a href="watch-list.html"><strong class="text-larger text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-larger"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
-							<div class="media-body">
-								<h2 class="display-5 text-questrial text-bold"><span class="company-name">Name</span>
-									(<span class="text-questrial text-bold" id='company-symbol'>Symbol</span>)</h2>
-								<p class="lead display-5 text-questrial"><span id='last-price'></span> US$
-									<small class="d-block green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
-								</p>
+							<div class="media-body my-auto">
+								<h2 class="text-questrial"><span class="company-name">Name</span>
+									(<span class="text-questrial" id='company-symbol'>Symbol</span>)</h2>
 							</div>
 							<img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: height 100px; overflow: hidden;' alt="company logo">
-	                    </div>
+                        </div>
+                        <p class="lead my-3 text-largest"><span id='last-price'></span> US$
+									<small class="d-block green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>
+						</p>
 						<hr class="my-3 bg-secondary">
 						<p>Powered by <a class="text-info" href="https://iexcloud.io">IEX Cloud</a></p>
 						<p><span id='latest-time'></span></p>
@@ -130,7 +127,7 @@
 	
 			<!-- Chart with historic data -->
 	
-			<div class='col-12 px-4 my-2'>
+			<div class='col-12 px-4 my-5'>
 				<div class="container">
 					<div class="text-center">
 						<button type="button" class='btn m-2 btn-info update-chart-button'>1D</button>
@@ -148,7 +145,7 @@
 	
 				<!-- Table with stock quote data -->
 	
-			<div class="col-12 px-4 my-3">
+			<div class="col-12 px-4 my-4">
 				<div class="container">
 					<table class="table table-sm table-responsive-sm table-striped table-dark">
 						<tr>
@@ -181,10 +178,12 @@
 	
 			<!-- Company profile information -->
 	
-			<div class="col-12 px-5">
-				<button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
+			<div class="col-12 px-4 my-4">
+                <div class="container">
+                    <button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
+                </div>
 			</div>
-			<div class='col-12 collapse' id="collapseProfileInformation">
+			<div class='col-12 collapse my-5' id="collapseProfileInformation">
                 <div class="container">
                     <div class="row">
                         <div class='col-12 col-md-8 px-4 my-2'>
@@ -204,19 +203,27 @@
 	
 			<!-- News related to this company -->
 	
-			<div class="col-12 px-5">
-				<button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about <span class="company-name">this company</span></button>
+			<div class="col-12 px-4 my-4">
+                <div class="container">
+                    <button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about <span class="company-name">this company</span></button>
+                </div>
 			</div>
-			<div class="col-12 px-5">
+			<div class="col-12 px-4 my-5">
                 <div class="container ticker-container collapse my-4" id="collapseLatestNews">
-                    
-                    <div class="card-columns" id='news-ticker'></div>
-                    
+                <div class="card-columns" id='news-ticker'></div>
                 </div>
 			</div>
 		</div>
 	</section>
 
+    <section>
+        <div class="row large-row">
+            <div class="col-12 px-4 my-5">
+                <div class="container" id='active-stocks-list'>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Footer -->
 
 	<footer>
@@ -255,6 +262,7 @@
     
 	<script defer type="text/javascript" src="assets/js/stockQuote.js"></script>
     <script defer type="text/javascript" src="assets/js/watchList.js"></script>
+    <script defer type="text/javascript" src="assets/js/activeStocks.js"></script>
     
 </body>
 

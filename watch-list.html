@@ -68,20 +68,40 @@
     <!-- My Watch List Display -->
     
 	<section>
-		<div class="row">
-			<div class="col-auto ml-auto my-2">
+		<div class="row large-row">
+			<div class="col-auto ml-auto my-4">
 				<div class="custom-control custom-switch">
 					<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
 					<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
 				</div>
 				<div class="form-check"></div>
 			</div>
-		</div>
-		<div class="col-12">
-			<div class="container">
-				<div id="my-watch-list-table"></div>
+            <div class='col-12 px-4 my-4'>
+				<div class="container">
+					<div class="jumbotron p-4 bg-dark">
+						<div class="media">
+							<div class="media-body my-auto">
+								<h2 class="display-5 text-questrial"><span>My Watch List</span></h2>
+							</div>
+                            <img class="ml-2 d-inline align-top d-md-none" src="assets/images/logo/white_logo_transparent_symbol.png" height="80px" alt="My Stock Dashboard Logo">
+                            <img class="ml-2 align-top d-none d-md-inline" src="assets/images/logo/white_logo_transparent_background_compact.png" height="100px" alt="My Stock Dashboard Logo">  
+	                    </div>
+                        <p class="lead">My Daily Average: <span class='mx-2 badge badge-my-watch-list'><span id="my-price-changes-average"></span> US$ (<span id='my-change-percent-average'></span> %)</span>
+							<small class="d-block">Depending on selected stocks</small>
+						</p>
+						<hr class="my-3 bg-secondary">
+						<p>Powered by <a class="text-info" href="https://iexcloud.io">IEX Cloud</a></p>
+						<p><span>Info here</span></p>
+					</div>
+				</div>
 			</div>
+            <div class="col-12 px-4 my-4">
+                <div class="container">
+                    <div id="my-watch-list-table"></div>
+                </div>
+		    </div>
 		</div>
+
 	</section>
        
 

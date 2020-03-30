@@ -13,6 +13,17 @@ if (cachedWatchList == null) {
     var watchListArray = cachedWatchList;
 }
 
+// Check if switch is checked to activate API Sandbox
+
+function isSwitchChecked() {
+    if ($('#testAPISwitch').is(':checked')) {
+        var baseURL = testAPI;
+        var keyToken = testToken
+    } else {
+        var baseURL = realAPI;
+        var keyToken = realToken}
+
+}
 
 // fetch news data from selected stock
 
@@ -228,6 +239,7 @@ function stockDataToDocument(entry) {
     {var company = $('#symbolInputText').val();} 
     else {var company = entry}
     
+    isSwitchChecked()
     if ($('#testAPISwitch').is(':checked')) {
         var baseURL = testAPI;
         var keyToken = testToken

@@ -21,19 +21,20 @@ function watchListTableHTML() {
         });
         var URLSymbolArray = symbolArray.join(',').toLowerCase()
         $.when(
-            $.getJSON(`${baseURL}${version}market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
+            $.getJSON(`${baseURL}stable/stock/market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
         ).then(
             function(response) {
                 var el = document.getElementById('my-watch-list-table')
                 var tableData =  response
                 var priceChangesArray = []
+                var percentChangesArray = []
                 for (let elem in tableData) {
                     var stockRow=[]
                     var stockObject = tableData[elem]
                     var companyNameWatchList = stockObject.quote.companyName
                     var latestPriceWatchList = stockObject.quote.latestPrice
                     var changeWatchList = stockObject.quote.change
-                    var changePercentWatchList = stockObject.quote.changePercent
+                    var changePercentWatchList = stockObject.quote.changePercent*100
                     var textColor=''
                     var signPlusMinus = ''
                     if (changeWatchList<0) {
@@ -44,7 +45,8 @@ function watchListTableHTML() {
                         var signPlusMinus='+'
                     }
                     priceChangesArray.push(changeWatchList);
-                    stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList}%</span></td>`);
+                    percentChangesArray.push(changePercentWatchList)
+                    stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
@@ -54,23 +56,32 @@ function watchListTableHTML() {
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
                 // Calculate average of price changes from WatchList
-                var total = 0;
+                var totalPriceChanges = 0;
+                var totalPercentChanges = 0;
                 for(var i = 0; i < priceChangesArray.length; i++) {
-                    total += priceChangesArray[i];
+                    totalPriceChanges += priceChangesArray[i];
+                    totalPercentChanges+= percentChangesArray[i];
                 }
-                var averagePriceChanges = total / priceChangesArray.length;
-                console.log(averagePriceChanges);
+                var averagePriceChange = totalPriceChanges / priceChangesArray.length;
+                var averagePercentChange = totalPercentChanges / percentChangesArray.length;
+                if (averagePriceChange > 0) {
+                    $('.badge-my-watch-list').addClass('badge-success')
+                } else {
+                    $('.badge-my-watch-list').addClass('badge-danger')
+                }
+                $('#my-price-changes-average').html(averagePriceChange.toFixed(2))
+                console.log(averagePercentChange)
+                $('#my-change-percent-average').html(averagePercentChange.toFixed(2))
+                
                
                 $('.clickable-row').click(function() {
                     stockDataToDocument('aapl');
                     window.location = $(this).data("href");
-                    
-                    stockDataToDocument('aapl');
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
     } else {
-        return `<p>Currently nothing in your Watch List!</p>`
+        return ``
     }
 }
 

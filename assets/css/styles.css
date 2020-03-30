@@ -1,4 +1,7 @@
 
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Questrial&display=swap');
+
+
 /* Eliminates gaps on the right side of rendered html page */
 
 html,body
@@ -17,7 +20,7 @@ body {
     background-color: #1d1d1d;
     padding-top: 80px;
     font-size: 0.8rem;
-    font-family: 'Assistant', sans-serif;
+    font-family: 'Questrial', sans-serif;
     font-weight: 300;
 }
 
@@ -26,8 +29,13 @@ body {
 .text-large {
     font-size: 1.1rem;
 }
-.text-x-large {
-    font-size: 1.5rem;
+.text-larger {
+    font-size: 1.6rem;
+}
+.text-largest {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
 }
 .nav-link {
     font-size: 1.2rem;
@@ -36,16 +44,20 @@ body {
     font-weight: 700;
 }
 .text-questrial {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Abril Fatface', cursive;
 }
 .badge {
     font-size: 100%;
     padding: .5em .5em;
 }
-th {
-    font-size: 0.9rem;
-}
 
+/* Stock Quote Information */
+
+.large-row {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* Stock Chart*/
 
 .chart-container {
@@ -82,6 +94,19 @@ th {
 
 /* Watch List */
 
+.table th, .table td {
+    padding: .4rem;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+/* Footer */
+
+footer {
+    min-height: 400px;
+    background-color: grey;
+}
+
 /*-----------------------------------------Media Queries */
 
 /*-----------Tablet (md) */
@@ -89,5 +114,9 @@ th {
 @media(min-width: 768px) {
     .navbar-brand-logo {
         background: url("/assets/images/logo/white_logo_transparent_long.png");
+    }
+
+    .media-body h2{
+        font-size: 2.5rem;
     }
 }
