@@ -104,8 +104,10 @@
 	
 			<!-- Quote Stock Data display -->
 	
-			<div class='col-12 px-4 my-5'>
+			<div class='col-12 px-4 my-3'>
 				<div class="container">
+                    <h3>Stock Quote</h4>
+                    <hr class="mb-3 bg-light">
                     <p class="text-right"><span class='text-large' id="text-before-star">Add to my </span> <a href="watch-list.html"><strong class="text-larger text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-larger"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
@@ -128,8 +130,10 @@
 	
 			<!-- Chart with historic data -->
 	
-			<div class='col-12 px-4 my-5'>
+			<div class='col-12 px-4 my-3'>
 				<div class="container">
+                    <h4>Stock Chart</h4>
+                    <hr class="mb-3 bg-light">
 					<div class="text-center">
 						<button type="button" class='btn m-2 btn-info update-chart-button'>1D</button>
 						<button type="button" class='btn m-2 btn-info update-chart-button'>5D</button>
@@ -179,23 +183,25 @@
 	
 			<!-- Company profile information -->
 	
-			<div class="col-12 px-4 my-4">
+			<div class="col-12 px-4 my-3">
                 <div class="container">
-                    <button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">Read more about <span class="company-name">this company</span></button>
+                    <h4>Read more</h4>
+                    <hr class="mb-5 bg-light">
+                    <button type="button" id='read-company-profile-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseProfileInformation" aria-expanded="false" aria-controls="collapseProfileInformation">About <span class="company-name">this company</span></button>
                 </div>
 			</div>
 			<div class='col-12 collapse my-5' id="collapseProfileInformation">
                 <div class="container">
                     <div class="row">
                         <div class='col-12 col-md-8 px-4 my-2'>
-                            <hr class="mb-3 bg-light">
                             <h4>Profile</h4>
+                            <hr class="mb-3 bg-light">
                             <p id="profile-description" class="text-justify"></p>
                             <div id='industry-information'></div>
                         </div>
                         <div class='col-12 col-md-4 px-4 my-2'>
-                            <hr class="mb-3 bg-light">
                             <h5>Contact Information</h5>
+                            <hr class="mb-3 bg-light">
                             <div id='contact-information'></div>
                         </div>
                     </div>
@@ -204,13 +210,15 @@
 	
 			<!-- News related to this company -->
 	
-			<div class="col-12 px-4 my-4">
+			<div class="col-12 px-4 my-3">
                 <div class="container">
-                    <button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">Latest news about <span class="company-name">this company</span></button>
+                    <button type="button" id='read-latest-news-button' class="btn btn-secondary my-2 btn-block btn-md-inline" data-toggle="collapse" data-target="#collapseLatestNews" aria-expanded="false" aria-controls="collapseLatestNews">News about <span class="company-name">this company</span></button>
                 </div>
 			</div>
-			<div class="col-12 px-4 my-5">
+			<div class="col-12 px-4 my-3">
                 <div class="container ticker-container collapse my-4" id="collapseLatestNews">
+                <h4>Latest News</h4>
+                <hr class="mb-4 bg-light">
                 <div class="card-columns" id='news-ticker'></div>
                 </div>
 			</div>
@@ -221,7 +229,10 @@
         <div class="row large-row">
             <div class="col-12 px-4 my-5">
                 <div class="container"> 
-                    <div id="active-stocks-list" class="row row-cols-2 row-cols-md-5"></div> 
+                    <h3>Today's Market Briefing</h3>
+                    <hr class="mb-3 bg-light">
+                    <div id="loading-symbol-active-stocks" class="align-center my-5"></div> 
+                    <div id="active-stocks-list" class="row row-cols-2 row-cols-md-5 my-4"></div> 
                 </div>
             </div>
         </div>

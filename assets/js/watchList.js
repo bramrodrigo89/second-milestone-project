@@ -31,6 +31,7 @@ function watchListTableHTML() {
                 for (let elem in tableData) {
                     var stockRow=[]
                     var stockObject = tableData[elem]
+                    var companySymbolWatchList = stockObject.quote.symbol
                     var companyNameWatchList = stockObject.quote.companyName
                     var latestPriceWatchList = stockObject.quote.latestPrice
                     var changeWatchList = stockObject.quote.change
@@ -46,7 +47,7 @@ function watchListTableHTML() {
                     }
                     priceChangesArray.push(changeWatchList);
                     percentChangesArray.push(changePercentWatchList)
-                    stockRow.push(`<th>${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
+                    stockRow.push(`<th><strong>(${companySymbolWatchList})</strong> ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');

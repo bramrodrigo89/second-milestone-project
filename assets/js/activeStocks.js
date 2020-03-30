@@ -39,13 +39,20 @@ function activestocksToDocument() {
         var keyToken = realToken}
     isSwitchChecked();
 
+    $('#loading-symbol-active-stocks').html(`
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-info m-5" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>`);
+
     $.when(
         $.getJSON(`${baseURL}stable/stock/market/collection/list?collectionName=mostactive&${keyToken}`),
 
     ).then(
         function(response) {
             var activeStocksList = response
-            console.log(activeStocksList)
+            $('#loading-symbol-active-stocks').html(``)
             $('#active-stocks-list').html(createStockCards(activeStocksList))
         }, function(errorResponse) {
             console.log('Error loading data')
@@ -53,8 +60,7 @@ function activestocksToDocument() {
     )
     
     $('.active-stock-card').click(function(){
-        
-        stockDataToDocument()
+        stockDataToDocument(this.activeStockSymbol)
     });
 }
 
