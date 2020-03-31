@@ -88,6 +88,11 @@ function etfsListTableHTML() {
 
 }
 
+focusScrollMethod = function getFocus() {          
+  document.getElementById("symbolInputText").focus({preventScroll:false});
+
+}
+
 function activestocksToDocument() {
     if ($('#testAPISwitch').is(':checked')) {
         var baseURL = testAPI;
@@ -114,9 +119,12 @@ function activestocksToDocument() {
             $('#active-stocks-list').html(createStockCards(activeStocksList))
 
             $('.active-stock-card').click(function(){
-                 var symbolToLookUp = $(this).find('.card-symbol').html()
-                 stockDataToDocument(symbolToLookUp);
+                focusScrollMethod();
+                var symbolToLookUp = $(this).find('.card-symbol').html()
+                stockDataToDocument(symbolToLookUp);
             });
+
+
         }, function(errorResponse) {
             console.log('Error loading data')
         }

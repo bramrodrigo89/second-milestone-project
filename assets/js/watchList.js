@@ -71,13 +71,13 @@ function watchListTableHTML() {
                     $('.badge-my-watch-list').addClass('badge-danger')
                 }
                 $('#my-price-changes-average').html(averagePriceChange.toFixed(2))
-                console.log(averagePercentChange)
                 $('#my-change-percent-average').html(averagePercentChange.toFixed(2))
                 
                
                 $('.clickable-row').click(function() {
-                    stockDataToDocument('aapl');
                     window.location = $(this).data("href");
+                    stockDataToDocument('aapl');
+                    console.log('I did everything')
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
