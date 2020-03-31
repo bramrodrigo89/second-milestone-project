@@ -13,7 +13,7 @@ function createStockCards(data) {
         } else if (activeChangePrice < 0) {
             var classActiveStock = 'badge-danger'
         } else { var classActiveStock = 'badge-secondary'}
-            return `<div class="card text-white bg-dark mb-3 active-stock-card">
+            return `<div class="active-stock-card card text-white bg-dark mb-3">
                         <div class="card-header">
                             ${activeExchange}
                         </div>
@@ -30,6 +30,62 @@ function createStockCards(data) {
     });
 
     return activeStockCards.join('\n')
+
+}
+
+function etfsListTableHTML() {
+    var etfsRows=[]
+    var etfsListArray=['spy','dia','iwm','qqq']
+    var URLSymbolArray = etfsListArray.join(',')
+
+    if ($('#testAPISwitch').is(':checked')) {
+        var baseURL = testAPI;
+        var keyToken = testToken
+    } else {
+        var baseURL = realAPI;
+        var keyToken = realToken}
+    
+    $.when(
+        $.getJSON(`${baseURL}stable/stock/market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
+    ).then(
+        function(response) {
+            var el = document.getElementById('popular-etfs-list')
+            var tableData =  response
+            
+            for (let elem in tableData) {
+                var etfRow=[]
+                var etfObject = tableData[elem]
+                var etfSymbol = etfObject.quote.symbol
+                var etfName = etfObject.quote.companyName
+                var latestPriceEtf = etfObject.quote.latestPrice
+                var changeEtf = etfObject.quote.change
+                var changePercentEtf = etfObject.quote.changePercent*100
+                var textColor=''
+                var signPlusMinus = ''
+                if (changeEtf<0) {
+                    var textColor='bg-danger text-white'
+                    var signPlusMinus=''
+                } else {
+                    var textColor='bg-success text-white'
+                    var signPlusMinus='+'
+                }
+                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeEtf} US$</span> <span class='${textColor}'>(${changePercentEtf.toFixed(2)}%)</span></td>`);
+                etfsRows.push(`<tr class='clickable-row' data-href='index.html'>${etfRow}</tr>`);
+                } 
+                var rowsHTML = Object.values(etfsRows).join(' ');
+
+                el.innerHTML = `<table class="table table-dark table-hover my-4">
+                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th></tr></thead>
+                                    <tbody>${rowsHTML}</tbody>
+                                </table>`
+                
+                $('.clickable-row').click(function() {
+                    var etfSymbolToLookUp = $(this).find('.etf-symbol').html()
+                    stockDataToDocument(etfSymbolToLookUp)
+                });   
+            }, function(errorResponse) {console.log('Error loading data')}
+        );
+
 }
 
 function activestocksToDocument() {
@@ -41,7 +97,7 @@ function activestocksToDocument() {
         var keyToken = realToken}
     isSwitchChecked();
 
-    $('#loading-symbol-active-stocks').html(`
+    $('.loading-symbol-market-briefing').html(`
         <div class="d-flex justify-content-center">
             <div class="spinner-border text-info m-5" role="status">
                 <span class="sr-only">Loading...</span>
@@ -54,9 +110,13 @@ function activestocksToDocument() {
     ).then(
         function(response) {
             var activeStocksList = response
-            $('#loading-symbol-active-stocks').html(``)
+            $('.loading-symbol-market-briefing').html(``)
             $('#active-stocks-list').html(createStockCards(activeStocksList))
-            console.log(activeStocksList)
+
+            $('.active-stock-card').click(function(){
+                 var symbolToLookUp = $(this).find('.card-symbol').html()
+                 stockDataToDocument(symbolToLookUp);
+            });
         }, function(errorResponse) {
             console.log('Error loading data')
         }
@@ -65,11 +125,8 @@ function activestocksToDocument() {
 
 $(document).ready(function() {
     activestocksToDocument();
-    $('.active-stock-card').click(function(){
-        var symbolToLookUp = $(this).find('.card-symbol').html()
-        console.log('huh?')
-        console.log(symbolToLookUp);
-    });
+    etfsListTableHTML()
+
 });
 
 
