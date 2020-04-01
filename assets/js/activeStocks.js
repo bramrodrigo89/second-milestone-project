@@ -22,9 +22,8 @@ function createStockCards(data) {
                             ${activeExchange}
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title"><span class='card-symbol'>${activeStockSymbol}</span></h5>
-                            <p class='card-text'>${activeStockName}</p>
-                            <a href="#active-stock-information" onclick="stockDataToDocument('${activeStockSymbol}')" class="badge ${classActiveStock}">${activeChangePrice} US$ (${activeChangePercent}%)</a>
+                            <h5 class="card-title"> ${activeStockName} (<span class='card-symbol'>${activeStockSymbol}</span>)</h5>
+                            <a href="#active-stock-information" class="badge ${classActiveStock}">${activeChangePrice} US$ (${activeChangePercent}%)</a>
                             <p class="card-text">Last Price: <strong>${activeLatestPrice} US$</strong></p>
                         </div>
                         <div class="card-footer text-muted">
@@ -86,7 +85,7 @@ function etfsListTableHTML() {
                 $('.clickable-row').click(function() {
                     focusScrollMethod();
                     var etfSymbolToLookUp = $(this).find('.etf-symbol').html()
-                    setTimeout(stockDataToDocument,900, etfSymbolToLookUp);
+                    setTimeout(stockDataToDocument,1000, etfSymbolToLookUp);
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
