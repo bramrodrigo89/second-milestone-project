@@ -1,5 +1,3 @@
-// define constants and variables 
-
 // create table using data from watch list array
 
 function watchListTableHTML() {
@@ -47,7 +45,7 @@ function watchListTableHTML() {
                     }
                     priceChangesArray.push(changeWatchList);
                     percentChangesArray.push(changePercentWatchList)
-                    stockRow.push(`<th><strong>(${companySymbolWatchList})</strong> ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
+                    stockRow.push(`<th>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
@@ -75,9 +73,9 @@ function watchListTableHTML() {
                 
                
                 $('.clickable-row').click(function() {
+                    var watchedStockToLookUp = $(this).find('.watched-stock-symbol-table').html()
                     window.location = $(this).data("href");
-                    stockDataToDocument('aapl');
-                    console.log('I did everything')
+                    localStorage.setItem('watchedStockToLookUp', JSON.stringify(watchedStockToLookUp));
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );

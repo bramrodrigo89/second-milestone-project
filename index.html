@@ -72,12 +72,12 @@
 				<form>
 					<div class="form-row align-items-center">
 						<div class="col-12 col-md-6 my-1">
-							<label class="sr-only" for="symbolInputText">Search for any stock symbol:</label>
+							<label for="symbolInputText">Search for any stock quote here by entering a symbol, or stock name. For example: Symbol 'GOOGL' for Google Alphabet Inc.</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 								    <div class="input-group-text">Symbol</div>
 							    </div>
-							    <input type="text" class="form-control" id="symbolInputText" placeholder="Example: AAPL">
+							    <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here">
 	                        </div>
 						</div>
 						<div class="col-auto my-1" id='search-symbol-button'>
@@ -115,7 +115,7 @@
 								<h2 class="text-questrial"><span class="company-name">Name</span>
 									(<span class="text-questrial" id='company-symbol'>Symbol</span>)</h2>
 							</div>
-							<img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: height 100px; overflow: hidden;' alt="company logo">
+							<a id="company-logo-link" target="blank_" href="#"><img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: height 100px; overflow: hidden;' alt="company logo"></a>
                         </div>
                         <p class="lead my-3 text-largest"><span id='last-price'></span> US$
 									<small class="d-block green-or-red"><span id='plus-or-minus'></span><span id="price-change"></span> US$ (<span id="price-change-percent"></span> %)</small>

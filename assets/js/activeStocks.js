@@ -1,5 +1,5 @@
 focusScrollMethod = function getFocus() {
-    document.getElementById("testAPISwitch").focus({preventScroll:false});
+    document.getElementById("company-logo-link").focus({preventScroll:false});
 }
 
 function createStockCards(data) {

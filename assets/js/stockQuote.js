@@ -7,6 +7,7 @@ const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
 const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
 var stockChart;
 var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"))
+var watchedStockSymbolToLookUp = JSON.parse(localStorage.getItem("watchedStockToLookUp"))
 if (cachedWatchList == null) {
     var watchListArray=[];
 } else {
@@ -202,6 +203,7 @@ function profileData(data) {
         <p><span class="font-weight-bold text-large">Industry: </span><span class="font-weight-light">${profileData.industry}</span></p>
         <p><span class="font-weight-bold text-large">Sector: </span><span class="font-weight-light">${profileData.sector}</span></p>
     `);
+    $('#company-logo-link').attr('href',profileData.website)
 }
 
 // Object constructor for currently displayed stocks
@@ -272,7 +274,7 @@ function stockDataToDocument(entry) {
 
     ).then(
         function(response) {
-            setTimeout(normalSearchButton,1000)
+            setTimeout(normalSearchButton,900)
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
             quoteDataVariables(stockData);
@@ -309,12 +311,6 @@ function stockDataToDocument(entry) {
     )
 }
 
-// Functions called after the document is finished loading
-
-$(document).ready(function() {
-    $('#watch-list-counter').html(watchListArray.length);
-});
-
 // Function to add stocks to watch list using the star button
 
 $('#watch-list-star').click(function(){
@@ -339,3 +335,12 @@ $('#watch-list-star').click(function(){
     }
 });
 
+// Functions called after the document is finished loading
+
+$(document).ready(function() {
+    $('#watch-list-counter').html(watchListArray.length);
+    if (watchedStockSymbolToLookUp) {
+        stockDataToDocument(watchedStockSymbolToLookUp);
+        localStorage.removeItem("watchedStockToLookUp");
+    }
+});
