@@ -81,7 +81,7 @@
 	                        </div>
 						</div>
 						<div class="col-auto my-1" id='search-symbol-button'>
-							<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+							<button id='search-stockSymbol-button' type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
 							<div class="custom-control custom-switch">
@@ -108,7 +108,7 @@
 				<div class="container">
                     <h3>Stock Quote</h4>
                     <hr class="mb-3 bg-light">
-                    <p class="text-right"><span class='text-large' id="text-before-star">Add to my </span> <a href="watch-list.html"><strong class="text-larger text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-larger"></i></a></p>
+                    <p class="text-right"><span class='text-large' id="text-before-star">Add to my </span> <a id='watch-list-link' href="watch-list.html"><strong class="text-larger text-info">Watch List</strong></a> <a><i id='watch-list-star' class="far fa-star ml-2 text-warning text-larger"></i></a></p>
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
 							<div class="media-body my-auto">
@@ -371,7 +371,6 @@
     <!-- Own JavaScript files -->
     
 	<script defer type="text/javascript" src="assets/js/stockQuote.js"></script>
-    <script defer type="text/javascript" src="assets/js/watchList.js"></script>
     <script defer type="text/javascript" src="assets/js/activeStocks.js"></script>
     
 </body>

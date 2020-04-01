@@ -225,7 +225,7 @@ function isStockWatched(stockList, stock, sym) {
 function normalSearchButton() {
     $("#loading-symbol").html('');
     $('#search-symbol-button').html(
-        `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+        `<button id='search-stockSymbol-button' type="submit" class="btn btn-info" onclick="stockDataToDocument()">
             Search
         </button>`);
 }
@@ -303,12 +303,7 @@ function stockDataToDocument(entry) {
             }
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
-            $("#loading-symbol").html('');
-            $('#search-symbol-button').html(
-                `<button type="submit" class="btn btn-info" onclick="stockDataToDocument()">
-                    Search
-                </button>`
-            )
+            normalSearchButton()
             $('#exampleModal').modal('show');
         }
     )

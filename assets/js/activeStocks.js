@@ -1,3 +1,7 @@
+focusScrollMethod = function getFocus() {
+    document.getElementById("testAPISwitch").focus({preventScroll:false});
+}
+
 function createStockCards(data) {
 
     var activeStockCards = data.map(function (item) {
@@ -80,16 +84,12 @@ function etfsListTableHTML() {
                                 </table>`
                 
                 $('.clickable-row').click(function() {
+                    focusScrollMethod();
                     var etfSymbolToLookUp = $(this).find('.etf-symbol').html()
-                    stockDataToDocument(etfSymbolToLookUp)
+                    setTimeOut(stockDataToDocument(etfSymbolToLookUp),3000);
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
-
-}
-
-focusScrollMethod = function getFocus() {          
-  document.getElementById("symbolInputText").focus({preventScroll:false});
 
 }
 
@@ -117,14 +117,11 @@ function activestocksToDocument() {
             var activeStocksList = response
             $('.loading-symbol-market-briefing').html(``)
             $('#active-stocks-list').html(createStockCards(activeStocksList))
-
             $('.active-stock-card').click(function(){
                 focusScrollMethod();
                 var symbolToLookUp = $(this).find('.card-symbol').html()
-                stockDataToDocument(symbolToLookUp);
+                setTimeout(stockDataToDocument(symbolToLookUp),3000);
             });
-
-
         }, function(errorResponse) {
             console.log('Error loading data')
         }
@@ -134,7 +131,6 @@ function activestocksToDocument() {
 $(document).ready(function() {
     activestocksToDocument();
     etfsListTableHTML()
-
 });
 
 
