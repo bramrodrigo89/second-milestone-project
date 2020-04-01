@@ -71,8 +71,8 @@
                 <div class="container">
 				<form>
 					<div class="form-row align-items-center">
-						<div class="col-12 col-md-6 my-1">
-							<label for="symbolInputText">Search for any stock quote here by entering a symbol, or stock name. For example: Symbol 'GOOGL' for Google Alphabet Inc.</label>
+						<div class="col-12 col-md-6 mt-auto">
+							<label for="symbolInputText">Search for any stock quote by entering the stock symbol. For example: Symbol 'GOOGL' for Alphabet Inc.</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 								    <div class="input-group-text">Symbol</div>
@@ -80,8 +80,8 @@
 							    <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here">
 	                        </div>
 						</div>
-						<div class="col-auto my-1" id='search-symbol-button'>
-							<button id='search-stockSymbol-button' type="submit" class="btn btn-info" onclick="stockDataToDocument()">Search</button>
+						<div class="col-auto mt-auto" id='search-symbol-button'>
+							<button id='search-stockSymbol-button' type="submit" class="btn btn-info mt-2" onclick="stockDataToDocument()">Search</button>
 						</div>
 						<div class="col-auto ml-auto my-2">
 							<div class="custom-control custom-switch">
@@ -98,12 +98,11 @@
 		<div id='loading-symbol'></div>
 		<div id='message-error'></div>
 	</section>
-       
+    
+    <!-- Quote Stock Data display -->
+
 	<section>
 		<div class="row d-none large-row" id="search-stock-information">
-	
-			<!-- Quote Stock Data display -->
-	
 			<div class='col-12 px-4 my-3'>
 				<div class="container">
                     <h3>Stock Quote</h4>
@@ -148,7 +147,7 @@
 				</div>
 			</div>
 	
-				<!-- Table with stock quote data -->
+			<!-- Table with stock quote data -->
 	
 			<div class="col-12 px-4 my-4">
 				<div class="container">
@@ -224,6 +223,8 @@
 			</div>
 		</div>
 	</section>
+
+    <!--- Today's Market Briefing and Popular ETFs --->
 
     <section>
         <div class="row large-row">

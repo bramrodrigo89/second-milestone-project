@@ -1,4 +1,4 @@
-// define constants and variables 
+// Define constants and variables 
 
 const testAPI = 'https://sandbox.iexapis.com/'
 const realAPI = 'https://cloud.iexapis.com/'
@@ -227,12 +227,12 @@ function isStockWatched(stockList, stock, sym) {
 function normalSearchButton() {
     $("#loading-symbol").html('');
     $('#search-symbol-button').html(
-        `<button id='search-stockSymbol-button' type="submit" class="btn btn-info" onclick="stockDataToDocument()">
+        `<button id='search-stockSymbol-button' type="submit" class="btn btn-info mt-2" onclick="stockDataToDocument()">
             Search
         </button>`);
 }
 
-// Main function which brings all stock information to the page
+// Main function which brings all collected quote information to the page
 // and combines all previous functions 
 
 function stockDataToDocument(entry) {
@@ -256,7 +256,7 @@ function stockDataToDocument(entry) {
         return
     } else (
     $("#search-symbol-button").html(
-        `<button class="btn btn-info" type="button" disabled>
+        `<button class="btn btn-info mt-2" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
             Loading...
         </button>`)
