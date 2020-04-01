@@ -272,7 +272,7 @@ function stockDataToDocument(entry) {
 
     ).then(
         function(response) {
-            normalSearchButton();
+            setTimeout(normalSearchButton,1000)
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
             quoteDataVariables(stockData);

@@ -86,7 +86,7 @@ function etfsListTableHTML() {
                 $('.clickable-row').click(function() {
                     focusScrollMethod();
                     var etfSymbolToLookUp = $(this).find('.etf-symbol').html()
-                    setTimeOut(stockDataToDocument(etfSymbolToLookUp),3000);
+                    setTimeout(stockDataToDocument,900, etfSymbolToLookUp);
                 });   
             }, function(errorResponse) {console.log('Error loading data')}
         );
@@ -118,9 +118,9 @@ function activestocksToDocument() {
             $('.loading-symbol-market-briefing').html(``)
             $('#active-stocks-list').html(createStockCards(activeStocksList))
             $('.active-stock-card').click(function(){
-                focusScrollMethod();
                 var symbolToLookUp = $(this).find('.card-symbol').html()
-                setTimeout(stockDataToDocument(symbolToLookUp),3000);
+                focusScrollMethod();
+                setTimeout(stockDataToDocument, 900, symbolToLookUp);
             });
         }, function(errorResponse) {
             console.log('Error loading data')
