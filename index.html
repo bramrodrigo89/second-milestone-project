@@ -69,15 +69,12 @@
 		<div class="row large-row">
 			<div class=" col-12 px-4 center-form my-4">
                 <div class="container">
-				<form>
+				<form autocomplete="off" action="/action_page.php">
 					<div class="form-row align-items-center">
 						<div class="col-12 col-md-6 mt-auto">
 							<label for="symbolInputText">Search for any stock quote by entering the stock symbol. For example: Symbol 'GOOGL' for Alphabet Inc.</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-								    <div class="input-group-text">Symbol</div>
-							    </div>
-							    <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here">
+							<div class="autocomplete">
+                                <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here" oninput="searchStockInformation()">
 	                        </div>
 						</div>
 						<div class="col-auto mt-auto" id='search-symbol-button'>
@@ -86,7 +83,7 @@
 						<div class="col-auto ml-auto my-2">
 							<div class="custom-control custom-switch">
 								<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
-								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Test Mode</label>
+								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Mode</label>
 							</div>
 							<div class="form-check"></div>
 						</div>
@@ -373,6 +370,7 @@
     
 	<script defer type="text/javascript" src="assets/js/stockQuote.js"></script>
     <script defer type="text/javascript" src="assets/js/activeStocks.js"></script>
+    <script defer type="text/javascript" src="assets/js/autocomplete.js"></script>
     
 </body>
 
