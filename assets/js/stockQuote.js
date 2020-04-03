@@ -36,12 +36,19 @@ function newsArticlesHTML(news) {
     }
 
     var articleItems = news.map(function (newsItem) {
-
+        if ($('#testAPISwitch').is(':checked')) {
+            var imageSource = 'assets/images/logo/white_logo_transparent_background_long.png'
+            var extraPadding = 'p-3'
+        } else {
+            var imageSource = newsItem.image
+            var extraPadding = 'p-0'
+        }
+        
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
 
         return  `<div class="col mb-4" >
                     <div class="card bg-dark text-white">
-                        <img src="${newsItem.image}" class="card-img-top" alt="Article image">
+                        <img src="${imageSource}" class="card-img-top ${extraPadding}" alt="Article image">
                         <div class="card-body">
                             <h5 class="card-title">${newsItem.source}</h5>
                             <p class="card-text">${newsItem.headline}</p>
@@ -278,7 +285,13 @@ function stockDataToDocument(entry) {
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
             quoteDataVariables(stockData);
-            $('#company-logo').attr('src',stockData.logo.url);
+            if ($('#testAPISwitch').is(':checked')) {
+                $('#company-logo').attr('src','assets/images/logo/white_logo_transparent_symbol.png');
+                $('#company-logo').removeClass('img-thumbnail bg-light');
+            } else {
+                $('#company-logo').attr('src',stockData.logo.url);
+                $('#company-logo').addClass('img-thumbnail bg-light');
+            }
             profileData(stockData);
             createStockChart(stockData, company);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
