@@ -4,12 +4,12 @@
 // https://sandbox.iexapis.com/stable/search/{fragment}?token=Tpk_2cb28d1e81034940b4058a5d063b25a5
 
 
-function addActive(x) {
+function addActive(x, focus) {
     if (!x) return false;
     removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");
+    if (focus >= x.length) focus = 0;
+    if (focus < 0) focus = (x.length - 1);
+    x[focus].classList.add("autocomplete-active");
 }
 function removeActive(x) {
     for (var i = 0; i < x.length; i++) {
@@ -50,23 +50,22 @@ function searchStockInformation(event) {
                 if (!val) { return false;}
                 currentFocus = -1;
                 a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("id", document.getElementById('symbolInputText').id + "autocomplete-list");
                 a.setAttribute("class", "autocomplete-items");
                 document.getElementById('symbolInputText').parentNode.appendChild(a);
-                for (i = 0; i < 6; i++) {
+                for (i = 0; i < 5; i++) {
                     var suggestedSymbol = suggestedStocksArray[i].symbol.toString()
-                    console.log(suggestedSymbol)
-                    if (suggestedSymbol.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + suggestedSymbol.substr(0, val.length) + "</strong>";
-                        b.innerHTML += suggestedSymbol.substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='"+suggestedSymbol+"'>";
-                        b.addEventListener("click", function(e) {
-                            $("#symbolInputText").val(this.getElementsByTagName("input")[0].value);
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                    }
+                    var suggestedName = suggestedStocksArray[i].securityName.toString()
+                    
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<span class='text-bold'>" + suggestedSymbol.substr(0, val.length) + "</span>";
+                    b.innerHTML += suggestedSymbol.substr(val.length)+" - "+suggestedName;
+                    b.innerHTML += "<input type='hidden' value='"+suggestedSymbol+"'>";
+                    b.addEventListener("click", function(e) {
+                        $("#symbolInputText").val(this.getElementsByTagName("input")[0].value);
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
                 }
             }
         )
@@ -75,10 +74,10 @@ function searchStockInformation(event) {
             if (x) x = x.getElementsByTagName("div");
             if (e.keyCode == 40) {
                 currentFocus++;
-                addActive(x);
+                addActive(x, currentFocus);
             } else if (e.keyCode == 38) {
                 currentFocus--;
-                addActive(x);
+                addActive(x, currentFocus);
             } else if (e.keyCode == 13) {
                 e.preventDefault();
                 if (currentFocus > -1) {

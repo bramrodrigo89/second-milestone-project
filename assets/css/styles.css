@@ -145,6 +145,7 @@ input[type=submit] {
   cursor: pointer;
   background-color: #fff;
   border-bottom: 1px solid #d4d4d4;
+  color: #585656
 }
 .autocomplete-items div:hover {
   background-color: #e9e9e9;
