@@ -37,21 +37,24 @@ function watchListTableHTML() {
                     var textColor=''
                     var signPlusMinus = ''
                     if (changeWatchList<0) {
-                        var textColor='bg-danger text-white'
+                        var textColor='badge-danger'
                         var signPlusMinus=''
-                    } else {
-                        var textColor='bg-success text-white'
+                    } else  if (changeWatchList>0){
+                        var textColor='badge-success'
                         var signPlusMinus='+'
+                    } else {
+                        var textColor='badge-secondary'
+                        var signPlusMinus=''
                     }
                     priceChangesArray.push(changeWatchList);
                     percentChangesArray.push(changePercentWatchList)
-                    stockRow.push(`<th>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeWatchList} US$</span></td><td class="text-center"><span class='${textColor}'>${changePercentWatchList.toFixed(2)}%</span></td>`);
+                    stockRow.push(`<th>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList} US$ <span class='badge ${textColor}'> ${signPlusMinus} ${changeWatchList} US$ (${changePercentWatchList.toFixed(2)}%) </span></td><td class="text-center">Total here!</td><td class="text-center">More Info</td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
 
                 el.innerHTML = `<table class="table table-dark table-hover my-4">
-                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th><th class="text-center">Change Percent</th></tr></thead>
+                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Title</th><th class="text-center">Title</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
                 // Calculate average of price changes from WatchList
@@ -65,8 +68,10 @@ function watchListTableHTML() {
                 var averagePercentChange = totalPercentChanges / percentChangesArray.length;
                 if (averagePriceChange > 0) {
                     $('.badge-my-watch-list').addClass('badge-success')
-                } else {
+                } else if (averagePriceChange < 0) {
                     $('.badge-my-watch-list').addClass('badge-danger')
+                } else {
+                    $('.badge-my-watch-list').addClass('badge-secondary')
                 }
                 $('#my-price-changes-average').html(averagePriceChange.toFixed(2))
                 $('#my-change-percent-average').html(averagePercentChange.toFixed(2))
