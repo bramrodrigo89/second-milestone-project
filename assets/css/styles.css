@@ -102,10 +102,14 @@ body {
 /* Watch List */
 
 .table th, .table td {
-    padding: .2rem;
+    padding: .4rem;
     font-size: 0.9rem;
     vertical-align: middle;
     text-align: center;
+}
+
+.clickable-row {
+    max-width: 100%;
 }
 
 /* Autocomplete Menu List (taken from W3Schools https://www.w3schools.com/howto/howto_js_autocomplete.asp) */
