@@ -26,6 +26,10 @@ function watchListTableHTML() {
                 var tableData =  response
                 var priceChangesArray = []
                 var percentChangesArray = []
+                var gainChangesArray = []
+                var percentGainChangesArray = []
+                var totalGainsArray = []
+                var j=0
                 for (let elem in tableData) {
                     var stockRow=[]
                     var stockObject = tableData[elem]
@@ -34,49 +38,76 @@ function watchListTableHTML() {
                     var latestPriceWatchList = stockObject.quote.latestPrice
                     var changeWatchList = stockObject.quote.change
                     var changePercentWatchList = stockObject.quote.changePercent*100
-                    var textColor=''
+                    var badgeColor=''
                     var signPlusMinus = ''
+                    var numberShares = watchListArray[j].units
+                    var total
                     if (changeWatchList<0) {
-                        var textColor='badge-danger'
+                        var badgeColor='badge-danger'
                         var signPlusMinus=''
                     } else  if (changeWatchList>0){
-                        var textColor='badge-success'
+                        var badgeColor='badge-success'
                         var signPlusMinus='+'
                     } else {
-                        var textColor='badge-secondary'
-                        var signPlusMinus=''
+                        var badgeColor='badge-secondary'
+                        var signPlusMinus='0.00'
                     }
+                    
                     priceChangesArray.push(changeWatchList);
-                    percentChangesArray.push(changePercentWatchList)
-                    stockRow.push(`<th>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</th><td class='text-center'>${latestPriceWatchList} US$ <span class='badge ${textColor}'> ${signPlusMinus} ${changeWatchList} US$ (${changePercentWatchList.toFixed(2)}%) </span></td><td class="text-center">Total here!</td><td class="text-center">More Info</td>`);
+                    percentChangesArray.push(changePercentWatchList);
+                    totalGainsArray.push(latestPriceWatchList*numberShares);
+                    gainChangesArray.push(changeWatchList*numberShares);
+                    percentGainChangesArray.push(changePercentWatchList*numberShares);
+
+                    stockRow.push(`<th><i class="fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</td><td class='text-center'>${numberShares}</td><td class='text-center'>${latestPriceWatchList} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList} US$<br>(${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">Total here!</td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
+                    j++
                 }
                 var rowsHTML = Object.values(stockRows).join(' ');
 
                 el.innerHTML = `<table class="table table-dark table-hover my-4">
-                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Title</th><th class="text-center">Title</th></tr></thead>
+                                    <thead><tr><th></th><th>Name</th><th>Shares</th><th class="text-center">Price</th><th class="text-center">Total</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
                 // Calculate average of price changes from WatchList
                 var totalPriceChanges = 0;
                 var totalPercentChanges = 0;
+                var totalDailyGain = 0;
+                var totalChangeGain = 0;
+                var totalPercentageGain = 0;
+
+                // calculation of daily average and total gain
                 for(var i = 0; i < priceChangesArray.length; i++) {
                     totalPriceChanges += priceChangesArray[i];
-                    totalPercentChanges+= percentChangesArray[i];
+                    totalPercentChanges += percentChangesArray[i];
+                    totalDailyGain += totalGainsArray[i];
+                    totalChangeGain += gainChangesArray[i];
+                    totalPercentageGain += percentGainChangesArray[i];
                 }
                 var averagePriceChange = totalPriceChanges / priceChangesArray.length;
                 var averagePercentChange = totalPercentChanges / percentChangesArray.length;
+                var averageChangeGain = totalChangeGain / gainChangesArray.length;
+                var averagePercentageGain = totalPercentageGain / percentGainChangesArray.length;
+
                 if (averagePriceChange > 0) {
-                    $('.badge-my-watch-list').addClass('badge-success')
+                    $('.badge-my-watch-list-average').addClass('badge-success')
+                    $('.my-daily-gain-or-loss').addClass('text-success')
                 } else if (averagePriceChange < 0) {
-                    $('.badge-my-watch-list').addClass('badge-danger')
+                    $('.badge-my-watch-list-average').addClass('badge-danger')
+                    $('.my-daily-gain-or-loss').addClass('text-danger')
                 } else {
-                    $('.badge-my-watch-list').addClass('badge-secondary')
+                    $('.badge-my-watch-list-average').addClass('badge-secondary')
+                    $('.my-daily-gain-or-loss').addClass('text-secondary')
                 }
+
+                // Set calculated values into the page
                 $('#my-price-changes-average').html(averagePriceChange.toFixed(2))
                 $('#my-change-percent-average').html(averagePercentChange.toFixed(2))
-                
-               
+                $('#my-shares-total').html(totalDailyGain.toFixed(2));
+                $('#my-daily-gain-change').html(averageChangeGain.toFixed(2));
+                $('#my-daily-gain-percent').html(averagePercentageGain.toFixed(2));
+
+                // function to set a local stored variable when one of the rows is clicked to be searched on index.html
                 $('.clickable-row').click(function() {
                     var watchedStockToLookUp = $(this).find('.watched-stock-symbol-table').html()
                     window.location = $(this).data("href");

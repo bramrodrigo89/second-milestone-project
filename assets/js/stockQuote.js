@@ -215,9 +215,10 @@ function profileData(data) {
 
 // Object constructor for currently displayed stocks
 
-function CurrentStock (sym,company) {
+function CurrentStock (sym,company,amount) {
     this.symbol = sym;
     this.name = company;
+    this.units = amount
 }
 
 // Check if stock is already in watch list
@@ -307,7 +308,7 @@ function stockDataToDocument(entry) {
                     }
                 )
             });
-            var displayedStock = JSON.parse(JSON.stringify(new CurrentStock ($('#company-symbol').html(),$('.company-name').html()))); 
+            var displayedStock = JSON.parse(JSON.stringify(new CurrentStock ($('#company-symbol').html(),$('.company-name').html(),1))); 
             
             if (isStockWatched(watchListArray, displayedStock, company)) {
                 $('#text-before-star').html('Remove from my ');
@@ -330,7 +331,7 @@ $('#watch-list-star').click(function(){
     var company_name = $('.company-name').html();
     var company_symbol = $('#company-symbol').html();
     var companySymbolLowerCase = company_symbol.toLowerCase();
-    var selectedStock = JSON.parse(JSON.stringify(new CurrentStock (company_symbol,company_name)));
+    var selectedStock = JSON.parse(JSON.stringify(new CurrentStock (company_symbol,company_name,1)));
     var stockInWatchList = isStockWatched(watchListArray,selectedStock,companySymbolLowerCase);
     if (stockInWatchList) {
         $('#text-before-star').html('Add to my ');
