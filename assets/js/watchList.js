@@ -59,7 +59,7 @@ function watchListTableHTML() {
                     gainChangesArray.push(changeWatchList*numberShares);
                     percentGainChangesArray.push(changePercentWatchList*numberShares);
 
-                    stockRow.push(`<th><i class="fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</td><td class='text-center'>${numberShares}</td><td class='text-center'>${latestPriceWatchList} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList} US$<br>(${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">Total here!</td>`);
+                    stockRow.push(`<th><i class="fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) ${companyNameWatchList}</td><td class='text-center'>${numberShares}</td><td class='text-center'>${latestPriceWatchList} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList} US$<br>(${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">${latestPriceWatchList*numberShares} <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList*numberShares} US$</span></td>`);
                     stockRows.push(`<tr class='clickable-row' data-href='index.html'>${stockRow}</tr>`);
                     j++
                 }
@@ -69,6 +69,7 @@ function watchListTableHTML() {
                                     <thead><tr><th></th><th>Name</th><th>Shares</th><th class="text-center">Price</th><th class="text-center">Total</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`
+
                 // Calculate average of price changes from WatchList
                 var totalPriceChanges = 0;
                 var totalPercentChanges = 0;
@@ -91,13 +92,13 @@ function watchListTableHTML() {
 
                 if (averagePriceChange > 0) {
                     $('.badge-my-watch-list-average').addClass('badge-success')
-                    $('.my-daily-gain-or-loss').addClass('text-success')
+                    $('#my-daily-gain-or-loss').addClass('text-success')
                 } else if (averagePriceChange < 0) {
                     $('.badge-my-watch-list-average').addClass('badge-danger')
-                    $('.my-daily-gain-or-loss').addClass('text-danger')
+                    $('#my-daily-gain-or-loss').addClass('text-danger')
                 } else {
                     $('.badge-my-watch-list-average').addClass('badge-secondary')
-                    $('.my-daily-gain-or-loss').addClass('text-secondary')
+                    $('#my-daily-gain-or-loss').addClass('text-secondary')
                 }
 
                 // Set calculated values into the page
