@@ -22,13 +22,13 @@ function calculateAverages(arr1, arr2, arr3, arr4, arr5, totalUnits) {
     var averagePercentageGain = (totalChangeGain*100)/(totalDailyGain - totalChangeGain)
 
     // Set text and badge colors depending on calcultion results
-    if (averagePriceChange > 0) {
+    if (averageChangeGain > 0) {
         $('.badge-my-watch-list-average').addClass('badge-success');
         $('.badge-my-watch-list-average').removeClass('badge-danger');
         $('#my-daily-gain-or-loss').addClass('text-success');
         $('#my-daily-gain-or-loss').removeClass('text-danger');
         $('.plus-or-minus-gain').html('+');
-    } else if (averagePriceChange < 0) {
+    } else if (averageChangeGain < 0) {
         $('.badge-my-watch-list-average').addClass('badge-danger');
         $('.badge-my-watch-list-average').removeClass('badge-success');
         $('#my-daily-gain-or-loss').addClass('text-danger');
@@ -36,7 +36,9 @@ function calculateAverages(arr1, arr2, arr3, arr4, arr5, totalUnits) {
         $('.plus-or-minus-gain').html('');
     } else {
         $('.badge-my-watch-list-average').addClass('badge-secondary');
+        $('.badge-my-watch-list-average').removeClass('badge-danger badge-success');
         $('#my-daily-gain-or-loss').addClass('text-secondary');
+        $('#my-daily-gain-or-loss').removeClass('text-danger text-success');
         $('.plus-or-minus-gain').html('');
     }
 
@@ -100,7 +102,7 @@ function watchListTableHTML() {
                         var signPlusMinus = '+'
                     } else {
                         var badgeColor = 'badge-secondary'
-                        var signPlusMinus = '0.00'
+                        var signPlusMinus = ''
                     }
 
                     priceChangesArray.push(changeWatchList * numberShares);
