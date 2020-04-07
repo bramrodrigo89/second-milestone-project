@@ -1,6 +1,6 @@
 // create table using data from watch list array
 
-function calculateAverages(arr1, arr2, arr3, arr4, arr5) {
+function calculateAverages(arr1, arr2, arr3, arr4, arr5, totalUnits) {
     // Calculate average of price changes from WatchList
     var totalPriceChanges = 0;
     var totalPercentChanges = 0;
@@ -16,20 +16,28 @@ function calculateAverages(arr1, arr2, arr3, arr4, arr5) {
         totalChangeGain += arr4[i];
         totalPercentageGain += arr5[i];
     }
-    var averagePriceChange = totalPriceChanges / arr1.length;
-    var averagePercentChange = totalPercentChanges / arr2.length;
+    var averagePriceChange = totalPriceChanges / totalUnits;
+    var averagePercentChange = totalPercentChanges / totalUnits;
     var averageChangeGain = totalChangeGain 
-    var averagePercentageGain = totalPercentageGain / arr5.length;
+    var averagePercentageGain = (totalChangeGain*100)/(totalDailyGain - totalChangeGain)
 
+    // Set text and badge colors depending on calcultion results
     if (averagePriceChange > 0) {
-        $('.badge-my-watch-list-average').addClass('badge-success')
-        $('#my-daily-gain-or-loss').addClass('text-success')
+        $('.badge-my-watch-list-average').addClass('badge-success');
+        $('.badge-my-watch-list-average').removeClass('badge-danger');
+        $('#my-daily-gain-or-loss').addClass('text-success');
+        $('#my-daily-gain-or-loss').removeClass('text-danger');
+        $('.plus-or-minus-gain').html('+');
     } else if (averagePriceChange < 0) {
-        $('.badge-my-watch-list-average').addClass('badge-danger')
-        $('#my-daily-gain-or-loss').addClass('text-danger')
+        $('.badge-my-watch-list-average').addClass('badge-danger');
+        $('.badge-my-watch-list-average').removeClass('badge-success');
+        $('#my-daily-gain-or-loss').addClass('text-danger');
+        $('#my-daily-gain-or-loss').removeClass('text-success');
+        $('.plus-or-minus-gain').html('');
     } else {
-        $('.badge-my-watch-list-average').addClass('badge-secondary')
-        $('#my-daily-gain-or-loss').addClass('text-secondary')
+        $('.badge-my-watch-list-average').addClass('badge-secondary');
+        $('#my-daily-gain-or-loss').addClass('text-secondary');
+        $('.plus-or-minus-gain').html('');
     }
 
     // Set calculated values into the page
@@ -64,13 +72,15 @@ function watchListTableHTML() {
         ).then(
             function (response) {
                 
-                var tableData = response
-                var priceChangesArray = []
-                var percentChangesArray = []
-                var gainChangesArray = []
-                var percentGainChangesArray = []
-                var totalGainsArray = []
-                var counter = 0
+                var tableData = response;
+                var priceChangesArray = [];
+                var percentChangesArray = [];
+                var gainChangesArray = [];
+                var percentGainChangesArray = [];
+                var totalGainsArray = [];
+                var totalshares;
+                var counter = 0;
+                var totalShares = 0;
                 for (let elem in tableData) {
                     var stockRow = []
                     var stockObject = tableData[elem]
@@ -82,7 +92,6 @@ function watchListTableHTML() {
                     var badgeColor = ''
                     var signPlusMinus = ''
                     var numberShares = watchListArray[counter].units
-                    var total
                     if (changeWatchList < 0) {
                         var badgeColor = 'badge-danger'
                         var signPlusMinus = ''
@@ -94,11 +103,12 @@ function watchListTableHTML() {
                         var signPlusMinus = '0.00'
                     }
 
-                    priceChangesArray.push(changeWatchList);
-                    percentChangesArray.push(changePercentWatchList);
+                    priceChangesArray.push(changeWatchList * numberShares);
+                    percentChangesArray.push(changePercentWatchList * numberShares);
                     totalGainsArray.push(latestPriceWatchList * numberShares);
                     gainChangesArray.push(changeWatchList * numberShares);
                     percentGainChangesArray.push(changePercentWatchList * numberShares);
+                    totalShares+=numberShares
 
                     stockRow.push(`<th><i class="far fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td class='clickable-row' data-href='index.html'>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) <span class='watched-stock-name-table'>${companyNameWatchList}</span></td><td>${numberShares}<div style="min-width:80px"> <i class="fas fa-plus-circle mx-1 text-large text-info"></i> <i class="fas fa-minus-circle mx-1 text-large text-info"></i></div></td><td class='text-center'>${latestPriceWatchList.toFixed(2)} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList.toFixed(2)} US$ (${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">${latestPriceWatchList.toFixed(2) * numberShares} US$ <br><span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList.toFixed(2) * numberShares} US$</span></td>`);
                     stockRows.push(`<tr class="table-stock-row">${stockRow}</tr>`);
@@ -111,12 +121,12 @@ function watchListTableHTML() {
                                                     <tbody>${rowsHTML}</tbody>
                                                 </table>`);
 
-                calculateAverages(priceChangesArray, percentChangesArray, totalGainsArray, gainChangesArray, percentGainChangesArray);
+                calculateAverages(priceChangesArray, percentChangesArray, totalGainsArray, gainChangesArray, percentGainChangesArray,totalShares);
 
             }, function (errorResponse) { console.log('Error loading data') }
         );
     } else {
-        return ``
+        return `<p>Your Watch List is currently empty. Start adding some stocks or ETFs from the Stock Quote page</p>`
     }
 }
 
@@ -169,9 +179,15 @@ $(document).on('click', '.fa-minus-circle', function () {
     var rowLocation = $(this).closest('.table-stock-row');
     var companySelected = rowLocation.find('.watched-stock-symbol-table').html();
     var stockIndexInArray = watchListArray.findIndex(obj => obj.symbol === companySelected)
-    watchListArray[stockIndexInArray].units--
-    localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
-    $('#my-watch-list-table').html(watchListTableHTML());
+    if(watchListArray[stockIndexInArray].units>0) {
+        watchListArray[stockIndexInArray].units--
+        localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
+        $('#my-watch-list-table').html(watchListTableHTML());
+    } else if (watchListArray[stockIndexInArray].units=0) {
+        localStorage.setItem('myWatchList', JSON.stringify(watchListArray));
+        $('#my-watch-list-table').html(watchListTableHTML());
+    }
+    
 });
 
 // Functions called after the document is finished loading
