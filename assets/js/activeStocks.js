@@ -59,21 +59,24 @@ function etfsListTableHTML() {
                 var latestPriceEtf = etfObject.quote.latestPrice;
                 var changeEtf = etfObject.quote.change;
                 var changePercentEtf = etfObject.quote.changePercent*100;
-                var textColor='';
+                var badgeColor='';
                 var signPlusMinus = '';
-                if (changeEtf<0) {
-                    var textColor='bg-danger text-white';
+                if (changeEtf<0.0) {
+                    var badgeColor='badge-danger';
                     var signPlusMinus='';
-                } else {
-                    var textColor='bg-success text-white';
+                } else if (changeEtf>0.001) {
+                    var badgeColor='badge-success';
                     var signPlusMinus='+';
+                } else {
+                    var badgeColor='badge-secondary';
+                    var signPlusMinus='';
                 }
-                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf}</td><td class="text-center"><span class='${textColor}'>${signPlusMinus} ${changeEtf} US$</span> <span class='${textColor}'>(${changePercentEtf.toFixed(2)}%)</span></td>`);
+                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf.toFixed(2)} US$ <span class='badge ${badgeColor}'>${signPlusMinus} ${changeEtf.toFixed(2)} US$ (<span class='change-percent-etf'>${changePercentEtf.toFixed(2)}</span>%)</span></td><td class=""></td>`);
                 etfsRows.push(`<tr class='clickable-row' data-href='index.html'>${etfRow}</tr>`);
                 } 
                 var rowsHTML = Object.values(etfsRows).join(' ');
                 el.innerHTML = `<table class="table table-dark table-hover my-4">
-                                    <thead><tr><th>Name</th><th class="text-center">Latest Price</th><th class="text-center">Change</th></tr></thead>
+                                    <thead><tr><th>Name</th><th class="">Latest Price</th><th class="">Change</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`;
                 $('.clickable-row').click(function() {
@@ -125,6 +128,19 @@ focusScrollMethod = function getFocus() {
     document.getElementById("testAPISwitch").focus({preventScroll:false});
 };
 
+$("#testAPISwitch").click(function(){
+    
+    if ($('#search-stock-information').hasClass('d-none')) {
+        activestocksToDocument();
+        etfsListTableHTML();
+    } else {
+        var symbolToLookUp = $('#company-symbol').html();
+        stockDataToDocument(symbolToLookUp);
+        activestocksToDocument();
+        etfsListTableHTML();
+    }
+    
+});
 // Functions to call when page is complete 
 
 $(document).ready(function() {

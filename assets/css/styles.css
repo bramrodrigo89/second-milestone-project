@@ -163,7 +163,11 @@ input[type=submit] {
 /* Footer */
 
 footer {
-    background-color: grey;
+    background-color: #3c3f42
+}
+
+.footer-copyright {
+    background-color: #212325
 }
 
 

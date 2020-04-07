@@ -39,6 +39,9 @@ function calculateAverages(arr1, arr2, arr3, arr4, arr5, totalUnits) {
         $('.badge-my-watch-list-average').removeClass('badge-danger badge-success');
         $('#my-daily-gain-or-loss').addClass('text-secondary');
         $('#my-daily-gain-or-loss').removeClass('text-danger text-success');
+        var averagePercentageGain = 0.00
+        var averagePriceChange = 0.00
+        var averagePercentChange = 0.00
         $('.plus-or-minus-gain').html('');
     }
 
@@ -94,6 +97,8 @@ function watchListTableHTML() {
                     var badgeColor = ''
                     var signPlusMinus = ''
                     var numberShares = watchListArray[counter].units
+                    var totalAmountShares = latestPriceWatchList*numberShares
+                    var totalChangeShares = changeWatchList*numberShares
                     if (changeWatchList < 0) {
                         var badgeColor = 'badge-danger'
                         var signPlusMinus = ''
@@ -112,7 +117,7 @@ function watchListTableHTML() {
                     percentGainChangesArray.push(changePercentWatchList * numberShares);
                     totalShares+=numberShares
 
-                    stockRow.push(`<th><i class="far fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td class='clickable-row' data-href='index.html'>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) <span class='watched-stock-name-table'>${companyNameWatchList}</span></td><td>${numberShares}<div style="min-width:80px"> <i class="fas fa-plus-circle mx-1 text-large text-info"></i> <i class="fas fa-minus-circle mx-1 text-large text-info"></i></div></td><td class='text-center'>${latestPriceWatchList.toFixed(2)} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList.toFixed(2)} US$ (${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">${latestPriceWatchList.toFixed(2) * numberShares} US$ <br><span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList.toFixed(2) * numberShares} US$</span></td>`);
+                    stockRow.push(`<th><i class="far fas fa-star mx-2 text-warning text-large star-watch-list"></i></th><td class='clickable-row' data-href='index.html'>(<span class='watched-stock-symbol-table'>${companySymbolWatchList}</span>) <span class='watched-stock-name-table'>${companyNameWatchList}</span></td><td>${numberShares}<div style="min-width:80px"> <i class="fas fa-plus-circle mx-1 text-large text-info"></i> <i class="fas fa-minus-circle mx-1 text-large text-info"></i></div></td><td class='text-center'>${latestPriceWatchList.toFixed(2)} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${changeWatchList.toFixed(2)} US$ (${changePercentWatchList.toFixed(2)}%)</span></td><td class="text-center">${totalAmountShares.toFixed(2)} US$ <span class='badge mx-2 ${badgeColor}'> ${signPlusMinus} ${totalChangeShares.toFixed(2)} US$</span></td>`);
                     stockRows.push(`<tr class="table-stock-row">${stockRow}</tr>`);
                     counter++
                 }
@@ -137,6 +142,7 @@ function watchListTableHTML() {
 $('#my-watch-list-table').html(watchListTableHTML());
 
 // function to remove stock from WatchListArray using the star icon
+
 $(document).on('click', '.star-watch-list', function () {
     if ($(this).hasClass('fas')) {
         $(this).removeClass('fas');
