@@ -67,10 +67,11 @@ function newsArticlesHTML(news) {
 
 // create graph with obtained data
 
-function createStockChart(data, company) {
+function createStockChart(data, company, priceChange) {
     var graphData = data.chart;
     var timeLabels = [];
     var graphDataSet = [];
+    var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : 'rgb(221, 53, 68)' 
 
     graphData.forEach(function (item) {
         timeLabels.push(item.label);
@@ -87,8 +88,9 @@ function createStockChart(data, company) {
             datasets: [{
                 label: company,
                 backgroundColor: 'rgba(83, 207, 85, 0)',
-                borderColor: 'rgb(83, 207, 85)',
-                data: graphDataSet
+                borderColor: lineColor,
+                data: graphDataSet,
+                
             }]
         },
 
@@ -285,6 +287,7 @@ function stockDataToDocument(entry) {
             setTimeout(normalSearchButton,900)
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
+            var stockPriceChange =stockData.quote.change
             quoteDataVariables(stockData);
             if ($('#testAPISwitch').is(':checked')) {
                 $('#company-logo').attr('src','assets/images/logo/white_logo_transparent_symbol.png');
@@ -294,7 +297,7 @@ function stockDataToDocument(entry) {
                 $('#company-logo').addClass('img-thumbnail bg-light');
             }
             profileData(stockData);
-            createStockChart(stockData, company);
+            createStockChart(stockData, company, stockPriceChange);
             $('#news-ticker').html(newsArticlesHTML(stockData.news));
             $('.update-chart-button').click(function(){
                 var range = this.innerText.toLowerCase();

@@ -51,6 +51,7 @@ function etfsListTableHTML() {
         function(response) {
             var el = document.getElementById('popular-etfs-list');
             var tableData =  response;
+            console.log(tableData)
             for (let elem in tableData) {
                 var etfRow=[];
                 var etfObject = tableData[elem];
@@ -59,6 +60,7 @@ function etfsListTableHTML() {
                 var latestPriceEtf = etfObject.quote.latestPrice;
                 var changeEtf = etfObject.quote.change;
                 var changePercentEtf = etfObject.quote.changePercent*100;
+                var ytdChange = etfObject.quote.ytdChange*100;
                 var badgeColor='';
                 var signPlusMinus = '';
                 if (changeEtf<0.0) {
@@ -71,12 +73,12 @@ function etfsListTableHTML() {
                     var badgeColor='badge-secondary';
                     var signPlusMinus='';
                 }
-                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf.toFixed(2)} US$ <span class='badge ${badgeColor}'>${signPlusMinus} ${changeEtf.toFixed(2)} US$ (<span class='change-percent-etf'>${changePercentEtf.toFixed(2)}</span>%)</span></td><td class=""></td>`);
+                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf.toFixed(2)} US$ <span class='badge ${badgeColor} mx-2'>${signPlusMinus} ${changeEtf.toFixed(2)} US$ (<span class='change-percent-etf'>${changePercentEtf.toFixed(2)}</span>%)</span></td><td class="">${ytdChange.toFixed(2)} %</td>`);
                 etfsRows.push(`<tr class='clickable-row' data-href='index.html'>${etfRow}</tr>`);
                 } 
                 var rowsHTML = Object.values(etfsRows).join(' ');
                 el.innerHTML = `<table class="table table-dark table-hover my-4">
-                                    <thead><tr><th>Name</th><th class="">Latest Price</th><th class="">Change</th></tr></thead>
+                                    <thead><tr><th>Name</th><th class="">Latest Price</th><th class="">YTD Change</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`;
                 $('.clickable-row').click(function() {
