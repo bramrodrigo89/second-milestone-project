@@ -72,7 +72,6 @@ function createStockChart(data, company, priceChange) {
     var timeLabels = [];
     var graphDataSet = [];
     var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : (priceChange<0)? 'rgb(221, 53, 68)' : 'rgb(108, 117, 126)'
-
     graphData.forEach(function (item) {
         timeLabels.push(item.label);
         graphDataSet.push(item.close)
@@ -264,7 +263,7 @@ function stockDataToDocument(entry) {
     if (!company) {
         normalSearchButton();
         $('#search-stock-information').addClass('d-none');
-        $('#exampleModal').modal('show');
+        $('#errorMessageModal').modal('show');
         return
     } else (
     $("#search-symbol-button").html(
@@ -286,6 +285,7 @@ function stockDataToDocument(entry) {
 
     ).then(
         function(response) {
+            $('.collapse').collapse('hide')
             setTimeout(normalSearchButton,900)
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
@@ -308,7 +308,6 @@ function stockDataToDocument(entry) {
                 ).then(
                     function (response) {
                         stockChart.destroy();
-                        stockChart.destroy();
                         var updatedChartData = response;
                         var updatedStockPriceChange = $('#price-change').html()
                         console.log(updatedChartData);
@@ -328,7 +327,7 @@ function stockDataToDocument(entry) {
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
             normalSearchButton()
-            $('#exampleModal').modal('show');
+            $('#errorMessageModal').modal('show');
         }
     )
 }

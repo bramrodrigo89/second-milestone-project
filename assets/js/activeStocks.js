@@ -129,6 +129,11 @@ focusScrollMethod = function getFocus() {
     document.getElementById("testAPISwitch").focus({preventScroll:false});
 };
 
+$("#testAPISwitch").hover(function () {
+    console.log('whatever');
+    $('[data-toggle="tooltip"]').tooltip('show')
+})
+
 $("#testAPISwitch").click(function(){
     
     if ($('#search-stock-information').hasClass('d-none')) {
@@ -148,5 +153,6 @@ $(document).ready(function() {
     activestocksToDocument();
     etfsListTableHTML();
 });
+
 
 
