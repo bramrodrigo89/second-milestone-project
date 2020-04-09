@@ -71,7 +71,7 @@ function createStockChart(data, company, priceChange) {
     var graphData = data.chart;
     var timeLabels = [];
     var graphDataSet = [];
-    var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : 'rgb(221, 53, 68)' 
+    var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : (priceChange<0)? 'rgb(221, 53, 68)' : 'rgb(108, 117, 126)'
 
     graphData.forEach(function (item) {
         timeLabels.push(item.label);
@@ -98,7 +98,8 @@ function createStockChart(data, company, priceChange) {
             legend: {
                 display: false,
             },
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            pointRadius:0
         }
     })
 
@@ -110,23 +111,24 @@ function quoteDataVariables(data) {
 
     var quoteData = data.quote;
     var latest_price = quoteData.latestPrice.toFixed(2);
-    var price_change = quoteData.change.toFixed(2);
-    var price_change_percent = quoteData.changePercent * 100;
+    var price_change = (quoteData.change==null)? 0.00 : quoteData.change;
+    var price_change_percent = (quoteData.changePercent==null)? 0.00 : quoteData.changePercent*100;
     var market_cap = (quoteData.marketCap / Math.pow(10, 9)).toFixed(1);
     var avg_total_volume = quoteData.avgTotalVolume.toLocaleString();
     var latest_time = quoteData.latestTime.toLocaleString();
     var ytd_change = quoteData.ytdChange*100;
+    var previous_close = (quoteData.previousClose==null)? 0.00 : quoteData.previousClose;
     
     var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
 
     $('.company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
     $('#last-price').html(latest_price);    
-    $('#price-change').html(price_change);
+    $('#price-change').html(price_change.toFixed(2));
     $('#52-week-range').html(`${quoteData.week52Low} - ${quoteData.week52High}`);
     $('#primary-exchange').html(quoteData.primaryExchange)
     $('#price-change-percent').html(price_change_percent.toFixed(2));
-    $('#previous-close').html(quoteData.previousClose.toFixed(2));
+    $('#previous-close').html(previous_close.toFixed(2));
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
@@ -146,10 +148,10 @@ function quoteDataVariables(data) {
         $('.green-or-red').addClass('text-danger');
         $('.green-or-red').removeClass('text-success text-secondary');
         $('#plus-or-minus').html('');
-    } else if (!price_change) {
+    } else if (price_change == 0) {
         $('.green-or-red').addClass('text-secondary');
         $('.green-or-red').removeClass('text-success text-danger');
-        $('#plus-or-minus').html('0.00');
+        $('#plus-or-minus').html('');
     }
     
     if (quoteData.isUSMarketOpen === true) {
@@ -287,7 +289,7 @@ function stockDataToDocument(entry) {
             setTimeout(normalSearchButton,900)
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
-            var stockPriceChange =stockData.quote.change
+            var stockPriceChange = (stockData.quote.change==null)? 0.00 : stockData.quote.change
             quoteDataVariables(stockData);
             if ($('#testAPISwitch').is(':checked')) {
                 $('#company-logo').attr('src','assets/images/logo/white_logo_transparent_symbol.png');
@@ -306,8 +308,11 @@ function stockDataToDocument(entry) {
                 ).then(
                     function (response) {
                         stockChart.destroy();
+                        stockChart.destroy();
                         var updatedChartData = response;
-                        createStockChart(updatedChartData, company);
+                        var updatedStockPriceChange = $('#price-change').html()
+                        console.log(updatedChartData);
+                        createStockChart(updatedChartData, company,updatedStockPriceChange);
                     }
                 )
             });

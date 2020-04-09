@@ -63,34 +63,42 @@
 		<div class="row large-row">
 			<div class=" col-12 px-4 center-form my-4">
                 <div class="container">
-				<form autocomplete="off" action="/action_page.php">
-					<div class="form-row align-items-center">
-						<div class="col-12 col-md-6 mt-auto">
-							<label for="symbolInputText">Search for any stock quote by entering the stock symbol. For example: Symbol 'GOOGL' for Alphabet Inc.</label>
-							<div class="autocomplete">
-                                <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here" oninput="searchStockInformation()">
-	                        </div>
-						</div>
-						<div class="col-auto mb-auto mb-md-0 mt-md-auto" id='search-symbol-button'>
-							<button id='search-stockSymbol-button' type="submit" class="btn btn-info mt-2" onclick="stockDataToDocument()">Search</button>
-						</div>
-						<div class="col-auto ml-auto mt-2 mb-0">
-                            
-							<div class="custom-control custom-switch mt-auto">
-								<input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
-								<label class="custom-control-label" for="testAPISwitch">Activate Sandbox Mode</label>
-							</div>
-							<div class="form-check"></div>
-                            <div class="text-right mr-0">
-                                <button id="help-button" type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#collapseHelpInstructions" aria-expanded="false" aria-controls="collapseHelpInstructions">Help</button>
+                    <form autocomplete="off" action="/action_page.php">
+                        <div class="form-row align-items-center">
+                            <div class="col-12 col-md-6 mt-auto">
+                                <label for="symbolInputText">Search for any stock quote by entering the stock symbol. For example: Symbol 'GOOGL' for Alphabet Inc.</label>
+                                <div class="autocomplete">
+                                    <input type="text" class="form-control" id="symbolInputText" placeholder="Enter here" oninput="searchStockInformation()">
+                                </div>
                             </div>
-						</div>
-					</div>
-				</form>
+                            <div class="col-auto mb-auto mb-md-0 mt-md-auto" id='search-symbol-button'>
+                                <button id='search-stockSymbol-button' type="submit" class="btn btn-info mt-2" onclick="stockDataToDocument()">Search</button>
+                            </div>
+                            <div class="col-auto ml-auto mt-2 mb-0">
+                                
+                                <div class="custom-control custom-switch mt-auto">
+                                    <input checked type="checkbox" class="custom-control-input" id="testAPISwitch">
+                                    <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Mode</label>
+                                </div>
+                                <div class="form-check"></div>
+                                <div class="text-right mr-0">
+                                    <button id="help-button" type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#collapseHelpInstructions" aria-expanded="false" aria-controls="collapseHelpInstructions">Help</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 			</div>
-		</div>
-        <div id='collapseHelpInstructions'></div>
+            <div id='collapseHelpInstructions' class="collapse col-12 px-4 my-4">
+                <div class="container">
+                    <h4>Instructions</h4>
+                    <hr class="mb-3 bg-light">
+                    <p>My Stock Dashboard helps to retrieve the most important quote data from any stock or ETF of your choice. Simply look up the stock symbol using the search bar above.  </p>
+                    <p>If you are not sure about a symbol, you can search by the company name and a list with suggestions will show underneath to help you find it. If you are interested in only the most active stocks currently in the market, click simply on one of the active stocks listed below.</p>
+                    <p>In order to add a specific stock to your Watch List symply click on the star symbol <i class="fas fa-star mx-2 text-warning text-large"></i> over the stock quote information. </p>
+                </div>
+            </div>
+        </div>
 		<div id='loading-symbol'></div>
 	</section>
     
@@ -278,10 +286,10 @@
 							<a target='blank_' href="https://iextrading.com/apps/stocks/">IEX Stocks</a>
 						</li>
 						<li>
-							<a target='blank_' href="#!">Link 3</a>
+							<a target='blank_' href="https://finance.yahoo.com/">Yahoo Finance</a>
 						</li>
 						<li>
-							<a target='blank_' href="#!">Link 4</a>
+							<a target='blank_' href="https://www.google.com/finance">Google Finance</a>
 						</li>
 					</ul>
 	

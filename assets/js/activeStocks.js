@@ -2,25 +2,25 @@
 
 function createStockCards(data) {
     var activeStockCards = data.map(function (item) {
-        var activeStockSymbol = item.symbol;
-        var activeStockName = item.companyName;
-        var activeExchange = item.primaryExchange;
-        var activeLatestPrice = item.latestPrice;
-        var activeChangePrice = item.change.toFixed(2);
-        var activeChangePercent = item.changePercent*100;
-        var lastUpdateTime = new Date(item.latestUpdate).toLocaleString("en-US").toString();
-        if (activeChangePrice > 0) {
-            var classActiveStock = 'badge-success';
-        } else if (activeChangePrice < 0) {
-            var classActiveStock = 'badge-danger';
-        } else { var classActiveStock = 'badge-secondary';}
-            return `<div class="active-stock-card card text-white bg-dark mb-3">
+    var activeStockSymbol = item.symbol;
+    var activeStockName = item.companyName;
+    var activeExchange = item.primaryExchange;
+    var activeLatestPrice = item.latestPrice;
+    var activeChangePrice = (item.change==null)? 0.00 : item.change;
+    var activeChangePercent = item.changePercent*100;
+    var lastUpdateTime = new Date(item.latestUpdate).toLocaleString("en-US").toString();
+    if (activeChangePrice > 0) {
+        var classActiveStock = 'badge-success';
+    } else if (activeChangePrice < 0) {
+        var classActiveStock = 'badge-danger';
+    } else { var classActiveStock = 'badge-secondary';}
+    return `<div class="active-stock-card card text-white bg-dark mb-3">
                         <div class="card-header">
                             ${activeExchange}
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"> ${activeStockName} (<span class='card-symbol'>${activeStockSymbol}</span>)</h5>
-                            <a href="#active-stock-information" class="badge ${classActiveStock}">${activeChangePrice} US$ (${activeChangePercent.toFixed(2)}%)</a>
+                            <a href="#active-stock-information" class="badge ${classActiveStock}">${activeChangePrice.toFixed(2)} US$ (${activeChangePercent.toFixed(2)}%)</a>
                             <p class="card-text">Last Price: <strong>${activeLatestPrice} US$</strong></p>
                         </div>
                         <div class="card-footer text-muted">
@@ -51,7 +51,6 @@ function etfsListTableHTML() {
         function(response) {
             var el = document.getElementById('popular-etfs-list');
             var tableData =  response;
-            console.log(tableData)
             for (let elem in tableData) {
                 var etfRow=[];
                 var etfObject = tableData[elem];
