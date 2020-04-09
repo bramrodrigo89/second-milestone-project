@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-auto ml-auto mt-2 mb-0">
                                 
-                                <div class="custom-control custom-switch mt-auto">
+                                <div class="custom-control custom-switch mt-auto" id="testAPISwitchContainer">
                                     <input checked type="checkbox" class="custom-control-input" id="testAPISwitch" data-toggle="tooltip" data-placement="bottom" title="Please deactivate the SandBox Mode only if company profile information or news are needed.">
                                     <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Mode</label>
                                 </div>
@@ -254,7 +254,7 @@
 			<div class="row">
 				<div class="col-12 col-md-4 mx-auto">
 					<h5 class="font-weight-bold mt-3 mb-4">My Stock Dashboard</h5>
-					<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a> a product of IEX Group, Inc.</p>
+					<p>Data provided by <a href="https://iexcloud.io." target="_blank">IEX Cloud</a> <br>a product of the IEX Group, Inc.</p>
                     <p>My Stock Dashboard is a web application created to help users understand the concept of following and watching market stocks. My Stock Dashboard allows to check the current market status, have an overview of the most active stocks and create a personal Watch List.</p>
                     <p>Do you have questions or new ideas we can implement? Contact us to let us know how we can improve!</p>
 				</div>
@@ -272,7 +272,7 @@
 							<a href="cryptocurrencies.html">Cryptocurrencies</a>
 						</li>
 						<li>
-							<a href="#">Contact Us</a>
+							<a data-toggle="modal" data-target="#ContactModal">Contact Us</a>
 						</li>
 					</ul>
 				</div>
@@ -358,11 +358,65 @@
 				<div class="modal-body">
                     <p>That did not work well!</p>
 					<p>Please enter a valid stock symbol to get a quote. For example: 'GOOGL' for Alphabet, INC.</p>
-                    <p>If you are unsure about which symbol you should enter, you can also enter a company name and a list of suggestions will pop up and then select one of the options.</p>
+                    <p>If you are unsure about which symbol you should enter, you can also a company name and a list of suggestions will pop up and then select one of the options.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary">Try again!</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Modal for sending suggestions, comments -->
+
+	<div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title general-subtitle-dark mb-0 uppercase" id="ContactModalLabel">Contact Us</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+				</div>
+				<div class="modal-body">
+					<p>Do you have any questions or comments? Let us know down below and we will be glad to conact you back soon.</p>
+					<div class="contact-form-container">
+						<form>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="contact-input-first-name">First Name</label>
+									<input type="text" class="form-control" id='contact-input-first-name' placeholder="John" required>
+							    </div>
+								<div class="form-group col-md-6">
+									<label for="contact-input-last-name">Last Name</label>
+									<input type="text" class="form-control" id="contact-input-last-name" placeholder="Smith" required>
+							    </div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="contact-input-email">Email Address</label>
+									<input type="email" class="form-control" id="contact-input-email" placeholder="john.smith@example.com" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="phone-input-country">Phone Number</label>
+									<input type="number" id="phone-input-country" class="form-control" placeholder="+1 (234) 456-7890">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="contact-form-free-text">Inquiries, comments or questions?</label>
+								<textarea rows="5" name="free-text" id="contact-form-free-text" class="form-control" placeholder="Enter your text here" required></textarea>
+							</div>
+							<div class="form-row text-center">
+								<div class="col">
+									<button type="submit" class="btn btn-info">Send Inquiry</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -378,10 +432,19 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
+    <!-- EMail JS DK -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+	<script type="text/javascript">
+		(function(){
+            emailjs.init("user_d0vr1ztDxIYK44r2o3aIv");
+		})();
+	</script>
+
     <!-- Own JavaScript files -->
 	<script defer type="text/javascript" src="assets/js/stockQuote.js"></script>
     <script defer type="text/javascript" src="assets/js/activeStocks.js"></script>
     <script defer type="text/javascript" src="assets/js/autocomplete.js"></script>
+    <script defer type="text/javascript" src="assets/js/sendEmail.js"></script>
     
 </body>
 

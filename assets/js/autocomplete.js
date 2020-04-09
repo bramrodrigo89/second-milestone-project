@@ -1,7 +1,7 @@
 
-// https://sandbox.iexapis.com/beta/ref-data/symbols?token=Tpk_2cb28d1e81034940b4058a5d063b25a5
-
-// https://sandbox.iexapis.com/stable/search/{fragment}?token=Tpk_2cb28d1e81034940b4058a5d063b25a5
+// The following code for creating an autocomplete menu list was based on the lesson "How To Autocomplete" Lesson from W3Schools
+// Code was adapted to this project's needs, though the functions share considerable similarity
+// Lesson can be found under https://www.w3schools.com/howto/howto_js_autocomplete.asp
 
 
 function addActive(x, focus) {
@@ -63,6 +63,7 @@ function searchStockInformation(event) {
                     b.innerHTML += "<input type='hidden' value='"+suggestedSymbol+"'>";
                     b.addEventListener("click", function(e) {
                         $("#symbolInputText").val(this.getElementsByTagName("input")[0].value);
+                        stockDataToDocument(this.getElementsByTagName("input")[0].value);
                         closeAllLists();
                     });
                     a.appendChild(b);
