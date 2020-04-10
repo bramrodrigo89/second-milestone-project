@@ -8,7 +8,7 @@ function createStockCards(data) {
     var activeLatestPrice = item.latestPrice;
     var activeChangePrice = (item.change==null)? 0.00 : item.change;
     var activeChangePercent = item.changePercent*100;
-    var lastUpdateTime = new Date(item.latestUpdate).toLocaleString("en-US").toString();
+    var lastUpdateTime = new Date(item.latestUpdate).toLocaleTimeString("en-US").toString();
     if (activeChangePrice > 0) {
         var classActiveStock = 'badge-success';
     } else if (activeChangePrice < 0) {
@@ -21,7 +21,7 @@ function createStockCards(data) {
                         <div class="card-body">
                             <h5 class="card-title"> ${activeStockName} (<span class='card-symbol'>${activeStockSymbol}</span>)</h5>
                             <a href="#active-stock-information" class="badge ${classActiveStock}">${activeChangePrice.toFixed(2)} US$ (${activeChangePercent.toFixed(2)}%)</a>
-                            <p class="card-text">Last Price: <strong>${activeLatestPrice} US$</strong></p>
+                            <p class="mt-2 card-text">Last Price: <strong>${activeLatestPrice} US$</strong></p>
                         </div>
                         <div class="card-footer text-muted">
                             Updated: ${lastUpdateTime}

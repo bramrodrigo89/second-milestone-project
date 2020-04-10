@@ -1,16 +1,18 @@
 function sendMail(contactForm) {
-
+   
     var templateParams = {
-        'from_firstName': contactForm.name.value, 
-        'from_lastName': contactForm.name.value, 
-        'project_request': contactForm.projectsummary.value,
-        'from_email': contactForm.email.value
-    };
+        "from_firstName": contactForm.firstName.value, 
+        "from_lastName": contactForm.lastName.value, 
+        "from_email": contactForm.email.value, 
+        "comment_question_inquiry": contactForm.freeText.value, 
+        "from_phoneNumber": contactForm.phoneNumber.value, 
+    }
     
-    emailjs.send("gmail", "rodrigoonlinecv", templateParams)
+    emailjs.send("gmail", "mystockdashboardcontactform", templateParams)
     
 	.then(
         function(response) {
+            $('#thank-you-alert').show();
 		    console.log('SUCCESS!', response.status, response.text);
         },
         function(error) {

@@ -32,7 +32,7 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-secondary">
-			<a class="navbar-brand text-questrial" href="index.html">
+			<a class="navbar-brand text-abril" href="index.html">
                 <img class="d-inline align-top d-md-none" src="assets/images/logo/white_logo_transparent_symbol.png" height="60px" alt="My Stock Dashboard Logo">
                 <img class="align-top d-none d-md-inline" src="assets/images/logo/white_logo_transparent_background_long.png" height="60px" alt="My Stock Dashboard Logo">
                 <span class="d-inline-block d-md-none text-wrap">My Stock Dashboard</span>
@@ -77,7 +77,7 @@
                             <div class="col-auto ml-auto mt-2 mb-0">
                                 
                                 <div class="custom-control custom-switch mt-auto" id="testAPISwitchContainer">
-                                    <input checked type="checkbox" class="custom-control-input" id="testAPISwitch" data-toggle="tooltip" data-placement="bottom" title="Please deactivate the SandBox Mode only if company profile information or news are needed.">
+                                    <input checked type="checkbox" class="custom-control-input" id="testAPISwitch" data-toggle="tooltip" data-placement="bottom" title="Please deactivate the SandBox Mode only if you need to read a company's profile information or stock news. Thanks for helping us keep this service for free!">
                                     <label class="custom-control-label" for="testAPISwitch">Activate Sandbox Mode</label>
                                 </div>
                                 <div class="form-check"></div>
@@ -115,8 +115,8 @@
 					<div class="jumbotron p-4 bg-dark">
 						<div class="media">
 							<div class="media-body my-auto">
-								<h2 class="text-questrial"><span class="company-name">Name</span>
-									(<span class="text-questrial" id='company-symbol'>Symbol</span>)</h2>
+								<h2 class="text-abril"><span class="company-name">Name</span>
+									(<span class="text-abril" id='company-symbol'>Symbol</span>)</h2>
 							</div>
 							<a id="company-logo-link" target="blank_" href="#"><img id='company-logo' src="#" class=" img-thumbnail ml-2 border-0 bg-light" style='max-width: 80px; overflow: hidden;' alt="company logo"></a>
                         </div>
@@ -258,7 +258,7 @@
                     <p>My Stock Dashboard is a web application created to help users understand the concept of following and watching market stocks. My Stock Dashboard allows to check the current market status, have an overview of the most active stocks and create a personal Watch List.</p>
                     <p>Do you have questions or new ideas we can implement? Contact us to let us know how we can improve!</p>
 				</div>
-				<hr class="clearfix w-100 d-md-none">
+				<hr class="bg-secondary w-100 d-md-none">
 				<div class="col-12 col-md-2 mx-auto">
 					<h5 class="font-weight-bold mt-3 mb-4">Internal Links</h5>
 					<ul class="list-unstyled">
@@ -272,11 +272,11 @@
 							<a href="cryptocurrencies.html">Cryptocurrencies</a>
 						</li>
 						<li>
-							<a data-toggle="modal" data-target="#ContactModal">Contact Us</a>
+							<a href="" data-toggle="modal" data-target="#ContactModal">Contact Us</a>
 						</li>
 					</ul>
 				</div>
-				<hr class="clearfix w-100 d-md-none">
+				<hr class="bg-secondary w-100 d-md-none">
 				<div class="col-md-2 mx-auto">
 					<h5 class="font-weight-bold mt-3 mb-4">External Links</h5>
 					<ul class="list-unstyled">
@@ -295,52 +295,86 @@
 					</ul>
 	
 				</div>
-				<hr class="clearfix w-100 d-md-none">
-				<div class="col-md-2 mx-auto">
-					<h5 class="font-weight-bold text-uppercase mt-3 mb-4">Links</h5>
-	
-					<ul class="list-unstyled">
-						<li>
-							<a href="#!">Link 1</a>
-						</li>
-						<li>
-							<a href="#!">Link 2</a>
-						</li>
-						<li>
-							<a href="#!">Link 3</a>
-						</li>
-						<li>
-							<a href="#!">Link 4</a>
-						</li>
-					</ul>
+				<hr class="bg-secondary w-100 d-md-none">
+				<div class="col-md-4 mx-auto">
+					<h5 class="font-weight-bold mt-3 mb-4">Contact Info</h5>
+					
+					<div class="personal-info-item">
+						<div class="key">
+							<p class="uppercase">
+								Name:
+							</p>
+						</div>
+						<div class="value">
+							<p>
+								Rodrigo Álvarez Monterroso
+							</p>
+						</div>
+					</div>
+					<div class="personal-info-item">
+						<div class="key">
+							<p class="uppercase">
+								Address:
+							</p>
+						</div>
+						<div class="value">
+							<p>
+								Stamford, USA
+							</p>
+						</div>
+					</div>
+					<div class="personal-info-item">
+						<div class="key">
+							<p class="uppercase">
+								Phone:
+							</p>
+						</div>
+						<div class="value">
+							<p>
+								+1 (203) 613-0294
+							</p>
+						</div>
+					</div>
+					<div class="personal-info-item">
+						<div class="key">
+							<p class="uppercase">
+								Email:
+							</p>
+						</div>
+						<div class="value">
+							<p>
+								bramrodrigo89@gmail.com
+							</p>
+						</div>
+                    </div>
 				</div>	
 			</div>
 		</div>
-		<hr>
-		<ul class="list-unstyled list-inline text-center">
+		<hr class="bg-dark w-100">
+		<ul class="social-links list-unstyled list-inline text-center">
 			<li class="list-inline-item">
-				<a class="btn-floating btn-fb mx-1">
+				<a target="_blank" href="https://www.facebook.com/bramrodrigo89" class="btn-floating mx-1">
 					<i class="fab fa-facebook-f"> </i>
 				</a>
 			</li>
 			<li class="list-inline-item">
-				<a class="btn-floating btn-tw mx-1">
+				<a target="_blank" href="https://twitter.com/bramrodrigo89" class="btn-floating mx-1">
 					<i class="fab fa-twitter"> </i>
 				</a>
 			</li>
 			<li class="list-inline-item">
-				<a class="btn-floating btn-gplus mx-1">
+				<a target="_blank" href="https://plus.google.com/u/1/117280731883555881499" class="btn-floating mx-1">
 					<i class="fab fa-google-plus-g"> </i>
 				</a>
 			</li>
 			<li class="list-inline-item">
-				<a class="btn-floating btn-li mx-1">
+				<a target="_blank" href="https://www.linkedin.com/in/rodrigo-monterroso/" class="btn-floating mx-1">
 					<i class="fab fa-linkedin-in"> </i>
 				</a>
 			</li>
 		</ul>
 		<div class="footer-copyright text-center py-3">© 2020 Copyright:
-			<a href="#"> Rodrigo Alvarez Monterroso</a>
+			<a href="https://bramrodrigo89.github.io/cv-rodrigo-alvarez/"> Rodrigo Alvarez Monterroso</a>
 		</div>
 	</footer>
 
@@ -382,30 +416,30 @@
 				<div class="modal-body">
 					<p>Do you have any questions or comments? Let us know down below and we will be glad to conact you back soon.</p>
 					<div class="contact-form-container">
-						<form>
+						<form onsubmit="return sendMail(this);">
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="contact-input-first-name">First Name</label>
-									<input type="text" class="form-control" id='contact-input-first-name' placeholder="John" required>
+									<input type="text" class="form-control" name='firstName' id='contact-input-first-name' placeholder="John" required>
 							    </div>
 								<div class="form-group col-md-6">
 									<label for="contact-input-last-name">Last Name</label>
-									<input type="text" class="form-control" id="contact-input-last-name" placeholder="Smith" required>
+									<input type="text" class="form-control" name='lastName' id="contact-input-last-name" placeholder="Smith" required>
 							    </div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="contact-input-email">Email Address</label>
-									<input type="email" class="form-control" id="contact-input-email" placeholder="john.smith@example.com" required>
+									<input type="email" class="form-control" name='email' id="contact-input-email" placeholder="john.smith@example.com" required>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="phone-input-country">Phone Number</label>
-									<input type="number" id="phone-input-country" class="form-control" placeholder="+1 (234) 456-7890">
+									<label for="phone-input-phoneNumber">Phone Number</label>
+									<input type="number" name='phoneNumber'  id="phone-input-phoneNumber" class="form-control" placeholder="+1 (234) 456-7890">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="contact-form-free-text">Inquiries, comments or questions?</label>
-								<textarea rows="5" name="free-text" id="contact-form-free-text" class="form-control" placeholder="Enter your text here" required></textarea>
+								<textarea rows="5" name="freeText" id="contact-form-free-text" class="form-control" placeholder="Enter your text here" required></textarea>
 							</div>
 							<div class="form-row text-center">
 								<div class="col">
@@ -413,6 +447,18 @@
 								</div>
 							</div>
 						</form>
+
+                        <!-- Succesful Email submission Alert -->
+
+                        <div id="thank-you-alert" class="alert alert-success collapse mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="alert-heading">Thank you!</h4>
+                            <p>We have successfully received your request. You will be contacted soon from us!</p>
+                            <hr>
+                            <p class="mb-0">We want to improve to meet your expectations. Thank you for the feedback.</p>
+                        </div>
 					</div>
 				</div>
 				<div class="modal-footer">
