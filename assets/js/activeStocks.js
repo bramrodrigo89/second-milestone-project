@@ -60,7 +60,7 @@ function etfsListTableHTML() {
                 etfsRows.push(`<tr class='clickable-row' data-href='index.html'>${etfRow}</tr>`);
                 } 
                 var rowsHTML = Object.values(etfsRows).join(' ');
-                el.innerHTML = `<table class="table table-dark table-hover my-4">
+                el.innerHTML = `<table class="table table-responsive table-dark table-hover my-4">
                                     <thead><tr><th>Name</th><th class="">Latest Price</th><th class="">YTD Change</th></tr></thead>
                                     <tbody>${rowsHTML}</tbody>
                                 </table>`;
