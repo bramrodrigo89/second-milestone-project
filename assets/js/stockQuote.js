@@ -1,51 +1,29 @@
 // Define constants and variables 
 
-const testAPI = 'https://sandbox.iexapis.com/'
-const realAPI = 'https://cloud.iexapis.com/'
-const version = 'stable/stock/'
-const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5'
-const realToken = 'token=pk_45af954261be4449955cbefadc328b65'
+const testAPI = 'https://sandbox.iexapis.com/';
+const realAPI = 'https://cloud.iexapis.com/';
+const version = 'stable/stock/';
+const testToken= 'token=Tpk_2cb28d1e81034940b4058a5d063b25a5';
+const realToken = 'token=pk_45af954261be4449955cbefadc328b65';
 var stockChart;
-var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"))
-var watchedStockSymbolToLookUp = JSON.parse(localStorage.getItem("watchedStockToLookUp"))
-if (cachedWatchList == null) {
-    var watchListArray=[];
+var cachedWatchList = JSON.parse(localStorage.getItem("myWatchList"));
+var watchedStockSymbolToLookUp = JSON.parse(localStorage.getItem("watchedStockToLookUp"));
+if (cachedWatchList === null) {
+    var watchListArray = [];
 } else {
     var watchListArray = cachedWatchList;
-}
-
-// Check if switch is checked to activate API Sandbox
-
-function isSwitchChecked() {
-    if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = testAPI;
-        var keyToken = testToken
-    } else {
-        var baseURL = realAPI;
-        var keyToken = realToken}
-
 }
 
 // fetch news data from selected stock
 
 function newsArticlesHTML(news) {
-
     if (news.length == 0) {
-        
-        return `<p>Currently no recent news listed for this company!</p>`
+        return `<p>Currently no recent news listed for this company!</p>`;
     }
-
     var articleItems = news.map(function (newsItem) {
-        if ($('#testAPISwitch').is(':checked')) {
-            var imageSource = 'assets/images/logo/white_logo_transparent_background_long.png'
-            var extraPadding = 'p-3'
-        } else {
-            var imageSource = newsItem.image
-            var extraPadding = 'p-0'
-        }
-        
+        var imageSource = ($('#testAPISwitch').is(':checked'))? 'assets/images/logo/white_logo_transparent_background_long.png' : newsItem.image;
+        var extraPadding = ($('#testAPISwitch').is(':checked'))? 'p-3' : 'p-0';    
         var articleDateTime = new Date(newsItem.datetime).toLocaleString("en-US").toString();
-
         return  `<div class="col mb-4" >
                     <div class="card bg-dark text-white">
                         <img src="${imageSource}" class="card-img-top ${extraPadding}" alt="Article image">
@@ -58,11 +36,9 @@ function newsArticlesHTML(news) {
                             <small class="text-muted">Published: ${articleDateTime}</small>
                         </div>
                     </div>
-                </div>`
-    })
-    
-    return articleItems.join('\n')
-            
+                </div>`;
+    });
+    return articleItems.join('\n');           
 }
 
 // create graph with obtained data
@@ -71,16 +47,13 @@ function createStockChart(data, company, priceChange) {
     var graphData = data.chart;
     var timeLabels = [];
     var graphDataSet = [];
-    var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : (priceChange<0)? 'rgb(221, 53, 68)' : 'rgb(108, 117, 126)'
+    var lineColor = (priceChange>0)? 'rgb(83, 207, 85)' : (priceChange<0)? 'rgb(221, 53, 68)' : 'rgb(108, 117, 126)';
     graphData.forEach(function (item) {
         timeLabels.push(item.label);
-        graphDataSet.push(item.close)
+        graphDataSet.push(item.close);
     });
-
     var ctx = document.getElementById('stockChart').getContext('2d');
-    
     stockChart = new Chart(ctx, {
-
         type: 'line',
         data: {
             labels: timeLabels,
@@ -89,10 +62,8 @@ function createStockChart(data, company, priceChange) {
                 backgroundColor: 'rgba(83, 207, 85, 0)',
                 borderColor: lineColor,
                 data: graphDataSet,
-                
             }]
         },
-
         options: {
             legend: {
                 display: false,
@@ -100,14 +71,12 @@ function createStockChart(data, company, priceChange) {
             maintainAspectRatio: false,
             pointRadius:0
         }
-    })
-
+    });
 }
 
 // Fetch quote data for summary table
 
 function quoteDataVariables(data) {
-
     var quoteData = data.quote;
     var latest_price = quoteData.latestPrice.toFixed(2);
     var price_change = (quoteData.change==null)? 0.00 : quoteData.change;
@@ -117,28 +86,23 @@ function quoteDataVariables(data) {
     var latest_time = quoteData.latestTime.toLocaleString();
     var ytd_change = quoteData.ytdChange*100;
     var previous_close = (quoteData.previousClose==null)? 0.00 : quoteData.previousClose;
-    
-    var recentSymbol = {symbol:quoteData.symbol, name:quoteData.companyName}
-
     $('.company-name').html(quoteData.companyName);
     $('#company-symbol').html(quoteData.symbol);
     $('#last-price').html(latest_price);    
     $('#price-change').html(price_change.toFixed(2));
     $('#52-week-range').html(`${quoteData.week52Low} - ${quoteData.week52High}`);
-    $('#primary-exchange').html(quoteData.primaryExchange)
+    $('#primary-exchange').html(quoteData.primaryExchange);
     $('#price-change-percent').html(price_change_percent.toFixed(2));
     $('#previous-close').html(previous_close.toFixed(2));
     $('#market-cap').html(market_cap);
     $('#pe-ratio').html(quoteData.peRatio);
     $('#avg-total-volume').html(avg_total_volume);
     $('#ytd-change').html(ytd_change.toFixed(2)+' %');
-
-    if (quoteData.open = 'null') {
-        $('#open-price').html(`N/A`);
+    if (quoteData.open == null) {
+        $('#open-price').html("N/A");
     } else {
         $('#open-price').html(quoteData.open);
     }
-
     if (price_change > 0) {
         $('.green-or-red').addClass('text-success');
         $('.green-or-red').removeClass('text-danger text-secondary');
@@ -152,17 +116,16 @@ function quoteDataVariables(data) {
         $('.green-or-red').removeClass('text-success text-danger');
         $('#plus-or-minus').html('');
     }
-    
     if (quoteData.isUSMarketOpen === true) {
         $('#latest-time').html(`${quoteData.latestSource} as of ${latest_time}`);
         $('#latest-source').html('');
     } else if (quoteData.isUSMarketOpen === false) {
         $('#latest-time').html(`<i class="fas fa-moon"></i>   <strong>Closed:</strong> Last price as of ${latest_time}`);
-        if (quoteData.extendedPrice = !'null') {
+        if (quoteData.extendedPrice == null) {
+            $('#extended-price').html('<h6><strong>After hours:</strong> N/A</h6>');
+        } else {
             var extended_time = new Date(quoteData.extendedPriceTime).toLocaleTimeString('en-US');
             $('#extended-price').html(`<h6><strong>After hours:</strong> ${quoteData.extendedPrice} US$ <small id='extended-change'>${quoteData.extendedChange} US$ (${quoteData.extendedChangePercent*100} %)</small></h6> <p class='small'>Extended price as of ${extended_time}</p?`);
-        } else if (quoteData.extendedPrice = 'null') {
-            $('#extended-price').html('<h6><strong>After hours:</strong> N/A</h6>');
         }
     }
 }
@@ -170,7 +133,6 @@ function quoteDataVariables(data) {
 // Fetch profile data for company summary
 
 function profileData(data) {
-
     var profileData = data.company;
     var tags = profileData.tags;
     $('#profile-description').html(profileData.description);
@@ -213,7 +175,7 @@ function profileData(data) {
         <p><span class="font-weight-bold text-large">Industry: </span><span class="font-weight-light">${profileData.industry}</span></p>
         <p><span class="font-weight-bold text-large">Sector: </span><span class="font-weight-light">${profileData.sector}</span></p>
     `);
-    $('#company-logo-link').attr('href',profileData.website)
+    $('#company-logo-link').attr('href',profileData.website);
 }
 
 // Object constructor for currently displayed stocks
@@ -221,7 +183,7 @@ function profileData(data) {
 function CurrentStock (sym,company,amount) {
     this.symbol = sym;
     this.name = company;
-    this.units = amount
+    this.units = amount;
 }
 
 // Check if stock is already in watch list
@@ -229,9 +191,9 @@ function CurrentStock (sym,company,amount) {
 function isStockWatched(stockList, stock, sym) {
     var upperCaseSym = sym.toUpperCase();
     if (stockList.some(stock => stock.symbol===upperCaseSym)) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }
 
@@ -247,31 +209,21 @@ function normalSearchButton() {
 // and combines all previous functions 
 
 function stockDataToDocument(entry) {
-
-    if (entry === undefined || entry == null) 
-    {var company = $('#symbolInputText').val();} 
-    else {var company = entry}
-    
-    isSwitchChecked()
-    if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = testAPI;
-        var keyToken = testToken
-    } else {
-        var baseURL = realAPI;
-        var keyToken = realToken}
-
+    var company = (entry === undefined || entry == null)? $('#symbolInputText').val() : entry;
+    var baseURL = ($('#testAPISwitch').is(':checked'))? testAPI : realAPI;
+    var keyToken = ($('#testAPISwitch').is(':checked'))? testToken : realToken;
     if (!company) {
         normalSearchButton();
         $('#search-stock-information').addClass('d-none');
         $('#errorMessageModal').modal('show');
-        return
+        return;
     } else (
     $("#search-symbol-button").html(
         `<button class="btn btn-info mt-2" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
             Loading...
         </button>`)
-    )
+    );
     $('#loading-symbol').html(`
         <div class="d-flex justify-content-center">
             <div class="spinner-border text-info m-5" role="status">
@@ -279,17 +231,15 @@ function stockDataToDocument(entry) {
             </div>
         </div>`);
     $('#search-stock-information').addClass('d-none');
-
     $.when(
-        $.getJSON(`${baseURL}${version}${company}/batch?types=company,logo,quote,chart,news&range=5d&last=8&${keyToken}`),
-
+        $.getJSON(`${baseURL}${version}${company}/batch?types=company,logo,quote,chart,news&range=5d&last=8&${keyToken}`)
     ).then(
         function(response) {
-            $('.collapse').collapse('hide')
-            setTimeout(normalSearchButton,900)
+            $('.collapse').collapse('hide');
+            setTimeout(normalSearchButton,900);
             $('#search-stock-information').removeClass('d-none');
             var stockData = response;
-            var stockPriceChange = (stockData.quote.change==null)? 0.00 : stockData.quote.change
+            var stockPriceChange = (stockData.quote.change==null)? 0.00 : stockData.quote.change;
             quoteDataVariables(stockData);
             if ($('#testAPISwitch').is(':checked')) {
                 $('#company-logo').attr('src','assets/images/logo/white_logo_transparent_symbol.png');
@@ -309,14 +259,12 @@ function stockDataToDocument(entry) {
                     function (response) {
                         stockChart.destroy();
                         var updatedChartData = response;
-                        var updatedStockPriceChange = $('#price-change').html()
-                        console.log(updatedChartData);
+                        var updatedStockPriceChange = $('#price-change').html();
                         createStockChart(updatedChartData, company,updatedStockPriceChange);
                     }
-                )
+                );
             });
             var displayedStock = JSON.parse(JSON.stringify(new CurrentStock ($('#company-symbol').html(),$('.company-name').html(),1))); 
-            
             if (isStockWatched(watchListArray, displayedStock, company)) {
                 $('#text-before-star').html('Remove from my ');
                 $('#watch-list-star').addClass('fas');
@@ -326,10 +274,10 @@ function stockDataToDocument(entry) {
             }
         }, function(errorResponse) {
             $('#search-stock-information').addClass('d-none');
-            normalSearchButton()
+            normalSearchButton();
             $('#errorMessageModal').modal('show');
         }
-    )
+    );
 }
 
 // Function to add stocks to watch list using the star button
@@ -343,7 +291,7 @@ $('#watch-list-star').click(function(){
     if (stockInWatchList) {
         $('#text-before-star').html('Add to my ');
         $('#watch-list-star').removeClass('fas');
-        var stockIndex = watchListArray.findIndex(obj => obj.symbol === company_symbol && obj.name === company_name)
+        var stockIndex = watchListArray.findIndex(obj => obj.symbol === company_symbol && obj.name === company_name);
         watchListArray.splice(stockIndex, 1);
         $('#watch-list-counter').html(watchListArray.length);
         localStorage.setItem('myWatchList', JSON.stringify(watchListArray));

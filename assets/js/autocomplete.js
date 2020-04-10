@@ -3,7 +3,6 @@
 // Code was adapted to this project's needs, though the functions share considerable similarity
 // Lesson can be found under https://www.w3schools.com/howto/howto_js_autocomplete.asp
 
-
 function addActive(x, focus) {
     if (!x) return false;
     removeActive(x);
@@ -11,13 +10,15 @@ function addActive(x, focus) {
     if (focus < 0) focus = (x.length - 1);
     x[focus].classList.add("autocomplete-active");
 }
+
 function removeActive(x) {
     for (var i = 0; i < x.length; i++) {
         x[i].classList.remove("autocomplete-active");
     }
 }
+
 function closeAllLists(elmnt) {
-    var inp = $("#symbolInputText").val()
+    var inp = $("#symbolInputText").val();
     var x = document.getElementsByClassName("autocomplete-items");
     for (var i = 0; i < x.length; i++) {
         if (elmnt != x[i] && elmnt != inp) {
@@ -30,22 +31,15 @@ function searchStockInformation(event) {
     var fragment = $("#symbolInputText").val();
     if (fragment) {
         var currentFocus;
-
-        if ($('#testAPISwitch').is(':checked')) {
-            var baseURL = testAPI;
-            var keyToken = testToken
-        } else {
-            var baseURL = realAPI;
-            var keyToken = realToken
-        }
+        var baseURL = ($('#testAPISwitch').is(':checked'))? testAPI : realAPI;
+        var keyToken = ($('#testAPISwitch').is(':checked'))? testToken : realToken;
         
         $.when(
-            $.getJSON(`${baseURL}stable/search/${fragment}?${keyToken}`),
-            
+            $.getJSON(`${baseURL}stable/search/${fragment}?${keyToken}`)
         ).then(
             function (response) {
-                var suggestedStocksArray = response
-                var a, b, i, val = $("#symbolInputText").val()
+                var suggestedStocksArray = response;
+                var a, b, i, val = $("#symbolInputText").val();
                 closeAllLists();
                 if (!val) { return false;}
                 currentFocus = -1;
@@ -54,9 +48,8 @@ function searchStockInformation(event) {
                 a.setAttribute("class", "autocomplete-items");
                 document.getElementById('symbolInputText').parentNode.appendChild(a);
                 for (i = 0; i < 5; i++) {
-                    var suggestedSymbol = suggestedStocksArray[i].symbol.toString()
-                    var suggestedName = suggestedStocksArray[i].securityName.toString()
-                    
+                    var suggestedSymbol = suggestedStocksArray[i].symbol.toString();
+                    var suggestedName = suggestedStocksArray[i].securityName.toString();
                     b = document.createElement("DIV");
                     b.innerHTML = "<span class='text-bold'>" + suggestedSymbol.substr(0, val.length) + "</span>";
                     b.innerHTML += suggestedSymbol.substr(val.length)+" - "+suggestedName;
@@ -69,7 +62,7 @@ function searchStockInformation(event) {
                     a.appendChild(b);
                 }
             }
-        )
+        );
         document.getElementById('symbolInputText').addEventListener("keydown", function (e) {
             var x = document.getElementById(this.id + "autocomplete-list");
             if (x) x = x.getElementsByTagName("div");

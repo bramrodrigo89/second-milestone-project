@@ -31,45 +31,32 @@ function createStockCards(data) {
 // creates table with current quotes from popular ETFs
 
 function etfsListTableHTML() {
-    var etfsRows=[];
     var etfsListArray=['spy','dia','iwm','qqq'];
     var URLSymbolArray = etfsListArray.join(',');
-
-    if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = testAPI;
-        var keyToken = testToken;
-    } else {
-        var baseURL = realAPI;
-        var keyToken = realToken;}
-    
+    var baseURL = ($('#testAPISwitch').is(':checked'))? testAPI : realAPI;
+    var keyToken = ($('#testAPISwitch').is(':checked'))? testToken : realToken;
     $.when(
-        $.getJSON(`${baseURL}stable/stock/market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`),
+        $.getJSON(`${baseURL}stable/stock/market/batch?symbols=${URLSymbolArray}&types=quote&${keyToken}`)
     ).then(
         function(response) {
+            var etfsRows=[];
             var el = document.getElementById('popular-etfs-list');
             var tableData =  response;
-            for (let elem in tableData) {
+            var tableDataKeys = Object.keys(tableData);
+            for (var i = 0; i<tableDataKeys.length; i++) {
                 var etfRow=[];
-                var etfObject = tableData[elem];
+                var etfObject = tableData[tableDataKeys[i]];
                 var etfSymbol = etfObject.quote.symbol;
                 var etfName = etfObject.quote.companyName;
                 var latestPriceEtf = etfObject.quote.latestPrice;
                 var changeEtf = etfObject.quote.change;
                 var changePercentEtf = etfObject.quote.changePercent*100;
                 var ytdChange = etfObject.quote.ytdChange*100;
-                var badgeColor='';
-                var signPlusMinus = '';
-                if (changeEtf<0.0) {
-                    var badgeColor='badge-danger';
-                    var signPlusMinus='';
-                } else if (changeEtf>0.001) {
-                    var badgeColor='badge-success';
-                    var signPlusMinus='+';
-                } else {
-                    var badgeColor='badge-secondary';
-                    var signPlusMinus='';
-                }
-                etfRow.push(`<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th><td class='text-center'>${latestPriceEtf.toFixed(2)} US$ <span class='badge ${badgeColor} mx-2'>${signPlusMinus} ${changeEtf.toFixed(2)} US$ (<span class='change-percent-etf'>${changePercentEtf.toFixed(2)}</span>%)</span></td><td class="">${ytdChange.toFixed(2)} %</td>`);
+                var badgeColor = (changeEtf<0.0)? 'badge-danger' : (changeEtf>0.001)? 'badge-success' : 'badge-secondary';
+                var signPlusMinus = (changeEtf<0.0)? '' : (changeEtf>0.001)? '+' : '';
+                etfRow.push(   `<th>${etfName} (<span class='etf-symbol'>${etfSymbol}</span>)</th>
+                                <td class="">${latestPriceEtf.toFixed(2)} US$ <span class='badge ${badgeColor} mx-2'>${signPlusMinus} ${changeEtf.toFixed(2)} US$ (<span class='change-percent-etf'>${changePercentEtf.toFixed(2)}</span>%)</span></td>
+                                <td class="">${ytdChange.toFixed(2)} %</td>`);
                 etfsRows.push(`<tr class='clickable-row' data-href='index.html'>${etfRow}</tr>`);
                 } 
                 var rowsHTML = Object.values(etfsRows).join(' ');
@@ -89,12 +76,8 @@ function etfsListTableHTML() {
 // combines previous functions to call when data is loaded
 
 function activestocksToDocument() {
-    if ($('#testAPISwitch').is(':checked')) {
-        var baseURL = testAPI;
-        var keyToken = testToken;
-    } else {
-        var baseURL = realAPI;
-        var keyToken = realToken;}
+    var baseURL = ($('#testAPISwitch').is(':checked'))? testAPI : realAPI;
+    var keyToken = ($('#testAPISwitch').is(':checked'))? testToken : realToken;
     $('.loading-symbol-market-briefing').html(`
         <div class="d-flex justify-content-center">
             <div class="spinner-border text-info m-5" role="status">
@@ -102,8 +85,7 @@ function activestocksToDocument() {
             </div>
         </div>`);
     $.when(
-        $.getJSON(`${baseURL}stable/stock/market/collection/list?collectionName=mostactive&${keyToken}`),
-
+        $.getJSON(`${baseURL}stable/stock/market/collection/list?collectionName=mostactive&${keyToken}`)
     ).then(
         function(response) {
             var activeStocksList = response;
@@ -126,10 +108,9 @@ focusScrollMethod = function getFocus() {
     document.getElementById("testAPISwitch").focus({preventScroll:false});
 };
 
-
+// When API Switch is clicked, all numbers displayed are refreshed
 
 $("#testAPISwitch").click(function(){
-    
     if ($('#search-stock-information').hasClass('d-none')) {
         activestocksToDocument();
         etfsListTableHTML();
@@ -139,15 +120,17 @@ $("#testAPISwitch").click(function(){
         activestocksToDocument();
         etfsListTableHTML();
     }
-    
 });
+
 // Functions to call when page is complete 
 
 $(document).ready(function() {
     activestocksToDocument();
     etfsListTableHTML();
     $("#testAPISwitchContainer").hover(function () {
-        $('[data-toggle="tooltip"]').tooltip('toggle');
+        $('[data-toggle="tooltip"]').tooltip('show');
+    }, function(){
+        $('[data-toggle="tooltip"]').tooltip('hide')
     }); 
 });
 

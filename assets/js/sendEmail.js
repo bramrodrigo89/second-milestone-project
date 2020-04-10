@@ -6,7 +6,7 @@ function sendMail(contactForm) {
         "from_email": contactForm.email.value, 
         "comment_question_inquiry": contactForm.freeText.value, 
         "from_phoneNumber": contactForm.phoneNumber.value, 
-    }
+    };
     
     emailjs.send("gmail", "mystockdashboardcontactform", templateParams)
     
