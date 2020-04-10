@@ -9,11 +9,8 @@ function createStockCards(data) {
     var activeChangePrice = (item.change==null)? 0.00 : item.change;
     var activeChangePercent = item.changePercent*100;
     var lastUpdateTime = new Date(item.latestUpdate).toLocaleTimeString("en-US").toString();
-    if (activeChangePrice > 0) {
-        var classActiveStock = 'badge-success';
-    } else if (activeChangePrice < 0) {
-        var classActiveStock = 'badge-danger';
-    } else { var classActiveStock = 'badge-secondary';}
+    var classActiveStock = (activeChangePrice > 0)? 'badge-success': (activeChangePrice < 0)? 'badge-danger' : 'badge-secondary';
+    
     return `<div class="active-stock-card card text-white bg-dark mb-3">
                         <div class="card-header">
                             ${activeExchange}
