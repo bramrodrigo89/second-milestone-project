@@ -6,52 +6,56 @@ This project was carried out within the framework of my Second Milestone Project
 
 Used technologies include  HTML5, CSS3, JavaScript to demonstrate my personal skills and acquired knowledge from this online program. 
 
-Code was written mostly on my own but a some libraries were taken as well to improve functionality and CSS. 
+Code was written mostly on my own but some libraries were taken as well to improve functionality and CSS. 
 
-I will be glad to hear your feedback about your experience using this web application. 
+I will be glad to hear your feedback about your experience using this web application. Just fill out the contact form included in the application when you click on "Contact Us"
 
 Website hosted on GitHub Pages here: [My Stock Dashboard](https://bramrodrigo89.github.io/second-milestone-project/)
- 
+
+
 ## UX
 
 
 ![Responsive Views of Home Page](documentation/MyStockDashboard_responsive_test.png)
 
-The main objective was to create a custom website for a landlord company called Koller Investments that rents different properties. The company needed online presence and a presentation card for other companies or even banks that inquiry about Koller Investments. Their current site is hosted on Google Sites [Koller Investments](https://inversiones-koller.business.site/) but it is not informative enough.
-
-The website also should give customers, the tenants, confidence on what the company can do and its cusomer care. 
-
-This importance for a new website was identified through some User Stories like the following:
-
-- "As a new comer in the city, I would like to know which properties are available at the moment for rent depending on their location. It would be great to have an overview map where I can narrow down my options and reserve the one the option that I like."
-
-- "As a current customer from the company, I would like to know if Koller Investments has other options for office properties available where we can move our office due to expansion. That means information like space is important for us."
-
-- "I am working in a bank granting credits to small companies. I woud like a webiste where I can easily read who they area and what services they offer so I can assess the risk of a new loan."
+The main objective was to create a simple looking and appealing online dashboard for following market stock prices, ETFs and Cryptocurrencies, inquiring about different public companies’ information and their latest related news on the market prices. 
+ 
+The intention is to target new users who do not have much experience in watching stock prices so they can understand the concepts and focus on the most important variables of basic stock watching. The dashboard should allow them to create a personal Watch List and a simple portfolio simulation to calculate how much they would gain or lose in the case of possessing actual shares of the selected stocks. 
+ 
+The dashboard should be in the form of a web-based application that can be accessed from different mobile devices or desktop computers. At the moment, the web application should rely solely on the browser’s local storage to save information on selected stocks und shares’ units, in order to avoid saving the user’s personal information by asking users to register. 
+ 
+This importance for this web application was identified through some User Stories like the following:
+ 
+- "I never had so much experience in watching market stocks. I always felt interested in trying to understand how that works, but whenever I go on sites like Yahoo! Finance or MarketWatch.com I just feel overwhelmed by so many numbers and graphs that I stop trying."
+ 
+- "As a user with some kind of experience in market stocks, I would like to find a web app to create my own  Watch List with as many stocks and ETFs as I want without having to create an account or subscribe to an expensive financial advice service. Those sites normally offer  Watch Lists that are limited to 5 or 10 stocks. I would like to have many more!"
+ 
+- "I am just starting to watch a few market stocks on my own but I know only the most famous companies like Google or Amazon. I would like to have a web application to discover which are the most active stocks on the market every day and read what the companies do or what’s in the news about them. Only then I could consider buying some shares from them."
 
 The website was first designed using a wireframe which can be found on miro.com under this link:
 
 [Miro Wireframe - Second Milestone Project](https://miro.com/app/board/o9J_kvJ0tW8=/)
 
 
-
-
 ## Features
 
-The website is composed by tree main pages among which customers can navigate to find the information they need or achieve the objective that they have. IMPORTANT: At the moment most of the content is shown as generic Lorem Ipsum text but will be corrected as the company provides this infromation!
+My Stock Dashboard (MSD) is composed by tree main pages among which customers can navigate to find the information they need: get a stock quote, check the personal Watch List or check the latest prices on Cryptocurrencies (this last feature is not yet deployed). 
  
 ### Existing Features
-- About-Us and Our-Services Sections - allows users to inform themselves about the company and understand what the company can offer. 
-- Our Properties-Section - provides information about the types of properties that tenants can reserve. 
-- Our Properties-Map - This feature will allow customers to find the property option that best suits their location needs. Location is the main criteria in this city, so they will select those mostly based on that criteria. This feature is partially inabled because the back-end development is missing to make the map interactive. 
-- Reservaton Form - This will enable users to reserve the property of their selection and enter their information to ellaborate a renting contract. 
-- Contact Form - For potential new clients or simply interested individuals who inquiry about the company. 
+- Stock Quote - MSD allows users to search for any stock listed on the public market by entering the stock symbol in the search bar and get the latest quote. 
+- Autocomplete Menu - when the user is not sure about the stock symbol, MSD can do a GET HTTP request to the API server to obtain a list of matching suggestions when the company name is entered in the search bar. 
+- Stock Chart - MSD displays a line chart of the price quote history. The time windows of 1 day, 5 days, 1 month, 1 year and “max” can be selected using the buttons above. 
+- Stock Quote Table - containing the most important variables and numbers. 
+- Company Profile Information - contains a description of the inquired company, their contact information and their industry sector that they belong to. 
+- Today’s Market Briefing - MSD displays the most active stocks listed on the market today. Cards are interactive and can be clicked to get more information on that market quote. 
+- Popular ETFs - As an alternative to displaying Market Indexes, these popular ETFs mimic these indices, such as SPY for the S&P 500, DIA for Dow Jones, and IWM for Russell 2000. 
+- My Watch List - After selecting the stocks of the user’s preference, a Watch List is created that summarizes the daily total gains or losses and the average performance of the selected stocks. The user can easily remove a stock from the WatchList by clicking on the star icon or adding more or fewer share units for a specific stock. The data displayed is updated automatically with every action. 
 
 In addition, these are the plans for additional features to be implemented in the future:
 
 ### Features Left to Implement
-- Back-end development - Overall this development is still missing to make the map interactive and collect the data from the reservation and contact forms. 
-- Online Tenant Portal - This internet portal is important for current customers to find and manage their renting contracts, browse their payment history, report issues to the company and others. 
+- Cryptocurrencies Watch Dashboard
+- Back-End Development
 
 ## Technologies Used
 
