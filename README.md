@@ -116,6 +116,10 @@ During the development phase I encountered some bugs which had to be solved
 5. **Problem** When the stock prices have no price changes, i.e. 0.00 the API server delivers an empty value "null", which cannot be operated in the arrays, so the average calculations were showing errors.  
     - **Solution** Conditionals variable value tasks were added, to check if the value is "null" or not. When the value "null" comes from the server, the value of 0.00 is assigned to the variables. 
 
+Bugs that remain unsolved:
+
+1. **Problem** Previous stock charts are sometimes saved in the memory and they suddenly show up again even though they should be destroyed using the destroy() function in JavaScript. Problem persists and it is unknown how to solve it. These occurs when many charts are being called from different companies and different time frames (1 day, 5 days, 1 month, etc).
+
 ### Performance 
 
 ![Test Performance Screenshot](/documentation/testing/screenshot_test_performance.png)
@@ -131,7 +135,7 @@ Front-End Software and JavaScript performance were tested in real phones, laptop
 ![Front End Testing Different Devices](documentation/testing/Front_end_testing_devices.png)
 
 ### Back End
-Further testing of Back-End will be peformed when the back-end software is developed. 
+Further testing of Back-End will be peformed with automated tests when the back-end software is developed. 
 
 ## Deployment
 
