@@ -16,7 +16,7 @@ Website hosted on GitHub Pages here: [My Stock Dashboard](https://bramrodrigo89.
 ## UX
 
 
-![Responsive Views of Home Page](documentation/MyStockDashboard_responsive_test.png)
+![Responsive Views of Home Page](documentation/Front_end_testing_devices.png)
 
 The main objective was to create a simple looking and appealing online dashboard for following market stock prices, ETFs and Cryptocurrencies, inquiring about different public companies’ information and their latest related news on the market prices. 
  
