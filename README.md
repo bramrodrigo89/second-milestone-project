@@ -117,7 +117,9 @@ During the development phase I encountered some bugs which had to be solved
     - **Solution** Conditionals variable value tasks were added, to check if the value is "null" or not. When the value "null" comes from the server, the value of 0.00 is assigned to the variables. 
 
 ### Performance 
-A LightHouse Report was generated to evaluate the performance of the web application. The report can be retrieved here: [Light House Report](/documentation/testing/Audit_April112020_Lighthouse.html)
+
+![Test Performance Screenshot](/documentation/testing/screenshot_test_performance.png)
+A LightHouse Report was generated to evaluate the performance of the web application. The full report can be retrieved here: [Light House Report](/documentation/testing/Audit_April112020_Lighthouse.html)
 
 
 ### Front End 
