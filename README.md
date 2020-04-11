@@ -34,6 +34,8 @@ This importance for this web application was identified through some User Storie
 
 The website was first designed using a wireframe which can be found on miro.com under this link:
 
+![Wireframe Image](/documentation/Wireframe_MSD.png)
+
 [Miro Wireframe - Second Milestone Project](https://miro.com/app/board/o9J_kvJ0tW8=/)
 
 
@@ -58,6 +60,7 @@ In addition, these are the plans for additional features to be implemented in th
 - Cryptocurrencies Watch Dashboard
 - Include more complex chart features, such as mixed chart types to display volume stock data in every graph. 
 - SSE Streaming for displayed data coming from the IEX cloud
+- Include number input option for increasing or decreasing stock shares in addition to icon buttons.
 - Back-End Development
 - Include interactive stock chart analysis tools for the graphs. 
 
@@ -91,21 +94,46 @@ Languages, frameworks, libraries used to construct this project:
 - [Am I Responsive](http://ami.responsivedesign.is)
     - Testing responsiveness of the applicaton in different devices, like the example below:
 
-![Front End Testing Different Devices](documentation/Front_end_testing_devices.png)
 
 ## Testing
 
-Front-End Software and JavaScript performance were tested in real phones, laptops and desktops to test the responsiveness of the site in in real life using different browsers like Chrome, IE and Firefox. 
+During the development phase I encountered some bugs which had to be solved
 
-Testing of Back-End will be peformed when the back-end software is developed. 
+1. **Problem** The data of the watched stocks selected by the user and saved in arrays was not being transfered from the page index.html to the next page watch-list.html but instead was always erased. 
+    1. **Solution** The main Array controling the selected stocks "watchListArray" was stored locally on the browser in a variable called "myWatchList" every time a change is made and then the array is retrieved using getItem() from another JS File to display the data on watch-list.html
+
+2. **Problem** The data retrieved from the API Server on Sandbox Mode does not include real image sources for company logos or article news, so the images shown on Sandbox mode were just broken img elements. 
+    2. **solution** Using jQuery the API Switch element is selected and checked in avance whether an image is loaded. A conditional attribute was used: if the sandbox mode is activated, the image displayed would be a local logo image from this project. 
+
+3. **Problem** There are some times during the day when the IEX Cloud Sever is not delivering data due to maintenance or when the stock exchange is closing (labor days at 4:30 PM NY time). During those time the application cannot show the data correctly and software errors are produced. 
+    3. **solution** Using JavaScript promises it is distinguised when the HTTP response status are successful. When an error is observed, a modal message is activated to let the user know that an error occured while loading the data from the API server. 
+
+4. **Problem** Tables for watchList or ETF List are normally too wide because they contain too much information for a small screen of a smartphone. 
+    4. **Solution** Added a DIV container for the tables and included the class .table-responsive so that the tables overflow horizontally in small devices and all the data can be seen by scrolling. 
+
+5. **Problem** When the stock prices have no price changes, i.e. 0.00 the API server delivers an empty value "null", which cannot be operated in the arrays, so the average calculations were showing errors.  
+    5. **Solution** Conditionals variable value tasks were added, to check if the value is "null" or not. When the value "null" comes from the server, the value of 0.00 is assigned to the variables. 
+
+Front-End Software and JavaScript performance were tested in real phones, laptops and desktops to test the responsiveness of the site in in real life using different browsers like Chrome, IE and Firefox. 
+![Front End Testing Different Devices](documentation/Front_end_testing_devices.png)
+
+Further testing of Back-End will be peformed when the back-end software is developed. 
 
 ## Deployment
 
 The code was developed solely on GitPod and then it was pushed to an external repository on [GitHub](https://github.com/bramrodrigo89).
-Later the settings of this GitHub repository were changed to host the code into GitHub Pages from the **master branch.**
-Currently the GitHub site is published using the following link:
+The settings of this GitHub repository were changed to host the code into GitHub Pages from the **master branch.**
+Currently the GitHub site is published here: [My Stock Dashboard](https://bramrodrigo89.github.io/second-milestone-project/)
 
-[My Stock Dashboard](https://bramrodrigo89.github.io/second-milestone-project/)
+To deploy the project from its repository, the following should be taken:
+
+1. Log in to GitHub.com
+2. From the repository screen, select this project "/second-milestone-project"
+3. On top of the page, click on the last right icon "Settings".
+4. Scroll down until you reach the GitHub Pages section.
+5. Change the source to the "Master Branch" using the drop down menu, labelled by default first as "none".
+6. The application is now deployed on GitHub pages!
+7. Copy the provided link from this section and share with others.
 
 ## Credits
 

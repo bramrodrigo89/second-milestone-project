@@ -69,7 +69,9 @@ function etfsListTableHTML() {
                     var etfSymbolToLookUp = $(this).find('.etf-symbol').html();
                     setTimeout(stockDataToDocument,1000, etfSymbolToLookUp);
                 });   
-            }, function(errorResponse) {console.log('Error loading data');}
+            }, function(errorResponse) {
+                $('#dataErrorMessageModal').modal('show');
+            }
         );
 }
 
@@ -97,7 +99,7 @@ function activestocksToDocument() {
                 setTimeout(stockDataToDocument, 900, symbolToLookUp);
             });
         }, function(errorResponse) {
-            console.log('Error loading data');
+            $('#dataErrorMessageModal').modal('show');
         }
     );
 }

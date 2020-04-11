@@ -105,7 +105,9 @@ function watchListTableHTML() {
                                                     <tbody>${rowsHTML}</tbody>
                                                 </table>`);
                 calculateAverages(priceChangesArray, percentChangesArray, totalGainsArray, gainChangesArray, percentGainChangesArray,totalShares);
-            }, function (errorResponse) { console.log('Error loading data') }
+            }, function (errorResponse) {
+                $('#dataErrorMessageModal').modal('show');
+            }
         );
     } else {
         return `<p>Your Watch List is currently empty. Start adding some stocks or ETFs from the Stock Quote page</p>`;
