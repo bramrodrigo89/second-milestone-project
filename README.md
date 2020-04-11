@@ -120,7 +120,11 @@ During the development phase I encountered some bugs which had to be solved
 
 ![Test Performance Screenshot](/documentation/testing/screenshot_test_performance.png)
 A LightHouse Report was generated to evaluate the performance of the web application. The full report can be retrieved here: [Light House Report](/documentation/testing/Audit_April112020_Lighthouse.html)
-
+In order to run this test it is necessary to open the application on incognito mode of Chrome broswer and follow these steps:
+1. Activate Developer Tools by doing right click and select "Inspect"
+2. Click on "Console" from the upper menu items and then click on the two arrows in the end of the list to the right >>
+3. Select "Audits" and then "Generate Report"
+4. Follow the prompt to finalize report. Use the options to print report if necessary. 
 
 ### Front End 
 Front-End Software and JavaScript performance were tested in real phones, laptops and desktops to test the responsiveness of the site in in real life using different browsers like Chrome, IE and Firefox. 
