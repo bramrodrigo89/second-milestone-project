@@ -111,7 +111,7 @@ Currently the GitHub site is published using the following link:
 
 ### Content
 
-![IEXCloud Logo](documenation/IEXCloud-logo-black.png)
+![IEXCloud Logo](documentation/IEXCloud_logo_black.png)
 
 Real-Time & historical financial data, stock prices, mutual funds, news, company profile information, financials, logo images and news article images are imported exclusively from the IEX Cloud API. 
 Content coming from the IEX Cloud when the sandbox mode is activated only returns **randomized test data and is meant to mimic the results returned from the real API.** The sandbox environment cannot be used to access real financial data but they **still represent a good estimate.** 
