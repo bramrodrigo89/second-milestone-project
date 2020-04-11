@@ -16,7 +16,7 @@ Website hosted on GitHub Pages here: [My Stock Dashboard](https://bramrodrigo89.
 ## UX
 
 
-![Responsive Views of Home Page](documentation/Front_end_testing_devices.png)
+![Responsive Views of Home Page](documentation/testing/Front_end_testing_devices.png)
 
 The main objective was to create a simple looking and appealing online dashboard for following market stock prices, ETFs and Cryptocurrencies, inquiring about different public companies’ information and their latest related news on the market prices. 
  
@@ -77,7 +77,7 @@ Languages, frameworks, libraries used to construct this project:
     - jQuery code was used to simplify HTML DOM tree traversal and manipulation, as well as event handling, CSS animation, and Ajax.
 - [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
     - The project uses **Bootstrap** to simplify giving styles and adding JavaScripts to different elements. Also it is found in the navbar construct, its grid-layout system was used, as well as other elements like modals, tables, badges, etc to complement the webiste. 
-- [Chart.js ](https://developers.google.com/maps/documentation/javascript/tutorial)
+- [Chart JS](https://developers.google.com/maps/documentation/javascript/tutorial)
     - The stock chart data coming from the IEX Cloud Server is passed into JavaScript code from Charts.JS to create the interative graphs for the displayed stock quote.
 - [EMail JS](https://www.emailjs.com/)
     - JavaScript SDK was implemented to send emais from this website from the contact form. 
@@ -97,26 +97,34 @@ Languages, frameworks, libraries used to construct this project:
 
 ## Testing
 
+### Problem Solving
+
 During the development phase I encountered some bugs which had to be solved
 
 1. **Problem** The data of the watched stocks selected by the user and saved in arrays was not being transfered from the page index.html to the next page watch-list.html but instead was always erased. 
-    1. **Solution** The main Array controling the selected stocks "watchListArray" was stored locally on the browser in a variable called "myWatchList" every time a change is made and then the array is retrieved using getItem() from another JS File to display the data on watch-list.html
+    - **Solution** The main Array controling the selected stocks "watchListArray" was stored locally on the browser in a variable called "myWatchList" every time a change is made and then the array is retrieved using getItem() from another JS File to display the data on watch-list.html
 
 2. **Problem** The data retrieved from the API Server on Sandbox Mode does not include real image sources for company logos or article news, so the images shown on Sandbox mode were just broken img elements. 
-    2. **solution** Using jQuery the API Switch element is selected and checked in avance whether an image is loaded. A conditional attribute was used: if the sandbox mode is activated, the image displayed would be a local logo image from this project. 
+    - **solution** Using jQuery the API Switch element is selected and checked in avance whether an image is loaded. A conditional attribute was used: if the sandbox mode is activated, the image displayed would be a local logo image from this project. 
 
 3. **Problem** There are some times during the day when the IEX Cloud Sever is not delivering data due to maintenance or when the stock exchange is closing (labor days at 4:30 PM NY time). During those time the application cannot show the data correctly and software errors are produced. 
-    3. **solution** Using JavaScript promises it is distinguised when the HTTP response status are successful. When an error is observed, a modal message is activated to let the user know that an error occured while loading the data from the API server. 
+    - **solution** Using JavaScript promises it is distinguised when the HTTP response status are successful. When an error is observed, a modal message is activated to let the user know that an error occured while loading the data from the API server. 
 
 4. **Problem** Tables for watchList or ETF List are normally too wide because they contain too much information for a small screen of a smartphone. 
-    4. **Solution** Added a DIV container for the tables and included the class .table-responsive so that the tables overflow horizontally in small devices and all the data can be seen by scrolling. 
+    - **Solution** Added a DIV container for the tables and included the class .table-responsive so that the tables overflow horizontally in small devices and all the data can be seen by scrolling. 
 
 5. **Problem** When the stock prices have no price changes, i.e. 0.00 the API server delivers an empty value "null", which cannot be operated in the arrays, so the average calculations were showing errors.  
-    5. **Solution** Conditionals variable value tasks were added, to check if the value is "null" or not. When the value "null" comes from the server, the value of 0.00 is assigned to the variables. 
+    - **Solution** Conditionals variable value tasks were added, to check if the value is "null" or not. When the value "null" comes from the server, the value of 0.00 is assigned to the variables. 
 
+### Performance 
+A LightHouse Report was generated to evaluate the performance of the web application. The report can be retrieved here: [Light House Report](/documentation/testing/Audit_April112020_Lighthouse.html)
+
+
+### Front End 
 Front-End Software and JavaScript performance were tested in real phones, laptops and desktops to test the responsiveness of the site in in real life using different browsers like Chrome, IE and Firefox. 
-![Front End Testing Different Devices](documentation/Front_end_testing_devices.png)
+![Front End Testing Different Devices](documentation/testing/Front_end_testing_devices.png)
 
+### Back End
 Further testing of Back-End will be peformed when the back-end software is developed. 
 
 ## Deployment
